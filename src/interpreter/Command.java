@@ -27,30 +27,6 @@ public enum Command {
 	},
 
 	/**
-	 * Bitwise left shifts a value.
-	 */
-	SHIFT_LEFT_LOGICAL("sll") {
-		public void run(Register destination, Register source, int shiftAmount) {
-			int val = source.getIntegerOfValues();
-			int shifted = val << shiftAmount;
-
-			destination.storeStringNum(BinaryConversion.intToBinary(shifted));
-		}
-	},
-
-	/**
-	 * Bitwise right shifts a value.
-	 */
-	SHIFT_RIGHT_LOGICAL("srl") {
-		public void run(Register destination, Register source, int shiftAmount) {
-			int val = source.getIntegerOfValues();
-			int shifted = val >> shiftAmount;
-
-			destination.storeStringNum(BinaryConversion.intToBinary(shifted));
-		}
-	},
-
-	/**
 	 * Adds two values and stores them.
 	 */
 	ADD("add") {
@@ -77,6 +53,85 @@ public enum Command {
 		public void run(Register destination, Register r1, int num) {
 			int sum = r1.getIntegerOfValues() + num;
 			destination.storeStringNum(BinaryConversion.intToBinary(sum));
+		}
+	},
+
+	/**
+	 * Stores the result of logical and between
+	 * two registers.
+	 */
+	LOGICAL_AND("and") {
+		public void run(Register destination, Register r1, Register r2) {
+			int result = r1.getIntegerOfValues() & r2.getIntegerOfValues();
+			destination.storeStringNum(BinaryConversion.intToBinary(result));
+		}
+	},
+
+	/**
+	 * Stores the result of logical or between two
+	 * registers.
+	 */
+	LOGICAL_OR("or") {
+		public void run(Register destination, Register r1, Register r2) {
+			int result = r1.getIntegerOfValues() | r2.getIntegerOfValues();
+			destination.storeStringNum(BinaryConversion.intToBinary(result));
+		}
+	},
+
+	/**
+	 * Stores the result of logical nor between
+	 * two registers.
+	 */
+	LOGICAL_NOR("nor") {
+		public void run(Register destination, Register r1, Register r2) {
+			int result = ~(r1.getIntegerOfValues() | r2.getIntegerOfValues());
+			destination.storeStringNum(BinaryConversion.intToBinary(result));
+		}
+	},
+
+	/**
+	 * Stores the result of logical and between
+	 * a register and a constant.
+	 */
+	LOGICAL_AND_IMMEDIATE("andi") {
+		public void run(Register destination, Register r1, int num) {
+			int result = r1.getIntegerOfValues() & num;
+			destination.storeStringNum(BinaryConversion.intToBinary(result));
+		}
+	},
+
+	/**
+	 * Stores the result of logical or between
+	 * a register and a constant.
+	 */
+	LOGICAL_OR_IMMEDIATE("ori") {
+		public void run(Register destination, Register r1, int num) {
+			int result = r1.getIntegerOfValues() | num;
+			destination.storeStringNum(BinaryConversion.intToBinary(result));
+		}
+	},
+
+	/**
+	 * Bitwise left shifts a value.
+	 */
+	SHIFT_LEFT_LOGICAL("sll") {
+		public void run(Register destination, Register source, int shiftAmount) {
+			int val = source.getIntegerOfValues();
+			int shifted = val << shiftAmount;
+
+			destination.storeStringNum(BinaryConversion.intToBinary(shifted));
+		}
+	},
+
+	/**
+	 * Bitwise right shifts a value.
+	 */
+	SHIFT_RIGHT_LOGICAL("srl") {
+		public void run(Register destination, Register source, int shiftAmount) {
+			int val = source.getIntegerOfValues();
+			int shifted = val >> shiftAmount;
+
+			destination.storeStringNum(BinaryConversion.intToBinary(shifted));
 		}
 	},
 
@@ -124,6 +179,24 @@ public enum Command {
 	JUMP("j") {
 		public void run() {
 
+		}
+	},
+
+	/**
+	 * Jumps to register for returning.
+	 */
+	JUMP_REGISTER("jr") {
+		public void run() {
+
+		}
+	},
+
+	/**
+	 * Jumps to an instruction and retains
+	 * the original jump location.
+	 */
+	JUMP_AND_LINK("jal") {
+		public void run() {
 		}
 	},
 	;
