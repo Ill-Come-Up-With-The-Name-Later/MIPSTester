@@ -1,10 +1,10 @@
 package interpreter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
- * The program memory.
+ * The program memory. Indexes must be accessed
+ * by 4s. Only multiples of 4 are acceptable indices.
  */
 public class Memory {
 
@@ -15,7 +15,8 @@ public class Memory {
 	private Memory() {
 		values = new ArrayList<>();
 
-		for(int i = 0; i < 2048; i++) {
+		// 2^13 Words can be stored
+		for(int i = 0; i < 8192; i++) {
 			values.add(null);
 		}
 	}
