@@ -67,6 +67,8 @@ public class Instruction {
 	public void run() {
 		switch(command) {
 			case LOAD_WORD -> Command.LOAD_WORD.run(registersData[0], integerData, registersData[1]);
+			case LOAD_IMMEDIATE -> Command.LOAD_IMMEDIATE.run(registersData[0], integerData);
+			case MOVE -> Command.MOVE.run(registersData[0], registersData[1]);
 			case STORE_WORD -> Command.STORE_WORD.run(registersData[0], integerData, registersData[1]);
 			case ADD -> Command.ADD.run(registersData[0], registersData[1], registersData[2]);
 			case SUBTRACT -> Command.SUBTRACT.run(registersData[0], registersData[1], registersData[2]);

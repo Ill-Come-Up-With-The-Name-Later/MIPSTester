@@ -1,7 +1,10 @@
 package interpreter;
 
+import interpreter.errors.ImproperArgumentError;
 import interpreter.errors.InsufficientArgumentError;
 import interpreter.errors.InvalidCommandError;
+import misc.Register;
+import misc.Registers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,7 +61,7 @@ public class FileParser {
 				// Get the command on this line
 				// Account for a branch declaration before a command
 				String[] tokens = line.split("[(, *)]");
-				tokens = removeWhiteSpaces(tokens);
+				tokens = cleanTokens(tokens);
 
 				Command command = null;
 				int commandIndex = 0;
@@ -85,16 +88,19 @@ public class FileParser {
 					throw new InvalidCommandError(lineNumber, tokens[commandIndex]);
 				}
 
-				if(tokens.length < command.getArgumentCount()) {
-					throw new InsufficientArgumentError(lineNumber, tokens[commandIndex]);
+				int argumentStartIndex = commandIndex + 1;
+				String[] arguments = Arrays.copyOfRange(tokens, argumentStartIndex, tokens.length);
+
+				if(arguments.length != command.getArgumentCount()) {
+					throw new InsufficientArgumentError(lineNumber, command.getName(),
+									command.getArgumentCount(), arguments.length);
 				}
 
-				if(tokens.length > commandIndex + command.getArgumentCount() + 1) {
-					throw new InsufficientArgumentError(lineNumber, tokens[commandIndex]);
-				}
-
-				System.out.println(command + " Tokens: " + Arrays.toString(tokens));
 				// TODO: Parse commands and their arguments into instructions to sequence
+				System.out.println(command + " | Tokens: " + Arrays.toString(tokens));
+				System.out.println("Arguments: " + Arrays.toString(arguments));
+
+
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
@@ -102,13 +108,65 @@ public class FileParser {
 	}
 
 	/**
-	 * Removes whitespace tokens from
-	 * the token array.
+	 * Gets a <code>Register</code> from a string.
+	 *
+	 * @param argument A string argument
+	 * @return The corresponding <code>Register</code> or <code>null</code>
+	 */
+	private Register getRegisterFromArgument(String argument) {
+		if(argument.startsWith("$")) {
+			return Registers.getFromString(argument.substring(1));
+		}
+
+		return null;
+	}
+
+	/**
+	 * Gets an integer offset for load word
+	 * and store word.
+	 *
+	 * @return The offset or <code>null</code>
+	 */
+	private Integer getOffsetFromArgument(String argument) {
+		String[] tokens = cleanOffsetArgument(argument).split(" ");
+
+		Register register = Registers.getFromString(tokens[1].substring(1));
+
+		if(register == null) {
+			return null;
+		}
+
+		return Integer.parseInt(tokens[0]) + register.getIntegerOfValues();
+	}
+
+	/**
+	 * Strips parentheses from offset arguments
+	 *
+	 * @param argument A string
+	 * @return <code>argument</code> with parentheses removed
+	 * */
+	private String cleanOffsetArgument(String argument) {
+		StringBuilder builder = new StringBuilder();
+
+		for(Character c : argument.toCharArray()) {
+			if(c == '(' || c == ')') {
+				builder.append(' ');
+				continue;
+			}
+
+			builder.append(c);
+		}
+
+		return builder.toString().trim();
+	}
+
+	/**
+	 * Cleans the token array.
 	 *
 	 * @param tokens An array of tokens
 	 * @return <code>tokens</code> without whitespace tokens
 	 */
-	private String[] removeWhiteSpaces(String[] tokens) {
+	private String[] cleanTokens(String[] tokens) {
 		ArrayList<String> list = new ArrayList<>();
 
 		for(String token : tokens) {
@@ -128,16 +186,6 @@ public class FileParser {
 		}
 
 		return result;
-	}
-
-	/**
-	 * Determines if a String is valid <code>Command</code>.
-	 *
-	 * @param command A string
-	 * @return If <code>command</code> is valid
-	 */
-	public boolean validCommand(String command) {
-		return Command.getCommand(command) != null;
 	}
 
 	public ArrayList<Branch> getBranches() {

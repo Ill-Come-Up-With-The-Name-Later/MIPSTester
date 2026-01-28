@@ -2,6 +2,8 @@ package misc;
 
 import util.BinaryConversion;
 
+import java.util.ArrayList;
+
 /**
  * All <code>Register</code>s.
  */
@@ -75,13 +77,22 @@ public class Registers {
 					ra,
 	};
 
+	public static final ArrayList<Register> READONLY_REGISTERS = new ArrayList<>() {
+		{
+			add(zero);
+			add(at);
+			add(k0);
+			add(k1);
+		}
+	};
+
 	/**
 	 * Gets the <code>Register</code> from a String name.
 	 *
 	 * @param name The name of a <code>Register</code>
 	 * @return The matching <code>Register</code> or <code>null</code>
 	 */
-	public Register getFromString(String name) {
+	public static Register getFromString(String name) {
 		return switch (name) {
 			case "zero" -> zero;
 			case "at" -> at;

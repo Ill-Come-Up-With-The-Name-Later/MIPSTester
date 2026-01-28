@@ -1,7 +1,9 @@
 package interpreter;
 
+import interpreter.errors.IllegalModificationError;
 import misc.Memory;
 import misc.Register;
+import misc.Registers;
 import util.BinaryConversion;
 
 /**
@@ -16,8 +18,32 @@ public enum Command {
 
 		@Override
 		public void run(Register destination, int offset, Register source) {
+			super.run(destination, offset, source);
 			destination.setValues(Memory.GLOBAL_MEMORY
 							.getWord(source.getIntegerOfValues() + offset).getValues());
+		}
+	},
+
+	/**
+	 * Loads a constant into a register
+	 */
+	LOAD_IMMEDIATE("li", 2) {
+
+		@Override
+		public void run(Register destination, int num) {
+			super.run(destination, num);
+			destination.storeStringNum(BinaryConversion.intToBinary(num));
+		}
+	},
+
+	/**
+	 * Moves a value from one register to another.
+	 */
+	MOVE("move", 2) {
+
+		@Override
+		public void run(Register destination, Register source) {
+			destination.storeStringNum(BinaryConversion.intToBinary(source.getIntegerOfValues()));
 		}
 	},
 
@@ -28,29 +54,32 @@ public enum Command {
 
 		@Override
 		public void run(Register source, int offset, Register destinationAddress) {
+			super.run(source, offset, destinationAddress);
 			Memory.GLOBAL_MEMORY.setWord(source.toWord(), destinationAddress.getIntegerOfValues() + offset);
 		}
 	},
 
 	/**
-	 * Adds two values and stores them.
+	 * Adds two values and stores the result.
 	 */
 	ADD("add", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
+			super.run(destination, r1, r2);
 			int sum = r1.getIntegerOfValues() + r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(sum));
 		}
 	},
 
 	/**
-	 * Subtracts two values and stores them.
+	 * Subtracts two values and stores the result.
 	 */
 	SUBTRACT("sub", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
+			super.run(destination, r1, r2);
 			int difference = r1.getIntegerOfValues() - r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(difference));
 		}
@@ -63,6 +92,7 @@ public enum Command {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
+			super.run(destination, r1, num);
 			int sum = r1.getIntegerOfValues() + num;
 			destination.storeStringNum(BinaryConversion.intToBinary(sum));
 		}
@@ -76,6 +106,7 @@ public enum Command {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
+			super.run(destination, r1, r2);
 			int result = r1.getIntegerOfValues() & r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
 		}
@@ -89,6 +120,7 @@ public enum Command {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
+			super.run(destination, r1, r2);
 			int result = r1.getIntegerOfValues() | r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
 		}
@@ -102,6 +134,7 @@ public enum Command {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
+			super.run(destination, r1, r2);
 			int result = ~(r1.getIntegerOfValues() | r2.getIntegerOfValues());
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
 		}
@@ -115,6 +148,7 @@ public enum Command {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
+			super.run(destination, r1, num);
 			int result = r1.getIntegerOfValues() & num;
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
 		}
@@ -128,6 +162,7 @@ public enum Command {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
+			super.run(destination, r1, num);
 			int result = r1.getIntegerOfValues() | num;
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
 		}
@@ -140,6 +175,7 @@ public enum Command {
 
 		@Override
 		public void run(Register destination, Register source, int shiftAmount) {
+			super.run(destination, source, shiftAmount);
 			int val = source.getIntegerOfValues();
 			int shifted = val << shiftAmount;
 
@@ -154,6 +190,7 @@ public enum Command {
 
 		@Override
 		public void run(Register destination, Register source, int shiftAmount) {
+			super.run(destination, source, shiftAmount);
 			int val = source.getIntegerOfValues();
 			int shifted = val >> shiftAmount;
 
@@ -170,6 +207,7 @@ public enum Command {
 
 		@Override
 		public void run(Register result, Register r1, Register r2) {
+			super.run(result, r1, r2);
 			int num1 = r1.getIntegerOfValues();
 			int num2 = r2.getIntegerOfValues();
 
@@ -280,31 +318,49 @@ public enum Command {
 		return null;
 	}
 
+	public void run(Register destination, Register r1) {
+		if(Registers.READONLY_REGISTERS.contains(destination)) {
+			throw new IllegalModificationError();
+		}
+	}
+
 	public void run(Register destination, Register r1, Register r2) {
-		throw new UnsupportedOperationException();
+		if(Registers.READONLY_REGISTERS.contains(destination)) {
+			throw new IllegalModificationError();
+		}
+	}
+
+	public void run(Register destination, int num) {
+		if(Registers.READONLY_REGISTERS.contains(destination)) {
+			throw new IllegalModificationError();
+		}
 	}
 
 	public void run(Register destination, Register r1, int relativeBranch) {
-		throw new UnsupportedOperationException();
+		if(Registers.READONLY_REGISTERS.contains(destination)) {
+			throw new IllegalModificationError();
+		}
 	}
 
 	public void run(Register destination) {
-		throw new UnsupportedOperationException();
+
 	}
 
 	public void run(Register r1, Register r2, Branch branch) {
-		throw new UnsupportedOperationException();
+
 	}
 
 	public void run(Branch branch) {
-		throw new UnsupportedOperationException();
+
 	}
 
 	public void run(int relativeBranch) {
-		throw new UnsupportedOperationException();
+
 	}
 
 	public void run(Register destination, int offset, Register destinationAddress) {
-		throw new UnsupportedOperationException();
+		if(Registers.READONLY_REGISTERS.contains(destination)) {
+			throw new IllegalModificationError();
+		}
 	}
 }
