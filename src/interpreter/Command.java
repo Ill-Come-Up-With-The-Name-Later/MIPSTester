@@ -1,5 +1,7 @@
 package interpreter;
 
+import misc.Memory;
+import misc.Register;
 import util.BinaryConversion;
 
 /**
@@ -11,6 +13,8 @@ public enum Command {
 	 * Loads a <code>Word</code> from program memory.
 	 */
 	LOAD_WORD("lw") {
+
+		@Override
 		public void run(Register destination, int offset, Register source) {
 			destination.setValues(Memory.GLOBAL_MEMORY
 							.getWord(source.getIntegerOfValues() + offset).getValues());
@@ -21,6 +25,8 @@ public enum Command {
 	 * Stores a word in program memory.
 	 */
 	STORE_WORD("sw") {
+
+		@Override
 		public void run(Register source, int offset, Register destinationAddress) {
 			Memory.GLOBAL_MEMORY.setWord(source.toWord(), destinationAddress.getIntegerOfValues() + offset);
 		}
@@ -30,6 +36,8 @@ public enum Command {
 	 * Adds two values and stores them.
 	 */
 	ADD("add") {
+
+		@Override
 		public void run(Register destination, Register r1, Register r2) {
 			int sum = r1.getIntegerOfValues() + r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(sum));
@@ -40,6 +48,8 @@ public enum Command {
 	 * Subtracts two values and stores them.
 	 */
 	SUBTRACT("sub") {
+
+		@Override
 		public void run(Register destination, Register r1, Register r2) {
 			int difference = r1.getIntegerOfValues() - r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(difference));
@@ -50,6 +60,8 @@ public enum Command {
 	 * Adds a constant and a register's value and stores the result.
 	 */
 	ADD_IMMEDIATE("addi") {
+
+		@Override
 		public void run(Register destination, Register r1, int num) {
 			int sum = r1.getIntegerOfValues() + num;
 			destination.storeStringNum(BinaryConversion.intToBinary(sum));
@@ -61,6 +73,8 @@ public enum Command {
 	 * two registers.
 	 */
 	LOGICAL_AND("and") {
+
+		@Override
 		public void run(Register destination, Register r1, Register r2) {
 			int result = r1.getIntegerOfValues() & r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
@@ -72,6 +86,8 @@ public enum Command {
 	 * registers.
 	 */
 	LOGICAL_OR("or") {
+
+		@Override
 		public void run(Register destination, Register r1, Register r2) {
 			int result = r1.getIntegerOfValues() | r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
@@ -83,6 +99,8 @@ public enum Command {
 	 * two registers.
 	 */
 	LOGICAL_NOR("nor") {
+
+		@Override
 		public void run(Register destination, Register r1, Register r2) {
 			int result = ~(r1.getIntegerOfValues() | r2.getIntegerOfValues());
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
@@ -94,6 +112,8 @@ public enum Command {
 	 * a register and a constant.
 	 */
 	LOGICAL_AND_IMMEDIATE("andi") {
+
+		@Override
 		public void run(Register destination, Register r1, int num) {
 			int result = r1.getIntegerOfValues() & num;
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
@@ -105,6 +125,8 @@ public enum Command {
 	 * a register and a constant.
 	 */
 	LOGICAL_OR_IMMEDIATE("ori") {
+
+		@Override
 		public void run(Register destination, Register r1, int num) {
 			int result = r1.getIntegerOfValues() | num;
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
@@ -115,6 +137,8 @@ public enum Command {
 	 * Bitwise left shifts a value.
 	 */
 	SHIFT_LEFT_LOGICAL("sll") {
+
+		@Override
 		public void run(Register destination, Register source, int shiftAmount) {
 			int val = source.getIntegerOfValues();
 			int shifted = val << shiftAmount;
@@ -127,6 +151,8 @@ public enum Command {
 	 * Bitwise right shifts a value.
 	 */
 	SHIFT_RIGHT_LOGICAL("srl") {
+
+		@Override
 		public void run(Register destination, Register source, int shiftAmount) {
 			int val = source.getIntegerOfValues();
 			int shifted = val >> shiftAmount;
@@ -141,6 +167,8 @@ public enum Command {
 	 * provided register's value.
 	 */
 	SET_ON_LESS_THAN("slt") {
+
+		@Override
 		public void run(Register result, Register r1, Register r2) {
 			int num1 = r1.getIntegerOfValues();
 			int num2 = r2.getIntegerOfValues();
@@ -158,7 +186,14 @@ public enum Command {
 	 * are equal.
 	 */
 	BRANCH_ON_EQUAL("beq") {
-		public void run() {
+
+		@Override
+		public void run(Register r1, Register r2, Branch branch) {
+
+		}
+
+		@Override
+		public void run(Register r1, Register r2, int relativeBranch) {
 
 		}
 	},
@@ -168,7 +203,14 @@ public enum Command {
 	 * are not equal.
 	 */
 	BRANCH_ON_NOT_EQUAL("bne") {
-		public void run() {
+
+		@Override
+		public void run(Register r1, Register r2, Branch branch) {
+
+		}
+
+		@Override
+		public void run(Register r1, Register r2, int relativeBranch) {
 
 		}
 	},
@@ -177,7 +219,13 @@ public enum Command {
 	 * Jumps to a branch.
 	 */
 	JUMP("j") {
-		public void run() {
+		@Override
+		public void run(Branch branch) {
+
+		}
+
+		@Override
+		public void run(int relativeBranch) {
 
 		}
 	},
@@ -186,7 +234,9 @@ public enum Command {
 	 * Jumps to register for returning.
 	 */
 	JUMP_REGISTER("jr") {
-		public void run() {
+
+		@Override
+		public void run(Register destination) {
 
 		}
 	},
@@ -196,7 +246,10 @@ public enum Command {
 	 * the original jump location.
 	 */
 	JUMP_AND_LINK("jal") {
-		public void run() {
+
+		@Override
+		public void run(int relativeBranch) {
+
 		}
 	},
 	;
@@ -219,5 +272,33 @@ public enum Command {
 		}
 
 		return null;
+	}
+
+	public void run(Register destination, Register r1, Register r2) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void run(Register destination, Register r1, int relativeBranch) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void run(Register destination) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void run(Register r1, Register r2, Branch branch) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void run(Branch branch) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void run(int relativeBranch) {
+		throw new UnsupportedOperationException();
+	}
+
+	public void run(Register destination, int offset, Register destinationAddress) {
+		throw new UnsupportedOperationException();
 	}
 }

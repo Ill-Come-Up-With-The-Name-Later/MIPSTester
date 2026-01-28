@@ -1,16 +1,15 @@
-package interpreter;
+package misc;
 
 import util.BinaryConversion;
 
 /**
- * A register that holds 32 bits
- * of data.
+ * A 4-byte chunk of memory.
  */
-public class Register {
+public class Word {
 
 	private int[] values;
 
-	public Register() {
+	public Word() {
 		values = new int[32];
 	}
 
@@ -80,32 +79,18 @@ public class Register {
 
 	/**
 	 * Converts the value of the
-	 * <code>Register</code> to a base 10 integer.
+	 * <code>Word</code> to a base 10 integer.
 	 *
 	 * @return The base 10 integer equivalent
-	 * 				 of the value in this <code>Register</code>
+	 * 				 of the value in this <code>Word</code>
 	 */
 	public int getIntegerOfValues() {
 		return Integer.parseInt(BinaryConversion.binaryToInt(String.valueOf(Integer.parseInt(getValueString()))));
 	}
 
 	/**
-	 * Puts the value in this <code>Register</code>
-	 * into a <code>Word</code>.
-	 *
-	 * @return A <code>Word</code> containing this
-	 * 				 <code>Register</code>'s value
-	 */
-	public Word toWord() {
-		Word word = new Word();
-		word.setValues(this.values);
-
-		return word;
-	}
-
-	/**
 	 * Stores a string representation of a binary number
-	 * into the <code>Register</code>.
+	 * into the <code>Word</code>.
 	 *
 	 * @param num The String representation
 	 */
