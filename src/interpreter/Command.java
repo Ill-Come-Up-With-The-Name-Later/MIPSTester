@@ -12,7 +12,7 @@ public enum Command {
 	/**
 	 * Loads a <code>Word</code> from program memory.
 	 */
-	LOAD_WORD("lw") {
+	LOAD_WORD("lw", 3) {
 
 		@Override
 		public void run(Register destination, int offset, Register source) {
@@ -24,7 +24,7 @@ public enum Command {
 	/**
 	 * Stores a word in program memory.
 	 */
-	STORE_WORD("sw") {
+	STORE_WORD("sw", 3) {
 
 		@Override
 		public void run(Register source, int offset, Register destinationAddress) {
@@ -35,7 +35,7 @@ public enum Command {
 	/**
 	 * Adds two values and stores them.
 	 */
-	ADD("add") {
+	ADD("add", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -47,7 +47,7 @@ public enum Command {
 	/**
 	 * Subtracts two values and stores them.
 	 */
-	SUBTRACT("sub") {
+	SUBTRACT("sub", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -59,7 +59,7 @@ public enum Command {
 	/**
 	 * Adds a constant and a register's value and stores the result.
 	 */
-	ADD_IMMEDIATE("addi") {
+	ADD_IMMEDIATE("addi", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
@@ -72,7 +72,7 @@ public enum Command {
 	 * Stores the result of logical and between
 	 * two registers.
 	 */
-	LOGICAL_AND("and") {
+	LOGICAL_AND("and", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -85,7 +85,7 @@ public enum Command {
 	 * Stores the result of logical or between two
 	 * registers.
 	 */
-	LOGICAL_OR("or") {
+	LOGICAL_OR("or", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -98,7 +98,7 @@ public enum Command {
 	 * Stores the result of logical nor between
 	 * two registers.
 	 */
-	LOGICAL_NOR("nor") {
+	LOGICAL_NOR("nor", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -111,7 +111,7 @@ public enum Command {
 	 * Stores the result of logical and between
 	 * a register and a constant.
 	 */
-	LOGICAL_AND_IMMEDIATE("andi") {
+	LOGICAL_AND_IMMEDIATE("andi", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
@@ -124,7 +124,7 @@ public enum Command {
 	 * Stores the result of logical or between
 	 * a register and a constant.
 	 */
-	LOGICAL_OR_IMMEDIATE("ori") {
+	LOGICAL_OR_IMMEDIATE("ori", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
@@ -136,7 +136,7 @@ public enum Command {
 	/**
 	 * Bitwise left shifts a value.
 	 */
-	SHIFT_LEFT_LOGICAL("sll") {
+	SHIFT_LEFT_LOGICAL("sll", 3) {
 
 		@Override
 		public void run(Register destination, Register source, int shiftAmount) {
@@ -150,7 +150,7 @@ public enum Command {
 	/**
 	 * Bitwise right shifts a value.
 	 */
-	SHIFT_RIGHT_LOGICAL("srl") {
+	SHIFT_RIGHT_LOGICAL("srl", 3) {
 
 		@Override
 		public void run(Register destination, Register source, int shiftAmount) {
@@ -166,7 +166,7 @@ public enum Command {
 	 * provided register's value is less than the third
 	 * provided register's value.
 	 */
-	SET_ON_LESS_THAN("slt") {
+	SET_ON_LESS_THAN("slt", 3) {
 
 		@Override
 		public void run(Register result, Register r1, Register r2) {
@@ -185,7 +185,7 @@ public enum Command {
 	 * Jumps to a branch when two registers' values
 	 * are equal.
 	 */
-	BRANCH_ON_EQUAL("beq") {
+	BRANCH_ON_EQUAL("beq", 3) {
 
 		@Override
 		public void run(Register r1, Register r2, Branch branch) {
@@ -202,7 +202,7 @@ public enum Command {
 	 * Jumps to a branch when two registers' values
 	 * are not equal.
 	 */
-	BRANCH_ON_NOT_EQUAL("bne") {
+	BRANCH_ON_NOT_EQUAL("bne", 3) {
 
 		@Override
 		public void run(Register r1, Register r2, Branch branch) {
@@ -218,7 +218,7 @@ public enum Command {
 	/**
 	 * Jumps to a branch.
 	 */
-	JUMP("j") {
+	JUMP("j", 1) {
 		@Override
 		public void run(Branch branch) {
 
@@ -233,7 +233,7 @@ public enum Command {
 	/**
 	 * Jumps to register for returning.
 	 */
-	JUMP_REGISTER("jr") {
+	JUMP_REGISTER("jr", 1) {
 
 		@Override
 		public void run(Register destination) {
@@ -245,7 +245,7 @@ public enum Command {
 	 * Jumps to an instruction and retains
 	 * the original jump location.
 	 */
-	JUMP_AND_LINK("jal") {
+	JUMP_AND_LINK("jal", 1) {
 
 		@Override
 		public void run(int relativeBranch) {
@@ -255,13 +255,19 @@ public enum Command {
 	;
 
 	private final String name;
+	private final int argumentCount;
 
-	Command(String name) {
+	Command(String name, int argumentCount) {
 		this.name = name;
+		this.argumentCount = argumentCount;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public int getArgumentCount() {
+		return argumentCount;
 	}
 
 	public static Command getCommand(String name) {
