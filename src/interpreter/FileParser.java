@@ -107,7 +107,7 @@ public class FileParser {
 				}
 
 				instructions.add(parsed);
-				//parsed.run();
+				parsed.run();
 				//System.out.println(parsed);
 			}
 		} catch (FileNotFoundException e) {
@@ -129,18 +129,22 @@ public class FileParser {
 		switch (command) {
 			case LOAD_WORD:
 				Register rd1 = getRegisterFromArgument(arguments[0]);
-				Integer o1 = getOffsetFromArgument(arguments[1]);
-				Register rs1 = getRegisterFromArgument(arguments[1]);
+				Integer o1 = getNumberFromArgument(arguments[1]);
+				Register rs1 = getRegisterFromArgument(arguments[2]);
 
 				if (rd1 == null) {
 					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
 				}
 
-				if (rs1 == null || o1 == null) {
+				if(o1 == null) {
 					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
 				}
 
-				return new Instruction(Command.LOAD_WORD, new Register[]{rd1, rs1}, o1);
+				if (rs1 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.LOAD_WORD, new Register[]{ rd1, rs1 }, o1);
 			case LOAD_IMMEDIATE:
 				Register rd2 = getRegisterFromArgument(arguments[0]);
 				Integer n1 = getNumberFromArgument(arguments[1]);
@@ -168,18 +172,22 @@ public class FileParser {
 				return new Instruction(Command.MOVE, new Register[]{rd3, rs2});
 			case STORE_WORD:
 				Register rd4 = getRegisterFromArgument(arguments[0]);
-				Integer o2 = getOffsetFromArgument(arguments[1]);
-				Register rs3 = getRegisterFromArgument(arguments[1]);
+				Integer o2 = getNumberFromArgument(arguments[1]);
+				Register rs3 = getRegisterFromArgument(arguments[2]);
 
 				if (rd4 == null) {
 					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
 				}
 
-				if (rs3 == null || o2 == null) {
+				if(o2 == null) {
 					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
 				}
 
-				return new Instruction(Command.STORE_WORD, new Register[]{rd4, rs3}, o2);
+				if (rs3 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.STORE_WORD, new Register[] { rd4, rs3 }, o2);
 			case ADD:
 				Register rd5 = getRegisterFromArgument(arguments[0]);
 				Register rs4 = getRegisterFromArgument(arguments[1]);
@@ -501,8 +509,15 @@ public class FileParser {
 	 * @return The corresponding <code>Register</code> or <code>null</code>
 	 */
 	private Register getRegisterFromArgument(String argument) {
-		if (argument.startsWith("$")) {
+		if(argument.startsWith("$")) {
 			return Registers.getFromString(argument.substring(1));
+		} else {
+			if(argument.contains("$")) {
+				int start = argument.indexOf('$') + 1;
+				int end = start + 2;
+				System.out.println(argument.substring(start, end));
+				return Registers.getFromString(argument.substring(start, end));
+			}
 		}
 
 		return null;
@@ -520,24 +535,6 @@ public class FileParser {
 		} catch (NumberFormatException e) {
 			return null;
 		}
-	}
-
-	/**
-	 * Gets an integer offset for load word
-	 * and store word.
-	 *
-	 * @return The offset or <code>null</code>
-	 */
-	private Integer getOffsetFromArgument(String argument) {
-		String[] tokens = cleanOffsetArgument(argument).split(" ");
-
-		Register register = Registers.getFromString(tokens[1].substring(1));
-
-		if (register == null) {
-			return null;
-		}
-
-		return Integer.parseInt(tokens[0]) + register.getIntegerOfValues();
 	}
 
 	/**

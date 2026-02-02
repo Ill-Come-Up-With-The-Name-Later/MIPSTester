@@ -1,0 +1,11 @@
+# Memory[12] holds the value 123
+
+addi $s1, $s1, 12
+lw $s0, 0($s1)
+
+# Why not, just for fun
+sll $s2, $s0, 1
+
+# store $s2 back into memory
+addi $t0, $t0, 24
+sw $s2, 0($t0)
