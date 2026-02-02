@@ -104,7 +104,7 @@ public class Register {
 	}
 
 	/**
-	 * Stores a number.
+	 * Stores a base 10 number.
 	 *
 	 * @param number The number to store
 	 */
