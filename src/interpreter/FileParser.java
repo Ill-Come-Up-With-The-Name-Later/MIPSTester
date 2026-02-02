@@ -1,9 +1,6 @@
 package interpreter;
 
-import interpreter.errors.ImproperArgumentError;
-import interpreter.errors.InstructionParseError;
-import interpreter.errors.InsufficientArgumentError;
-import interpreter.errors.InvalidCommandError;
+import interpreter.errors.*;
 import misc.Register;
 import misc.Registers;
 
@@ -25,6 +22,7 @@ public class FileParser {
 	private Branch activeBranch;
 	private ArrayList<Branch> branches;
 	private ArrayList<Instruction> instructions;
+	private ArrayList<Symbol> symbols;
 
 	private FileParser() {
 		branches = new ArrayList<>();
@@ -46,6 +44,8 @@ public class FileParser {
 		File file = new File(fileName);
 		int lineNumber = 0;
 
+		Section currentSection = Section.TEXT;
+
 		try {
 			Scanner scanner = new Scanner(file);
 
@@ -56,6 +56,32 @@ public class FileParser {
 				// Disregard this line if there is only a comment
 				// or if the line empty
 				if (line.startsWith("#") || line.isEmpty()) {
+					continue;
+				}
+
+				if(line.startsWith(".data")) {
+					currentSection = Section.DATA;
+					continue;
+				}
+
+				if(line.startsWith(".text")) {
+					currentSection = Section.TEXT;
+					continue;
+				}
+
+				if(currentSection == Section.DATA) {
+					// TODO: Data variables
+					String[] tokens = line.split(" ");
+
+					if(tokens.length != 3) {
+						throw new NotASymbolError(lineNumber, tokens[0]);
+					}
+
+					// TODO: Data types
+					switch(tokens[1].trim()) {
+
+					}
+
 					continue;
 				}
 

@@ -66,4 +66,40 @@ public class BinaryConversion {
 
 		return new String[] { mostSignificant, leastSignificant };
 	}
+
+	/**
+	 * Converts a String to binary.
+	 *
+	 * @param string The string
+	 * @return The binary representation of String's
+	 * 				 characters
+	 */
+	public static String[] stringToBinary(String string) {
+		String[] binary = new String[string.length()];
+
+		for(int i = 0; i < string.length(); i++) {
+			int n = string.charAt(i);
+
+			binary[i] = intToBinary(n);
+		}
+
+		return binary;
+	}
+
+	/**
+	 * Converts binary to a String using
+	 * character codes.
+	 *
+	 * @param binary A binary representation of a String
+	 * @return A String
+	 */
+	public static String binaryToString(String[] binary) {
+		StringBuilder builder = new StringBuilder();
+
+		for(String s : binary) {
+			builder.append((char) Integer.parseInt(binaryToInt(s)));
+		}
+
+		return builder.toString();
+	}
 }

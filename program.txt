@@ -1,3 +1,6 @@
+.data
+cat: .word 5
+.text
 # Memory[12] holds the value 123
 
 # Load Memory[12]
