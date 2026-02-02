@@ -41,6 +41,8 @@ public class Registers {
 	public static final Register sp = new Register();
 	public static final Register fp = new Register();
 	public static final Register ra = new Register();
+	public static final Register hi = new Register();
+	public static final Register lo = new Register();
 
 	public static final Register[] REGISTERS = {
 					zero,
@@ -83,6 +85,8 @@ public class Registers {
 			add(at);
 			add(k0);
 			add(k1);
+			add(hi);
+			add(lo);
 		}
 	};
 

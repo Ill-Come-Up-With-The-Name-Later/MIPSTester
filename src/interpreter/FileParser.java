@@ -72,6 +72,8 @@ public class FileParser {
 
 					if(branch == null) {
 						branch = new Branch(activeBranch, tokens[0].substring(0, tokens[0].length() - 1));
+					} else {
+						branch.setPrevious(activeBranch);
 					}
 
 					activeBranch = branch;
@@ -108,7 +110,7 @@ public class FileParser {
 				Instruction parsed = validateCommand(command, arguments, lineNumber);
 
 				if (parsed == null) {
-					throw new InstructionParseError();
+					throw new InstructionParseError(lineNumber);
 				}
 
 				instructions.add(parsed);
@@ -477,7 +479,7 @@ public class FileParser {
 					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
 				}
 
-				return new Instruction(Command.JUMP_REGISTER, new Register[] { rd18 } );
+				return new Instruction(Command.JUMP_REGISTER, new Register[] { rd18 });
 			case JUMP_AND_LINK:
 				Register rd19 = getRegisterFromArgument(arguments[0]);
 
@@ -485,7 +487,49 @@ public class FileParser {
 					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
 				}
 
-				return new Instruction(Command.JUMP_AND_LINK, new Register[] { rd19 } );
+				return new Instruction(Command.JUMP_AND_LINK, new Register[] { rd19 });
+			case MOVE_FROM_HI:
+				Register rd20 = getRegisterFromArgument(arguments[0]);
+
+				if(rd20 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				return new Instruction(Command.MOVE_FROM_HI, new Register[] { rd20 });
+			case MOVE_FROM_LO:
+				Register rd21 = getRegisterFromArgument(arguments[0]);
+
+				if(rd21 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				return new Instruction(Command.MOVE_FROM_LO, new Register[] { rd21 });
+			case MULTIPLY:
+				Register rs32 = getRegisterFromArgument(arguments[0]);
+				Register rs33 = getRegisterFromArgument(arguments[1]);
+
+				if(rs32 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs33 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				return new Instruction(Command.MULTIPLY, new Register[] { rs32, rs33 });
+			case DIVIDE:
+				Register rs34 = getRegisterFromArgument(arguments[0]);
+				Register rs35 = getRegisterFromArgument(arguments[1]);
+
+				if(rs34 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs35 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				return new Instruction(Command.DIVIDE, new Register[] { rs34, rs35 });
 		}
 
 		return null;

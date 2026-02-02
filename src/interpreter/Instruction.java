@@ -80,9 +80,13 @@ public class Instruction {
 			case LOAD_WORD -> Command.LOAD_WORD.run(registersData[0], integerData, registersData[1]);
 			case LOAD_IMMEDIATE -> Command.LOAD_IMMEDIATE.run(registersData[0], integerData);
 			case MOVE -> Command.MOVE.run(registersData[0], registersData[1]);
+			case MOVE_FROM_HI -> Command.MOVE_FROM_HI.run(registersData[0]);
+			case MOVE_FROM_LO -> Command.MOVE_FROM_LO.run(registersData[0]);
 			case STORE_WORD -> Command.STORE_WORD.run(registersData[0], integerData, registersData[1]);
 			case ADD -> Command.ADD.run(registersData[0], registersData[1], registersData[2]);
 			case SUBTRACT -> Command.SUBTRACT.run(registersData[0], registersData[1], registersData[2]);
+			case MULTIPLY -> Command.MULTIPLY.run(registersData[0], registersData[1]);
+			case DIVIDE -> Command.DIVIDE.run(registersData[0], registersData[1]);
 			case ADD_IMMEDIATE -> Command.ADD_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case LOGICAL_AND -> Command.LOGICAL_AND.run(registersData[0], registersData[1], registersData[2]);
 			case LOGICAL_OR -> Command.LOGICAL_OR.run(registersData[0], registersData[1], registersData[2]);
@@ -104,6 +108,20 @@ public class Instruction {
 					Command.BRANCH_ON_NOT_EQUAL.run(registersData[0], registersData[1], integerData);
 				} else {
 					Command.BRANCH_ON_NOT_EQUAL.run(registersData[0], registersData[1], branchData);
+				}
+			}
+			case BRANCH_ON_LESS_THAN -> {
+				if(branchData == null) {
+					Command.BRANCH_ON_LESS_THAN.run(registersData[0], registersData[1], integerData);
+				} else {
+					Command.BRANCH_ON_LESS_THAN.run(registersData[0], registersData[1], branchData);
+				}
+			}
+			case BRANCH_ON_GREATER_THAN_OR_EQUAL -> {
+				if(branchData == null) {
+					Command.BRANCH_ON_GREATER_THAN_OR_EQUAL.run(registersData[0], registersData[1], integerData);
+				} else {
+					Command.BRANCH_ON_GREATER_THAN_OR_EQUAL.run(registersData[0], registersData[1], branchData);
 				}
 			}
 			case JUMP -> {

@@ -5,6 +5,7 @@ import misc.Memory;
 import misc.Register;
 import misc.Registers;
 import util.BinaryConversion;
+import util.MathHelper;
 
 /**
  * The various supported commands.
@@ -44,7 +45,30 @@ public enum Command {
 		@Override
 		public void run(Register destination, Register source) {
 			destination.storeStringNum(BinaryConversion.intToBinary(source.getIntegerOfValues()));
-			source.storeStringNum(BinaryConversion.intToBinary(0));
+		}
+	},
+
+	/**
+	 * Copies the value from the hi register.
+	 */
+	MOVE_FROM_HI("mfhi", 1) {
+
+		@Override
+		public void run(Register destination) {
+			super.run(destination);
+			destination.storeStringNum(Registers.hi.getValueString());
+		}
+	},
+
+	/**
+	 * Copies the value from the lo register.
+	 */
+	MOVE_FROM_LO("mflo", 1) {
+
+		@Override
+		public void run(Register destination) {
+			super.run(destination);
+			destination.storeStringNum(Registers.lo.getValueString());
 		}
 	},
 
@@ -83,6 +107,40 @@ public enum Command {
 			super.run(destination, r1, r2);
 			int difference = r1.getIntegerOfValues() - r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(difference));
+		}
+	},
+
+	/**
+	 * Multiplies two numbers and stores the result into
+	 * hi and low registers.
+	 */
+	MULTIPLY("mult", 2) {
+
+		@Override
+		public void run(Register r1, Register r2) {
+			super.run(r1, r2);
+			long product = MathHelper.multiply(r1.getIntegerOfValues(), r2.getIntegerOfValues());
+			String binary = BinaryConversion.longToBinary(product);
+			String[] splitBinary = BinaryConversion.split64BitBinary(binary);
+
+			Registers.hi.storeStringNum(splitBinary[0]);
+			Registers.lo.storeStringNum(splitBinary[1]);
+		}
+	},
+
+	DIVIDE("div", 2) {
+		@Override
+		public void run(Register r1, Register r2) {
+			super.run(r1, r2);
+
+			int quotient = r1.getIntegerOfValues() / r2.getIntegerOfValues();
+			int remainder = r1.getIntegerOfValues() % r2.getIntegerOfValues();
+
+			String binaryQuotient = BinaryConversion.intToBinary(quotient);
+			String binaryRemainder = BinaryConversion.intToBinary(remainder);
+
+			Registers.lo.storeStringNum(binaryQuotient);
+			Registers.hi.storeStringNum(binaryRemainder);
 		}
 	},
 
@@ -230,6 +288,11 @@ public enum Command {
 		public void run(Register r1, Register r2, Branch branch) {
 
 		}
+
+		@Override
+		public void run(Register r1, Register r2, int num) {
+
+		}
 	},
 
 	/**
@@ -240,6 +303,11 @@ public enum Command {
 
 		@Override
 		public void run(Register r1, Register r2, Branch branch) {
+
+		}
+
+		@Override
+		public void run(Register r1, Register r2, int num) {
 
 		}
 	},
@@ -254,6 +322,11 @@ public enum Command {
 		public void run(Register r1, Register r2, Branch branch) {
 
 		}
+
+		@Override
+		public void run(Register r1, Register r2, int num) {
+
+		}
 	},
 
 	/**
@@ -264,6 +337,11 @@ public enum Command {
 
 		@Override
 		public void run(Register r1, Register r2, Branch branch) {
+
+		}
+
+		@Override
+		public void run(Register r1, Register r2, int num) {
 
 		}
 	},
@@ -358,7 +436,9 @@ public enum Command {
 	}
 
 	public void run(Register destination) {
-
+		if(Registers.READONLY_REGISTERS.contains(destination)) {
+			throw new IllegalModificationError();
+		}
 	}
 
 	public void run(Register r1, Register r2, Branch branch) {

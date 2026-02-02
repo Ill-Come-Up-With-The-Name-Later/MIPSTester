@@ -1,13 +1,20 @@
 package interpreter.errors;
 
+/**
+ * Occurs if an instruction fails to parse yet
+ * causes no other errors.
+ */
 public class InstructionParseError extends Error {
 
-	public InstructionParseError() {
+	private final int lineNum;
+
+	public InstructionParseError(int lineNum) {
 		super();
+		this.lineNum = lineNum;
 	}
 
 	@Override
 	public String getMessage() {
-		return "Failed to parse instruction.";
+		return "Line " + lineNum + ": Failed to parse instruction.";
 	}
 }

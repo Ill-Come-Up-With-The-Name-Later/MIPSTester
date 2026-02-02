@@ -1,6 +1,5 @@
 import interpreter.FileParser;
 import misc.Memory;
-import misc.Registers;
 import misc.Word;
 
 public class Main {
