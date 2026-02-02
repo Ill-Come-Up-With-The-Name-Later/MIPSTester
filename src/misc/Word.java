@@ -89,6 +89,15 @@ public class Word {
 	}
 
 	/**
+	 * Stores a number.
+	 *
+	 * @param number The number to store
+	 */
+	public void storeNum(int number) {
+		storeStringNum(BinaryConversion.intToBinary(number));
+	}
+
+	/**
 	 * Stores a string representation of a binary number
 	 * into the <code>Word</code>.
 	 *

@@ -1,4 +1,5 @@
 import interpreter.FileParser;
+import misc.Registers;
 
 public class Main {
 

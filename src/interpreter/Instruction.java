@@ -2,6 +2,8 @@ package interpreter;
 
 import misc.Register;
 
+import java.util.Arrays;
+
 /**
  * An instruction to be executed.
  */
@@ -28,6 +30,15 @@ public class Instruction {
 		this.command = command;
 		this.registersData = registersData;
 		this.integerData = integerData;
+	}
+
+	public Instruction(Command command, Register[] registersData, Branch branchData) {
+		this(command, registersData, Integer.MIN_VALUE);
+		this.branchData = branchData;
+	}
+
+	public Instruction(Command command, int integerData) {
+		this(command, new Register[3], integerData);
 	}
 
 	public Instruction(Command command, Branch branchData) {
@@ -105,5 +116,26 @@ public class Instruction {
 			case JUMP_REGISTER -> Command.JUMP_REGISTER.run(registersData[0]);
 			case JUMP_AND_LINK -> Command.JUMP_AND_LINK.run(integerData);
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("Instruction: ").append(command).append("\n");
+
+		if(registersData != null) {
+			builder.append("Registers: ").append(Arrays.toString(registersData)).append("\n");
+		}
+
+		if(branchData != null) {
+			builder.append("Branch: ").append(branchData).append("\n");
+		}
+
+		if(integerData != Integer.MIN_VALUE) {
+			builder.append("Integer: ").append(integerData).append("\n");
+		}
+
+		return builder.toString();
 	}
 }

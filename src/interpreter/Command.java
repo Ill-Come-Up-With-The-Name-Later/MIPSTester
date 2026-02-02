@@ -44,6 +44,7 @@ public enum Command {
 		@Override
 		public void run(Register destination, Register source) {
 			destination.storeStringNum(BinaryConversion.intToBinary(source.getIntegerOfValues()));
+			source.storeStringNum(BinaryConversion.intToBinary(0));
 		}
 	},
 
@@ -229,11 +230,6 @@ public enum Command {
 		public void run(Register r1, Register r2, Branch branch) {
 
 		}
-
-		@Override
-		public void run(Register r1, Register r2, int relativeBranch) {
-
-		}
 	},
 
 	/**
@@ -246,9 +242,28 @@ public enum Command {
 		public void run(Register r1, Register r2, Branch branch) {
 
 		}
+	},
+
+	/**
+	 * Jumps to a branch if a value is greater than
+	 * or equal to another.
+	 */
+	BRANCH_ON_GREATER_THAN_OR_EQUAL("bge", 3) {
 
 		@Override
-		public void run(Register r1, Register r2, int relativeBranch) {
+		public void run(Register r1, Register r2, Branch branch) {
+
+		}
+	},
+
+	/**
+	 * Jumps to a branch if a value is less than
+	 * another.
+	 */
+	BRANCH_ON_LESS_THAN("blt", 3) {
+
+		@Override
+		public void run(Register r1, Register r2, Branch branch) {
 
 		}
 	},

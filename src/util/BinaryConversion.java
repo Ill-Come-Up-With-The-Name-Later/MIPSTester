@@ -24,6 +24,6 @@ public class BinaryConversion {
 	 * @return The base 10 equivalent of <code>binary</code>
 	 */
 	public static String binaryToInt(String binary) {
-		return String.valueOf(Integer.parseInt(binary, 2));
+		return String.valueOf(Integer.parseUnsignedInt((binary), 2));
 	}
 }

@@ -86,7 +86,7 @@ public class Register {
 	 * 				 of the value in this <code>Register</code>
 	 */
 	public int getIntegerOfValues() {
-		return Integer.parseInt(BinaryConversion.binaryToInt(String.valueOf(Integer.parseInt(getValueString()))));
+		return Integer.parseInt(BinaryConversion.binaryToInt(getValueString()));
 	}
 
 	/**
@@ -101,6 +101,15 @@ public class Register {
 		word.setValues(this.values);
 
 		return word;
+	}
+
+	/**
+	 * Stores a number.
+	 *
+	 * @param number The number to store
+	 */
+	public void storeNum(int number) {
+		storeStringNum(BinaryConversion.intToBinary(number));
 	}
 
 	/**
