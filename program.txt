@@ -18,4 +18,4 @@ mult $s3, $s2
 mfhi $t2
 mflo $t3
 add $t1, $t2, $t3
-sw $t3, 64($zero)
+sw $t1, 64($zero)

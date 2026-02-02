@@ -114,7 +114,8 @@ public class FileParser {
 				}
 
 				instructions.add(parsed);
-				parsed.run();
+				activeBranch.addInstruction(parsed);
+				parsed.run(); // TODO: Remove this later
 				//System.out.println(parsed);
 			}
 		} catch (FileNotFoundException e) {
