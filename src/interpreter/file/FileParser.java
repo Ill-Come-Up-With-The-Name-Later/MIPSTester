@@ -727,8 +727,15 @@ public class FileParser {
 		} else {
 			if(argument.contains("$")) {
 				int start = argument.indexOf('$') + 1;
-				int end = start + 2;
-				System.out.println(argument.substring(start, end));
+				int end = start;
+
+				for(int i = start; i < argument.length(); i++) {
+					if(!Character.isAlphabetic(argument.charAt(i))) {
+						end = i;
+						break;
+					}
+				}
+
 				return Registers.getFromString(argument.substring(start, end));
 			}
 		}
