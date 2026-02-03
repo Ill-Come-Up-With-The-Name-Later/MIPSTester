@@ -98,8 +98,9 @@ public class FileParser {
 
 					if(branch == null) {
 						branch = new Branch(activeBranch, tokens[0].substring(0, tokens[0].length() - 1));
+						branches.add(branch);
 					} else {
-						branch.setPrevious(activeBranch);
+						throw new DuplicateBranchError(tokens[0], lineNumber);
 					}
 
 					activeBranch = branch;
@@ -144,6 +145,7 @@ public class FileParser {
 				parsed.run(); // TODO: Remove this later
 				//System.out.println(parsed);
 			}
+			System.out.println(branches.toString());
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
 		}

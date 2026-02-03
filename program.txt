@@ -6,6 +6,7 @@ blank_space: .space 40 # Oh great, I'm going to get called a Swiftie for naming 
 
 # Memory[12] holds the value 123
 
+branch_name:
 # Load Memory[12]
 addi $s1, $s1, 12
 lw $s0, 0($s1)
