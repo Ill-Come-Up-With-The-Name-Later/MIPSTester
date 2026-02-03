@@ -1,6 +1,8 @@
+# Use of variables is work in progress
 .data
 variable: .word 12
 .text
+
 # Memory[12] holds the value 123
 
 # Load Memory[12]
