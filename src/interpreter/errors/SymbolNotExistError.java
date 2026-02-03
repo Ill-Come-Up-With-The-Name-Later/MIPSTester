@@ -1,9 +1,13 @@
 package interpreter.errors;
 
+/**
+ * Occurs if a symbol is invoked that is not
+ * declared.
+ */
 public class SymbolNotExistError extends Error {
 
-	private int lineNum;
-	private String symbol;
+	private final int lineNum;
+	private final String symbol;
 
 	public SymbolNotExistError(int lineNum, String symbol) {
 		super();

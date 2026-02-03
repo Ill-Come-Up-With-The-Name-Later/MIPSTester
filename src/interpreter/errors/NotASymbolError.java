@@ -5,8 +5,8 @@ package interpreter.errors;
  */
 public class NotASymbolError extends Error {
 
-	private int lineNum;
-	private String symbol;
+	private final int lineNum;
+	private final String symbol;
 
 	public NotASymbolError(int lineNum, String symbol) {
 		super();
@@ -16,6 +16,6 @@ public class NotASymbolError extends Error {
 	}
 
 	public String getMessage() {
-		return "Line " + lineNum + ": " + symbol + " is not a valid symbol.";
+		return "Line " + lineNum + ": " + symbol + " is not a valid symbol declaration.";
 	}
 }

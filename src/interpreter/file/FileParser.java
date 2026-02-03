@@ -159,8 +159,12 @@ public class FileParser {
 	private Symbol getSymbol(String line, int lineNumber) {
 		String[] tokens = line.split(" ");
 
-		if(tokens.length != 3) {
+		if(tokens.length < 3) {
 			throw new NotASymbolError(lineNumber, tokens[0]);
+		}
+
+		if(tokens.length > 3) {
+			tokens = Arrays.copyOfRange(tokens, 0, 3);
 		}
 
 		DataType type = null;
@@ -179,7 +183,11 @@ public class FileParser {
 			throw new NotASymbolError(lineNumber, tokens[0]);
 		}
 
-		if(type == DataType.WORD && !stringNumeric(tokens[2])) {
+		if((type == DataType.WORD || type == DataType.SPACE) && !stringNumeric(tokens[2])) {
+			throw new NotASymbolError(lineNumber, tokens[0]);
+		}
+
+		if(type == DataType.SPACE && (Integer.parseInt(tokens[2]) <= 0 || Integer.parseInt(tokens[2]) % 4 != 0)) {
 			throw new NotASymbolError(lineNumber, tokens[0]);
 		}
 

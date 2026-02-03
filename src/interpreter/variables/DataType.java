@@ -4,6 +4,7 @@ public enum DataType {
 
 	WORD(".word"),
 	ASCII(".asciiz"),
+	SPACE(".space"),
 	;
 
 	private final String id;

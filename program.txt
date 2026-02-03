@@ -1,6 +1,7 @@
 # Use of variables is work in progress
 .data
 variable: .word 12
+blank_space: .space 40 # Oh great, I'm going to get called a Swiftie for naming a variable "blank space"
 .text
 
 # Memory[12] holds the value 123

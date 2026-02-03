@@ -15,8 +15,8 @@ public class Memory {
 	private Memory() {
 		values = new ArrayList<>();
 
-		// 2^13 Words can be stored
-		for(int i = 0; i < 8192; i++) {
+		// 2^14 - 1 Words can be stored
+		for(int i = 0; i < 16384; i++) {
 			values.add(null);
 		}
 	}
