@@ -1,6 +1,9 @@
 package misc;
 
+import util.BinaryConversion;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The program memory. Indexes must be accessed
@@ -9,14 +12,19 @@ import java.util.ArrayList;
 public class Memory {
 
 	public static final Memory GLOBAL_MEMORY = new Memory();
+	public static final Memory STACK_MEMORY = new Memory(4096);
 
 	private final ArrayList<Word> values;
 
 	private Memory() {
-		values = new ArrayList<>();
+		// 2^15 words can be stored
+		this(16384);
+	}
 
-		// 2^14 - 1 Words can be stored
-		for(int i = 0; i < 16384; i++) {
+	private Memory(int size) {
+		values = new ArrayList<>(size);
+
+		for(int i = 0; i < size; i++) {
 			values.add(null);
 		}
 	}
@@ -50,6 +58,82 @@ public class Memory {
 
 		int trueIndex = index / 4;
 		values.set(trueIndex, word);
+	}
+
+	/**
+	 * Finds the start and end byte index
+	 * of the first available block of memory of
+	 * a certain length.
+	 *
+	 * @param length The required number of bytes, must be
+	 *               a multiple of 4
+	 * @return The start and end index in memory that is
+	 * 				 of the required length, or [-1, -1] if there
+	 * 				 is none
+	 */
+	public int[] findAvailableMemory(int length) {
+		if(length % 4 != 0) {
+			throw new IllegalArgumentException("Length must be a multiple of 4");
+		}
+
+		if(length > values.size() * 4) {
+			throw new IllegalArgumentException("Cannot use more memory than is available");
+		}
+
+		int[] indices = new int[2];
+		Arrays.fill(indices, -1);
+
+		int start = 0;
+		int end = 0;
+
+		for(int i = 0; i < values.size() * 4; i += 4) {
+			if(getWord(i) == null) {
+				end += 4;
+
+				if(end - start == length) {
+					indices[0] = start;
+					indices[1] = end;
+
+					return indices;
+				}
+			} else {
+				start = i + 4;
+				end = i + 4;
+			}
+		}
+
+		return indices;
+	}
+
+	/**
+	 * Stores a String into memory. Assumes
+	 * the appropriate memory is already available
+	 * and will overwrite anything that was in an address
+	 * prior.
+	 *
+	 * @param string The String to store
+	 * @param startIndex The start of the String in memory
+	 */
+	public void storeString(String string, int startIndex) {
+		if(startIndex % 4 != 0) {
+			throw new IllegalArgumentException("Index must be a multiple of 4");
+		}
+
+		String[] binary = BinaryConversion.stringToBinary(string);
+		Word[] words = new Word[binary.length];
+
+		for(int i = 0; i < binary.length; i++) {
+			Word word = new Word();
+			word.storeStringNum(binary[i]);
+			words[i] = word;
+		}
+
+		int currentIndex = startIndex / 4;
+
+		for(Word word : words) {
+			setWord(word, currentIndex);
+			currentIndex += 4;
+		}
 	}
 
 	@Override

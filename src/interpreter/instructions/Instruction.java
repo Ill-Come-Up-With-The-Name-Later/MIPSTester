@@ -98,7 +98,9 @@ public class Instruction {
 			case SHIFT_LEFT_LOGICAL -> Command.SHIFT_LEFT_LOGICAL.run(registersData[0], registersData[1], integerData);
 			case SHIFT_RIGHT_LOGICAL -> Command.SHIFT_RIGHT_LOGICAL.run(registersData[0], registersData[1], integerData);
 			case SET_ON_LESS_THAN -> Command.SET_ON_LESS_THAN.run(registersData[0], registersData[1], registersData[2]);
+			case SET_ON_LESS_THAN_UNSIGNED -> Command.SET_ON_LESS_THAN_UNSIGNED.run(registersData[0], registersData[1], registersData[2]);
 			case SET_ON_LESS_THAN_IMMEDIATE -> Command.SET_ON_LESS_THAN_IMMEDIATE.run(registersData[0], registersData[1], integerData);
+			case SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE -> Command.SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case BRANCH_ON_EQUAL -> {
 				if(branchData == null) {
 					Command.BRANCH_ON_EQUAL.run(registersData[0], registersData[1], integerData);
@@ -135,7 +137,7 @@ public class Instruction {
 				}
 			}
 			case JUMP_REGISTER -> Command.JUMP_REGISTER.run(registersData[0]);
-			case JUMP_AND_LINK -> Command.JUMP_AND_LINK.run(integerData);
+			case JUMP_AND_LINK -> Command.JUMP_AND_LINK.run(branchData);
 		}
 	}
 

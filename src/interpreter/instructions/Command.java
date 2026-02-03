@@ -307,6 +307,31 @@ public enum Command {
 	},
 
 	/**
+	 * Sets the value of a register to 1 if the second
+	 * provided register's value is less than the third
+	 * provided register's value.
+	 */
+	SET_ON_LESS_THAN_UNSIGNED("sltu", 3) {
+
+		@Override
+		public void run(Register result, Register r1, Register r2) {
+			super.run(result, r1, r2);
+
+			int n1 = r1.getIntegerOfValues();
+			int n2 = r2.getIntegerOfValues();
+
+			long num1 = MathHelper.toUnsigned(n1);
+			long num2 = MathHelper.toUnsigned(n2);
+
+			if(num1 < num2) {
+				result.storeStringNum(BinaryConversion.intToBinary(1));
+			} else {
+				result.storeStringNum(BinaryConversion.intToBinary(0));
+			}
+		}
+	},
+
+	/**
 	 * Sets the value of a register to 1
 	 * if the second provided register is less
 	 * than a constant otherwise sets the register
@@ -320,6 +345,29 @@ public enum Command {
 			int num1 = r1.getIntegerOfValues();
 
 			if(num1 < num) {
+				result.storeStringNum(BinaryConversion.intToBinary(1));
+			} else {
+				result.storeStringNum(BinaryConversion.intToBinary(0));
+			}
+		}
+	},
+
+	/**
+	 * Sets the value of a register to 1
+	 * if the second provided register is less
+	 * than a constant otherwise sets the register
+	 * to 0.
+	 */
+	SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE("sltui", 3) {
+
+		@Override
+		public void run(Register result, Register r1, int num) {
+			super.run(result, r1, num);
+			int n1 = r1.getIntegerOfValues();
+			long num1 = MathHelper.toUnsigned(n1);
+			long num2 = MathHelper.toUnsigned(num);
+
+			if(num1 < num2) {
 				result.storeStringNum(BinaryConversion.intToBinary(1));
 			} else {
 				result.storeStringNum(BinaryConversion.intToBinary(0));

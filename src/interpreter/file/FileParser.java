@@ -104,8 +104,6 @@ public class FileParser {
 					}
 
 					activeBranch = branch;
-					System.out.println("Branch is now: " + activeBranch.getName() +
-									", Previous: " + branch.getPrevious().getName());
 
 					if (tokens.length > 1) {
 						command = Command.getCommand(tokens[1]);
@@ -145,7 +143,6 @@ public class FileParser {
 				parsed.run(); // TODO: Remove this later
 				//System.out.println(parsed);
 			}
-			System.out.println(branches.toString());
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
 		}
@@ -593,13 +590,13 @@ public class FileParser {
 
 				return new Instruction(Command.JUMP_REGISTER, new Register[] { rd18 });
 			case JUMP_AND_LINK:
-				Register rd19 = getRegisterFromArgument(arguments[0]);
+				Branch branch6 = getBranchFromArgument(arguments[0]);
 
-				if(rd19 == null) {
+				if(branch6 == null) {
 					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
 				}
 
-				return new Instruction(Command.JUMP_AND_LINK, new Register[] { rd19 });
+				return new Instruction(Command.JUMP_AND_LINK, branch6);
 			case MOVE_FROM_HI:
 				Register rd20 = getRegisterFromArgument(arguments[0]);
 
@@ -696,6 +693,42 @@ public class FileParser {
 				}
 
 				return new Instruction(Command.OR_IMMEDIATE, new Register[] { rd27, rs38 }, n10);
+			case SET_ON_LESS_THAN_UNSIGNED:
+				Register rd28 = getRegisterFromArgument(arguments[0]);
+				Register rs39 = getRegisterFromArgument(arguments[1]);
+				Register rs40 = getRegisterFromArgument(arguments[2]);
+
+				if(rd28 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs39 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				if(rs40 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.SET_ON_LESS_THAN_UNSIGNED, new Register[] { rd28, rs39, rs40});
+			case SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE:
+				Register rd29 = getRegisterFromArgument(arguments[0]);
+				Register rs41 = getRegisterFromArgument(arguments[1]);
+				Integer n11 = getNumberFromArgument(arguments[2]);
+
+				if(rd29 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs41 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				if(n11 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE, new Register[] { rd29, rs41 }, n11);
 		}
 
 		return null;
