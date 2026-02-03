@@ -92,7 +92,7 @@ public class Memory {
 
 				if(end - start == length) {
 					indices[0] = start;
-					indices[1] = end;
+					indices[1] = end - 1;
 
 					return indices;
 				}
