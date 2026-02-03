@@ -76,6 +76,10 @@ public class Memory {
 			throw new IllegalArgumentException("Length must be a multiple of 4");
 		}
 
+		if(length <= 0) {
+			throw new IllegalArgumentException("Length must be greater than 0");
+		}
+
 		if(length > values.size() * 4) {
 			throw new IllegalArgumentException("Cannot use more memory than is available");
 		}
