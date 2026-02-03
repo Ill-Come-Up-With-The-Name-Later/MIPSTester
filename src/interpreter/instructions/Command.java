@@ -172,6 +172,20 @@ public enum Command {
 	},
 
 	/**
+	 * Performs logical and with a register value
+	 * and a constant.
+	 */
+	AND_IMMEDIATE("andi", 3) {
+
+		@Override
+		public void run(Register destination, Register r1, int num) {
+			super.run(destination, r1, num);
+			int result = r1.getIntegerOfValues() & num;
+			destination.storeStringNum(BinaryConversion.intToBinary(result));
+		}
+	},
+
+	/**
 	 * Stores the result of logical or between two
 	 * registers.
 	 */
@@ -181,6 +195,20 @@ public enum Command {
 		public void run(Register destination, Register r1, Register r2) {
 			super.run(destination, r1, r2);
 			int result = r1.getIntegerOfValues() | r2.getIntegerOfValues();
+			destination.storeStringNum(BinaryConversion.intToBinary(result));
+		}
+	},
+
+	/**
+	 * Performs logical or with a register value
+	 * and a constant.
+	 */
+	OR_IMMEDIATE("andi", 3) {
+
+		@Override
+		public void run(Register destination, Register r1, int num) {
+			super.run(destination, r1, num);
+			int result = r1.getIntegerOfValues() | num;
 			destination.storeStringNum(BinaryConversion.intToBinary(result));
 		}
 	},
@@ -271,6 +299,27 @@ public enum Command {
 			int num2 = r2.getIntegerOfValues();
 
 			if(num1 < num2) {
+				result.storeStringNum(BinaryConversion.intToBinary(1));
+			} else {
+				result.storeStringNum(BinaryConversion.intToBinary(0));
+			}
+		}
+	},
+
+	/**
+	 * Sets the value of a register to 1
+	 * if the second provided register is less
+	 * than a constant otherwise sets the register
+	 * to 0.
+	 */
+	SET_ON_LESS_THAN_IMMEDIATE("slti", 3) {
+
+		@Override
+		public void run(Register result, Register r1, int num) {
+			super.run(result, r1, num);
+			int num1 = r1.getIntegerOfValues();
+
+			if(num1 < num) {
 				result.storeStringNum(BinaryConversion.intToBinary(1));
 			} else {
 				result.storeStringNum(BinaryConversion.intToBinary(0));

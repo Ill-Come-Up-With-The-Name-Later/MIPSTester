@@ -189,6 +189,7 @@ public class FileParser {
 			value = value.substring(1, value.length() - 1);
 		}
 
+		// Token comes out as "name:" so we use a substring
 		return new Symbol(value, type, tokens[0].substring(0, tokens[0].length() - 1));
 	}
 
@@ -631,6 +632,60 @@ public class FileParser {
 				}
 
 				return new Instruction(Command.DIVIDE, new Register[] { rs34, rs35 });
+			case SET_ON_LESS_THAN_IMMEDIATE:
+				Register rd25 = getRegisterFromArgument(arguments[0]);
+				Register rs36 = getRegisterFromArgument(arguments[1]);
+				Integer n8 = getNumberFromArgument(arguments[2]);
+
+				if(rd25 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs36 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				if(n8 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.SET_ON_LESS_THAN_IMMEDIATE, new Register[] { rd25, rs36 }, n8);
+			case AND_IMMEDIATE:
+				Register rd26 = getRegisterFromArgument(arguments[0]);
+				Register rs37 = getRegisterFromArgument(arguments[1]);
+				Integer n9 = getNumberFromArgument(arguments[2]);
+
+				if(rd26 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs37 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				if(n9 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.AND_IMMEDIATE, new Register[] { rd26, rs37 }, n9);
+			case OR_IMMEDIATE:
+				Register rd27 = getRegisterFromArgument(arguments[0]);
+				Register rs38 = getRegisterFromArgument(arguments[1]);
+				Integer n10 = getNumberFromArgument(arguments[2]);
+
+				if(rd27 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs38 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				if(n10 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.OR_IMMEDIATE, new Register[] { rd27, rs38 }, n10);
 		}
 
 		return null;
