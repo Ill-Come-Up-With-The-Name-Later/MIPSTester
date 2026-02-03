@@ -203,7 +203,7 @@ public enum Command {
 	 * Performs logical or with a register value
 	 * and a constant.
 	 */
-	OR_IMMEDIATE("andi", 3) {
+	OR_IMMEDIATE("ori", 3) {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
