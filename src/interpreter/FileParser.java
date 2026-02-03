@@ -1,6 +1,8 @@
 package interpreter;
 
 import interpreter.errors.*;
+import interpreter.variables.DataType;
+import interpreter.variables.Symbol;
 import misc.Register;
 import misc.Registers;
 
@@ -20,13 +22,14 @@ public class FileParser {
 
 	private final Branch mainBranch;
 	private Branch activeBranch;
-	private ArrayList<Branch> branches;
-	private ArrayList<Instruction> instructions;
-	private ArrayList<Symbol> symbols;
+	private final ArrayList<Branch> branches;
+	private final ArrayList<Instruction> instructions;
+	private final ArrayList<Symbol> symbols;
 
 	private FileParser() {
 		branches = new ArrayList<>();
 		instructions = new ArrayList<>();
+		symbols = new ArrayList<>();
 
 		mainBranch = new Branch();
 		activeBranch = mainBranch;
@@ -69,21 +72,15 @@ public class FileParser {
 					continue;
 				}
 
+				// User variables
 				if(currentSection == Section.DATA) {
-					// TODO: Data variables
-					String[] tokens = line.split(" ");
-
-					if(tokens.length != 3) {
-						throw new NotASymbolError(lineNumber, tokens[0]);
-					}
-
-					// TODO: Data types
-					switch(tokens[1].trim()) {
-
-					}
+					Symbol symbol = getSymbol(line, lineNumber);
+					symbols.add(symbol);
 
 					continue;
 				}
+
+				// Assembly instructions
 
 				// Get the command on this line
 				// Account for a branch declaration before a command
@@ -130,6 +127,23 @@ public class FileParser {
 									command.getArgumentCount(), arguments.length);
 				}
 
+				// Convert symbols into appropriate arguments
+				for(int i = 0; i < arguments.length; i++) {
+					Integer num = getNumberFromArgument(arguments[i]);
+					Register reg = getRegisterFromArgument(arguments[i]);
+					Branch branch = getBranchFromArgument(arguments[i]);
+
+					if(num == null && reg == null && branch == null) {
+						Symbol symbol = getSymbolFromArgument(arguments[i]);
+
+						if(symbol == null) {
+							throw new SymbolNotExistError(lineNumber, arguments[i]);
+						}
+
+						arguments[i] = symbol.getValue().toString();
+					}
+				}
+
 				//System.out.println(command + " | Tokens: " +
 				//				Arrays.toString(tokens) + " | Arguments: " + Arrays.toString(arguments));
 
@@ -146,6 +160,80 @@ public class FileParser {
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
+		}
+	}
+
+	/**
+	 * Creates a <code>Symbol</code> from a line.
+	 *
+	 * @param line The line
+	 * @param lineNumber The line number in the program
+	 * @return A parsed <code>Symbol</code>
+	 */
+	private Symbol getSymbol(String line, int lineNumber) {
+		String[] tokens = line.split(" ");
+
+		if(tokens.length != 3) {
+			throw new NotASymbolError(lineNumber, tokens[0]);
+		}
+
+		DataType type = null;
+
+		for(DataType dataType : DataType.values()) {
+			if(tokens[1].equals(dataType.getId())) {
+				type = dataType;
+			}
+		}
+
+		if(type == null) {
+			throw new NotASymbolError(lineNumber, tokens[0]);
+		}
+
+		if(type == DataType.ASCII && !tokens[2].startsWith("\"") && !tokens[2].endsWith("\"")) {
+			throw new NotASymbolError(lineNumber, tokens[0]);
+		}
+
+		if(type == DataType.WORD && !stringNumeric(tokens[2])) {
+			throw new NotASymbolError(lineNumber, tokens[0]);
+		}
+
+		String value = tokens[2];
+
+		if(type == DataType.ASCII) {
+			value = value.substring(1, value.length() - 1);
+		}
+
+		return new Symbol(value, type, tokens[0].substring(0, tokens[0].length() - 1));
+	}
+
+	/**
+	 * Gets the <code>Symbol</code> matching the argument
+	 *
+	 * @param argument A String argument
+	 * @return The <code>Symbol</code> or <code>null</code>
+	 */
+	private Symbol getSymbolFromArgument(String argument) {
+		for(Symbol symbol : symbols) {
+			if(argument.equals(symbol.getName())) {
+				return symbol;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Determines if a String is also a number
+	 *
+	 * @param string A String
+	 * @return If <code>string</code> is a number
+	 */
+	private boolean stringNumeric(String string) {
+		try {
+			Integer.parseInt(string);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
 		}
 	}
 

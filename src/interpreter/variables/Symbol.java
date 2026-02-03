@@ -1,4 +1,4 @@
-package interpreter;
+package interpreter.variables;
 
 /**
  * A user defined symbol. Stores
@@ -7,10 +7,12 @@ package interpreter;
 public class Symbol {
 
 	private Object value;
+	private final DataType type;
 	private String name;
 
-	public Symbol(Object value, String name) {
+	public Symbol(Object value, DataType type, String name) {
 		this.value = value;
+		this.type = type;
 		this.name = name;
 	}
 
@@ -22,11 +24,20 @@ public class Symbol {
 		this.name = name;
 	}
 
+	public DataType getType() {
+		return type;
+	}
+
 	public Object getValue() {
 		return value;
 	}
 
 	public void setValue(Object value) {
 		this.value = value;
+	}
+
+	@Override
+	public String toString() {
+		return name + " = " + value + ", Type: " + type;
 	}
 }

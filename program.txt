@@ -1,10 +1,10 @@
 .data
-cat: .word 5
+variable: .word 12
 .text
 # Memory[12] holds the value 123
 
 # Load Memory[12]
-addi $s1, $s1, 12
+addi $s1, $s1, variable
 lw $s0, 0($s1)
 
 # Why not, just for fun

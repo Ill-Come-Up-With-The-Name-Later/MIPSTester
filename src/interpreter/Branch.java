@@ -55,4 +55,9 @@ public class Branch {
 	public void execute() {
 		instructions.forEach(Instruction::run);
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }
