@@ -1,4 +1,4 @@
-package interpreter;
+package interpreter.instructions;
 
 import misc.Register;
 

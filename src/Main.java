@@ -1,9 +1,6 @@
-import interpreter.FileParser;
+import interpreter.file.FileParser;
 import misc.Memory;
 import misc.Word;
-import util.BinaryConversion;
-
-import java.util.Arrays;
 
 public class Main {
 

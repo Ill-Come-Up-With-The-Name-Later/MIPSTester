@@ -1,4 +1,4 @@
-package interpreter;
+package interpreter.file;
 
 /**
  * Sections of the program

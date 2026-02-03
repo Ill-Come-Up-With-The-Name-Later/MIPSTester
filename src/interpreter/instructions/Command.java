@@ -1,4 +1,4 @@
-package interpreter;
+package interpreter.instructions;
 
 import interpreter.errors.IllegalModificationError;
 import misc.Memory;

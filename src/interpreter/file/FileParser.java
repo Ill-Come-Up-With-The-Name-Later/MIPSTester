@@ -1,6 +1,9 @@
-package interpreter;
+package interpreter.file;
 
 import interpreter.errors.*;
+import interpreter.instructions.Branch;
+import interpreter.instructions.Command;
+import interpreter.instructions.Instruction;
 import interpreter.variables.DataType;
 import interpreter.variables.Symbol;
 import misc.Register;
@@ -125,23 +128,6 @@ public class FileParser {
 				if (arguments.length != command.getArgumentCount()) {
 					throw new InsufficientArgumentError(lineNumber, command.getName(),
 									command.getArgumentCount(), arguments.length);
-				}
-
-				// Convert symbols into appropriate arguments
-				for(int i = 0; i < arguments.length; i++) {
-					Integer num = getNumberFromArgument(arguments[i]);
-					Register reg = getRegisterFromArgument(arguments[i]);
-					Branch branch = getBranchFromArgument(arguments[i]);
-
-					if(num == null && reg == null && branch == null) {
-						Symbol symbol = getSymbolFromArgument(arguments[i]);
-
-						if(symbol == null) {
-							throw new SymbolNotExistError(lineNumber, arguments[i]);
-						}
-
-						arguments[i] = symbol.getValue().toString();
-					}
 				}
 
 				//System.out.println(command + " | Tokens: " +
