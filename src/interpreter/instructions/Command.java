@@ -23,6 +23,12 @@ public enum Command {
 		@Override
 		public void run(Register destination, int offset, Register source) {
 			super.run(destination, offset, source);
+			if(source == Registers.sp) {
+				destination.setValues(Memory.STACK_MEMORY.getWord(source.getIntegerOfValues() +
+								offset).getValues().clone());
+				return;
+			}
+
 			destination.setValues(Memory.GLOBAL_MEMORY
 							.getWord(source.getIntegerOfValues() + offset).getValues().clone());
 		}
@@ -97,6 +103,11 @@ public enum Command {
 		@Override
 		public void run(Register source, int offset, Register destinationAddress) {
 			super.run(source, offset, destinationAddress);
+			if(destinationAddress == Registers.sp) {
+				Memory.STACK_MEMORY.setWord(source.toWord(), destinationAddress.getIntegerOfValues() + offset);
+				return;
+			}
+
 			Memory.GLOBAL_MEMORY.setWord(source.toWord(), destinationAddress.getIntegerOfValues() + offset);
 		}
 	},
