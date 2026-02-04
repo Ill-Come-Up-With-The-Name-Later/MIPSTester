@@ -2,15 +2,16 @@ package interpreter.variables;
 
 /**
  * A user defined symbol. Stores
- * numbers or Strings.
+ * numbers or Strings, or empty
+ * space for arrays.
  */
 public class Symbol {
 
-	private Object value;
+	private String value;
 	private final DataType type;
 	private String name;
 
-	public Symbol(Object value, DataType type, String name) {
+	public Symbol(String value, DataType type, String name) {
 		this.value = value;
 		this.type = type;
 		this.name = name;
@@ -28,11 +29,11 @@ public class Symbol {
 		return type;
 	}
 
-	public Object getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 

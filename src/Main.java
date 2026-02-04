@@ -1,7 +1,7 @@
 import interpreter.file.FileParser;
 import misc.Memory;
 import misc.Word;
-import util.MathHelper;
+import program.Program;
 
 public class Main {
 
@@ -14,6 +14,7 @@ public class Main {
 		System.out.println(Memory.GLOBAL_MEMORY);
 
 		FileParser.GLOBAL.readFile("program.txt");
+		Program.MAIN_PROGRAM.run();
 
 		System.out.println("Post-execution");
 		System.out.println(Memory.GLOBAL_MEMORY);

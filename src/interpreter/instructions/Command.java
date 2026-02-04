@@ -1,9 +1,12 @@
 package interpreter.instructions;
 
 import interpreter.errors.IllegalModificationError;
+import interpreter.errors.SymbolNotExistError;
+import interpreter.variables.Symbol;
 import misc.Memory;
 import misc.Register;
 import misc.Registers;
+import program.Program;
 import util.BinaryConversion;
 import util.MathHelper;
 
@@ -22,6 +25,20 @@ public enum Command {
 			super.run(destination, offset, source);
 			destination.setValues(Memory.GLOBAL_MEMORY
 							.getWord(source.getIntegerOfValues() + offset).getValues());
+		}
+	},
+
+	/**
+	 * Loads the start address of a symbol into
+	 * a register.
+	 */
+	LOAD_ADDRESS("la", 2) {
+
+		@Override
+		public void run(Register destination, Symbol symbol) {
+			super.run(destination, symbol);
+
+			destination.storeNum(Program.MAIN_PROGRAM.getSymbolAddresses().get(symbol)[0]);
 		}
 	},
 
@@ -535,6 +552,16 @@ public enum Command {
 	public void run(Register destination) {
 		if(Registers.READONLY_REGISTERS.contains(destination)) {
 			throw new IllegalModificationError();
+		}
+	}
+
+	public void run(Register destination, Symbol symbol) {
+		if(Registers.READONLY_REGISTERS.contains(destination)) {
+			throw new IllegalModificationError();
+		}
+
+		if(!Program.MAIN_PROGRAM.getSymbols().contains(symbol)) {
+			throw new SymbolNotExistError();
 		}
 	}
 

@@ -16,7 +16,17 @@ public class SymbolNotExistError extends Error {
 		this.symbol = symbol;
 	}
 
+	public SymbolNotExistError() {
+		lineNum = -1;
+		symbol = null;
+	}
+
+	@Override
 	public String getMessage() {
+		if(lineNum == -1) {
+			return "Symbol Not Found";
+		}
+
 		return "Line " + lineNum + ": " + symbol + " does not exist.";
 	}
 }

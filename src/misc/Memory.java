@@ -11,15 +11,13 @@ import java.util.Arrays;
  */
 public class Memory {
 
-	public static final Memory GLOBAL_MEMORY = new Memory();
+	// For global defined variables
+	public static final Memory GLOBAL_MEMORY = new Memory(16384);
+
+	// For local variables in procedures
 	public static final Memory STACK_MEMORY = new Memory(4096);
 
 	private final ArrayList<Word> values;
-
-	private Memory() {
-		// 2^15 words can be stored
-		this(16384);
-	}
 
 	private Memory(int size) {
 		values = new ArrayList<>(size);

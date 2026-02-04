@@ -6,23 +6,11 @@ blank_space: .space 40 # Oh great, I'm going to get called a Swiftie for naming 
 
 # Memory[12] holds the value 123
 
-branch_name:
-# Load Memory[12]
-addi $s1, $s1, 12
-lw $s0, 0($s1)
+li $t0, 12
+lw $s0, 0($t0)
 
-# Why not, just for fun
-sll $s2, $s0, 1
+sll $s0, $s0, 2
+sw $s0, 100($zero)
 
-# store $s2 back into memory
-addi $t0, $t0, 24
-sw $s2, 0($t0)
-sw $t0, 0($zero)
-
-# Do 246 * 10 and store it
-li $s3, 10
-mult $s3, $s2
-mfhi $t2
-mflo $t3
-add $t1, $t2, $t3
-sw $t1, 64($zero)
+la $t1, blank_space
+sw $t1 120($zero)

@@ -1,5 +1,6 @@
 package interpreter.instructions;
 
+import interpreter.variables.Symbol;
 import misc.Register;
 
 import java.util.Arrays;
@@ -13,6 +14,7 @@ public class Instruction {
 	private final Register[] registersData;
 	private final int integerData;
 	private Branch branchData;
+	private Symbol symbolData;
 
 	public Instruction() {
 		this(null, new Register[3], Integer.MIN_VALUE);
@@ -44,6 +46,11 @@ public class Instruction {
 	public Instruction(Command command, Branch branchData) {
 		this(command);
 		this.branchData = branchData;
+	}
+
+	public Instruction(Command command, Register[] registersData, Symbol symbolData) {
+		this(command, registersData);
+		this.symbolData = symbolData;
 	}
 
 	public Command getCommand() {
@@ -78,6 +85,7 @@ public class Instruction {
 	public void run() {
 		switch(command) {
 			case LOAD_WORD -> Command.LOAD_WORD.run(registersData[0], integerData, registersData[1]);
+			case LOAD_ADDRESS ->  Command.LOAD_ADDRESS.run(registersData[0], symbolData);
 			case LOAD_IMMEDIATE -> Command.LOAD_IMMEDIATE.run(registersData[0], integerData);
 			case MOVE -> Command.MOVE.run(registersData[0], registersData[1]);
 			case MOVE_FROM_HI -> Command.MOVE_FROM_HI.run(registersData[0]);

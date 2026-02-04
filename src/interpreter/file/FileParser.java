@@ -8,6 +8,7 @@ import interpreter.variables.DataType;
 import interpreter.variables.Symbol;
 import misc.Register;
 import misc.Registers;
+import program.Program;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -140,9 +141,13 @@ public class FileParser {
 
 				instructions.add(parsed);
 				activeBranch.addInstruction(parsed);
-				parsed.run(); // TODO: Remove this later
 				//System.out.println(parsed);
 			}
+
+			// Store everything for the program
+			Program.MAIN_PROGRAM.setBranches(branches);
+			Program.MAIN_PROGRAM.setInstructions(instructions);
+			Program.MAIN_PROGRAM.setSymbols(symbols);
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found");
 		}
@@ -729,6 +734,19 @@ public class FileParser {
 				}
 
 				return new Instruction(Command.SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE, new Register[] { rd29, rs41 }, n11);
+			case LOAD_ADDRESS:
+				Register rd30 = getRegisterFromArgument(arguments[0]);
+				Symbol symbol = getSymbolFromArgument(arguments[1]);
+
+				if(rd30 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(symbol == null) {
+					throw new SymbolNotExistError(lineNumber, arguments[1]);
+				}
+
+				return new Instruction(Command.LOAD_ADDRESS, new Register[] { rd30 }, symbol);
 		}
 
 		return null;
