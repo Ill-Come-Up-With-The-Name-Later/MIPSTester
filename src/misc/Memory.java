@@ -28,6 +28,16 @@ public class Memory {
 	}
 
 	/**
+	 * The size of the memory in
+	 * bytes.
+	 *
+	 * @return The size of memory
+	 */
+	public int size() {
+		return values.size() * 4;
+	}
+
+	/**
 	 * Gets the <code>Word</code> at an index.
 	 * The index must be a multiple of 4.
 	 *
@@ -40,7 +50,12 @@ public class Memory {
 		}
 
 		int trueIndex = index / 4;
-		return values.get(trueIndex);
+
+		if(values.get(trueIndex) == null) {
+			return null;
+		}
+
+		return values.get(trueIndex).copy();
 	}
 
 	/**
@@ -55,7 +70,9 @@ public class Memory {
 		}
 
 		int trueIndex = index / 4;
-		values.set(trueIndex, word);
+
+		Word clone = word.copy();
+		values.set(trueIndex, clone);
 	}
 
 	/**
@@ -94,7 +111,7 @@ public class Memory {
 
 				if(end - start == length) {
 					indices[0] = start;
-					indices[1] = end - 1;
+					indices[1] = end;
 
 					return indices;
 				}

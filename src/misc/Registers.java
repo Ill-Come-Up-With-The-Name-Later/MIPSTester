@@ -43,6 +43,7 @@ public class Registers {
 	public static final Register ra = new Register();
 	public static final Register hi = new Register();
 	public static final Register lo = new Register();
+	public static final Register pc = new Register();
 
 	public static final Register[] REGISTERS = {
 					zero,
@@ -77,6 +78,7 @@ public class Registers {
 					sp,
 					fp,
 					ra,
+					pc,
 	};
 
 	public static final ArrayList<Register> READONLY_REGISTERS = new ArrayList<>() {
@@ -87,6 +89,7 @@ public class Registers {
 			add(k1);
 			add(hi);
 			add(lo);
+			add(pc);
 		}
 	};
 

@@ -79,6 +79,11 @@ public class FileParser {
 				// User variables
 				if(currentSection == Section.DATA) {
 					Symbol symbol = getSymbol(line, lineNumber);
+
+					if(symbolExists(symbol.getName())) {
+						throw new DuplicateSymbolError(lineNumber, symbol);
+					}
+
 					symbols.add(symbol);
 
 					continue;
@@ -766,6 +771,24 @@ public class FileParser {
 		}
 
 		return null;
+	}
+
+	/**
+	 * If a <code>Symbol</code> of a certain
+	 * identifier already exists.
+	 *
+	 * @param symbol A String identifier
+	 * @return If a <code>Symbol</code> exists
+	 * 				 with a matching identifier
+	 */
+	private boolean symbolExists(String symbol) {
+		for(Symbol s : symbols) {
+			if(s.getName().equals(symbol)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

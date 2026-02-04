@@ -79,17 +79,17 @@ public class Word {
 
 	/**
 	 * Converts the value of the
-	 * <code>Word</code> to a base 10 integer.
+	 * <code>Register</code> to a base-10 integer.
 	 *
-	 * @return The base 10 integer equivalent
+	 * @return The base-10 integer equivalent
 	 * 				 of the value in this <code>Word</code>
 	 */
 	public int getIntegerOfValues() {
-		return Integer.parseInt(BinaryConversion.binaryToInt(String.valueOf(Integer.parseInt(getValueString()))));
+		return Integer.parseInt(BinaryConversion.binaryToInt(getValueString()));
 	}
 
 	/**
-	 * Stores a base 10 number.
+	 * Stores a base-10 number.
 	 *
 	 * @param number The number to store
 	 */
@@ -111,6 +111,19 @@ public class Word {
 		for(int i = 0; i < 32; i++) {
 			setValue(Integer.parseInt(String.valueOf(num.charAt(i))), i);
 		}
+	}
+
+	/**
+	 * Copies the value of this <code>Word</code>
+	 * into another.
+	 *
+	 * @return Another <code>Word</code> with the same
+	 * 				 value
+	 */
+	public Word copy() {
+		Word word = new Word();
+		word.values = this.values;
+		return word;
 	}
 
 	@Override

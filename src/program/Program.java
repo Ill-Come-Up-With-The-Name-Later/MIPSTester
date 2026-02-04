@@ -6,6 +6,7 @@ import interpreter.instructions.Instruction;
 import interpreter.variables.DataType;
 import interpreter.variables.Symbol;
 import misc.Memory;
+import misc.Registers;
 import misc.Word;
 import util.BinaryConversion;
 import util.MathHelper;
@@ -33,7 +34,7 @@ public class Program {
 
 	/**
 	 * Allocates user-defined symbols into
-	 * memory
+	 * memory.
 	 */
 	public void allocateSymbols() {
 		for(Symbol symbol : symbols) {
@@ -83,8 +84,8 @@ public class Program {
 					int end = addresses[1];
 
 					for(int i = start; i < end; i += 4) {
-						Word w2 = new Word();
-						Memory.GLOBAL_MEMORY.setWord(w2, i);
+						Word w3 = new Word();
+						Memory.GLOBAL_MEMORY.setWord(w3, i);
 					}
 
 					break;
@@ -99,11 +100,12 @@ public class Program {
 	 */
 	public void run() {
 		allocateSymbols();
+		Registers.sp.storeNum(Memory.STACK_MEMORY.size());
+		Registers.pc.storeNum(0);
 
-		for(Branch branch : branches) {
-			for(Instruction instruction : branch.getInstructions()) {
-				instruction.run();
-			}
+		for(Instruction instruction : instructions) {
+			instruction.run();
+			Registers.pc.storeNum(Registers.pc.getIntegerOfValues() + 4);
 		}
 	}
 
@@ -137,5 +139,9 @@ public class Program {
 
 	public int getProgramCounter() {
 		return programCounter;
+	}
+
+	public void setProgramCounter(int programCounter) {
+		this.programCounter = programCounter;
 	}
 }

@@ -128,6 +128,19 @@ public class Register {
 		}
 	}
 
+	/**
+	 * Copies the value of this <code>Register</code>
+	 * into another.
+	 *
+	 * @return Another <code>Register</code> with the same
+	 * 				 value
+	 */
+	public Register copy() {
+		Register register = new Register();
+		register.values = this.values;
+		return register;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

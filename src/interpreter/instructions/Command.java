@@ -24,7 +24,7 @@ public enum Command {
 		public void run(Register destination, int offset, Register source) {
 			super.run(destination, offset, source);
 			destination.setValues(Memory.GLOBAL_MEMORY
-							.getWord(source.getIntegerOfValues() + offset).getValues());
+							.getWord(source.getIntegerOfValues() + offset).getValues().clone());
 		}
 	},
 
