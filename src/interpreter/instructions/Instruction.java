@@ -3,12 +3,26 @@ package interpreter.instructions;
 import interpreter.variables.Symbol;
 import misc.Register;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * An instruction to be executed.
  */
 public class Instruction {
+
+	public static final ArrayList<Command> BRANCHING_COMMANDS = new ArrayList<Command>()
+	{
+		{
+			add(Command.JUMP);
+			add(Command.JUMP_REGISTER);
+			add(Command.JUMP_AND_LINK);
+			add(Command.BRANCH_ON_EQUAL);
+			add(Command.BRANCH_ON_NOT_EQUAL);
+			add(Command.BRANCH_ON_LESS_THAN);
+			add(Command.BRANCH_ON_GREATER_THAN_OR_EQUAL);
+		}
+	};
 
 	private final Command command;
 	private final Register[] registersData;
@@ -109,44 +123,25 @@ public class Instruction {
 			case SET_ON_LESS_THAN_UNSIGNED -> Command.SET_ON_LESS_THAN_UNSIGNED.run(registersData[0], registersData[1], registersData[2]);
 			case SET_ON_LESS_THAN_IMMEDIATE -> Command.SET_ON_LESS_THAN_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE -> Command.SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE.run(registersData[0], registersData[1], integerData);
-			case BRANCH_ON_EQUAL -> {
-				if(branchData == null) {
-					Command.BRANCH_ON_EQUAL.run(registersData[0], registersData[1], integerData);
-				} else {
-					Command.BRANCH_ON_EQUAL.run(registersData[0], registersData[1], branchData);
-				}
-			}
-			case BRANCH_ON_NOT_EQUAL -> {
-				if(branchData == null) {
-					Command.BRANCH_ON_NOT_EQUAL.run(registersData[0], registersData[1], integerData);
-				} else {
-					Command.BRANCH_ON_NOT_EQUAL.run(registersData[0], registersData[1], branchData);
-				}
-			}
-			case BRANCH_ON_LESS_THAN -> {
-				if(branchData == null) {
-					Command.BRANCH_ON_LESS_THAN.run(registersData[0], registersData[1], integerData);
-				} else {
-					Command.BRANCH_ON_LESS_THAN.run(registersData[0], registersData[1], branchData);
-				}
-			}
-			case BRANCH_ON_GREATER_THAN_OR_EQUAL -> {
-				if(branchData == null) {
-					Command.BRANCH_ON_GREATER_THAN_OR_EQUAL.run(registersData[0], registersData[1], integerData);
-				} else {
-					Command.BRANCH_ON_GREATER_THAN_OR_EQUAL.run(registersData[0], registersData[1], branchData);
-				}
-			}
-			case JUMP -> {
-				if(branchData == null) {
-					Command.JUMP.run(integerData);
-				} else {
-					Command.JUMP.run(branchData);
-				}
-			}
+			case BRANCH_ON_EQUAL -> Command.BRANCH_ON_EQUAL.run(registersData[0], registersData[1], branchData);
+			case BRANCH_ON_NOT_EQUAL -> Command.BRANCH_ON_NOT_EQUAL.run(registersData[0], registersData[1], branchData);
+			case BRANCH_ON_LESS_THAN -> Command.BRANCH_ON_LESS_THAN.run(registersData[0], registersData[1], branchData);
+			case BRANCH_ON_GREATER_THAN_OR_EQUAL -> Command.BRANCH_ON_GREATER_THAN_OR_EQUAL.run(registersData[0], registersData[1], branchData);
+			case JUMP -> Command.JUMP.run(branchData);
 			case JUMP_REGISTER -> Command.JUMP_REGISTER.run(registersData[0]);
 			case JUMP_AND_LINK -> Command.JUMP_AND_LINK.run(branchData);
 		}
+	}
+
+	/**
+	 * If this <code>Instruction</code> requires a jump
+	 * in the program.
+	 *
+	 * @return If this <code>Instruction</code> is a jumping
+	 * 				 command
+	 */
+	public boolean isJump() {
+		return BRANCHING_COMMANDS.contains(command);
 	}
 
 	@Override

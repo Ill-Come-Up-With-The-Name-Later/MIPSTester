@@ -10,8 +10,5 @@ public class Main {
 
 		System.out.println("Post-execution");
 		System.out.println(Memory.GLOBAL_MEMORY);
-
-		System.out.println(Memory.GLOBAL_MEMORY.getWord(0).getIntegerOfValues());
-		System.out.println(Memory.GLOBAL_MEMORY.getWord(4).getIntegerOfValues());
 	}
 }

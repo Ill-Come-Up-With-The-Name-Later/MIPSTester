@@ -580,11 +580,6 @@ public class FileParser {
 				return new Instruction(Command.BRANCH_ON_LESS_THAN, new Register[] { rs30, rs31 }, branch4);
 			case JUMP:
 				Branch branch5 = getBranchFromArgument(arguments[0]);
-				Integer n7 = getNumberFromArgument(arguments[0]);
-
-				if(n7 != null) {
-					return new Instruction(Command.JUMP, n7);
-				}
 
 				if(branch5 == null) {
 					branch5 = new Branch(activeBranch, arguments[0]);

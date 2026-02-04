@@ -402,11 +402,6 @@ public enum Command {
 		public void run(Register r1, Register r2, Branch branch) {
 
 		}
-
-		@Override
-		public void run(Register r1, Register r2, int num) {
-
-		}
 	},
 
 	/**
@@ -417,11 +412,6 @@ public enum Command {
 
 		@Override
 		public void run(Register r1, Register r2, Branch branch) {
-
-		}
-
-		@Override
-		public void run(Register r1, Register r2, int num) {
 
 		}
 	},
@@ -436,11 +426,6 @@ public enum Command {
 		public void run(Register r1, Register r2, Branch branch) {
 
 		}
-
-		@Override
-		public void run(Register r1, Register r2, int num) {
-
-		}
 	},
 
 	/**
@@ -453,11 +438,6 @@ public enum Command {
 		public void run(Register r1, Register r2, Branch branch) {
 
 		}
-
-		@Override
-		public void run(Register r1, Register r2, int num) {
-
-		}
 	},
 
 	/**
@@ -466,11 +446,6 @@ public enum Command {
 	JUMP("j", 1) {
 		@Override
 		public void run(Branch branch) {
-
-		}
-
-		@Override
-		public void run(int relativeBranch) {
 
 		}
 	},
@@ -493,7 +468,7 @@ public enum Command {
 	JUMP_AND_LINK("jal", 1) {
 
 		@Override
-		public void run(int relativeBranch) {
+		public void run(Branch branch) {
 
 		}
 	},
