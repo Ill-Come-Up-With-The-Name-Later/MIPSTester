@@ -15,12 +15,16 @@ public class Branch {
 
 	public Branch() {
 		this.instructions = new ArrayList<>();
-		this.name = "";
+		this.name = " ";
 	}
 
 	public Branch(Branch previous) {
 		this();
 		this.previous = previous;
+	}
+
+	public Branch(String name) {
+		this(null, name);
 	}
 
 	public Branch(Branch previous, String name) {

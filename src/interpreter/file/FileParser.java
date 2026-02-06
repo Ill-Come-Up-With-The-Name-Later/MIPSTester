@@ -35,7 +35,7 @@ public class FileParser {
 		instructions = new ArrayList<>();
 		symbols = new ArrayList<>();
 
-		mainBranch = new Branch();
+		mainBranch = new Branch(null, "-");
 		activeBranch = mainBranch;
 
 		branches.add(mainBranch);
@@ -888,5 +888,11 @@ public class FileParser {
 
 	public Branch getMainBranch() {
 		return mainBranch;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(branches) +
+						'\n' + instructions + '\n' + symbols;
 	}
 }

@@ -10,6 +10,8 @@ public class Main {
 		Program.MAIN_PROGRAM.run();
 
 		System.out.println("Post-execution");
+
 		System.out.println(Memory.GLOBAL_MEMORY);
+		System.out.println(Memory.STACK_MEMORY);
 	}
 }
