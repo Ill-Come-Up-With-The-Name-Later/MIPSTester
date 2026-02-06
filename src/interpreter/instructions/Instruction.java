@@ -106,12 +106,17 @@ public class Instruction {
 			case MOVE_FROM_LO -> Command.MOVE_FROM_LO.run(registersData[0]);
 			case STORE_WORD -> Command.STORE_WORD.run(registersData[0], integerData, registersData[1]);
 			case ADD -> Command.ADD.run(registersData[0], registersData[1], registersData[2]);
+			case ADD_UNSIGNED -> Command.ADD_UNSIGNED.run(registersData[0], registersData[1], registersData[2]);
 			case SUBTRACT -> Command.SUBTRACT.run(registersData[0], registersData[1], registersData[2]);
+			case SUBTRACT_UNSIGNED -> Command.SUBTRACT_UNSIGNED.run(registersData[0], registersData[1], registersData[2]);
 			case MULTIPLY -> Command.MULTIPLY.run(registersData[0], registersData[1]);
+			case MULTIPLY_UNSIGNED -> Command.MULTIPLY_UNSIGNED.run(registersData[0], registersData[1]);
 			case DIVIDE -> Command.DIVIDE.run(registersData[0], registersData[1]);
+			case DIVIDE_UNSIGNED -> Command.DIVIDE_UNSIGNED.run(registersData[0], registersData[1]);
 			case ADD_IMMEDIATE -> Command.ADD_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case LOGICAL_AND -> Command.LOGICAL_AND.run(registersData[0], registersData[1], registersData[2]);
 			case AND_IMMEDIATE -> Command.AND_IMMEDIATE.run(registersData[0], registersData[1], integerData);
+			case ADD_IMMEDIATE_UNSIGNED ->  Command.ADD_IMMEDIATE_UNSIGNED.run(registersData[0], registersData[1], integerData);
 			case LOGICAL_OR -> Command.LOGICAL_OR.run(registersData[0], registersData[1], registersData[2]);
 			case OR_IMMEDIATE -> Command.OR_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case LOGICAL_NOR -> Command.LOGICAL_NOR.run(registersData[0], registersData[1], registersData[2]);

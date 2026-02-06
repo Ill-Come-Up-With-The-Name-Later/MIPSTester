@@ -747,6 +747,86 @@ public class FileParser {
 				}
 
 				return new Instruction(Command.LOAD_ADDRESS, new Register[] { rd30 }, symbol);
+			case ADD_UNSIGNED:
+				Register rd31 = getRegisterFromArgument(arguments[0]);
+				Register rs42 = getRegisterFromArgument(arguments[1]);
+				Register rs43 = getRegisterFromArgument(arguments[2]);
+
+				if(rd31 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs42 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				if(rs43 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.ADD_UNSIGNED, new Register[] { rd31, rs42, rs43 });
+			case SUBTRACT_UNSIGNED:
+				Register rd32 = getRegisterFromArgument(arguments[0]);
+				Register rs44 = getRegisterFromArgument(arguments[1]);
+				Register rs45 = getRegisterFromArgument(arguments[2]);
+
+				if(rd32 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs44 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				if(rs45 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.SUBTRACT_UNSIGNED, new Register[] { rd32, rs44, rs45 });
+			case ADD_IMMEDIATE_UNSIGNED:
+				Register rd33 = getRegisterFromArgument(arguments[0]);
+				Register rs46 = getRegisterFromArgument(arguments[1]);
+				Integer n12 = getNumberFromArgument(arguments[2]);
+
+				if(rd33 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs46 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				if(n12 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.ADD_IMMEDIATE_UNSIGNED, new Register[] { rd33, rs46 }, n12);
+			case MULTIPLY_UNSIGNED:
+				Register rs47 = getRegisterFromArgument(arguments[0]);
+				Register rs48 = getRegisterFromArgument(arguments[1]);
+
+				if(rs47 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs48 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				return new Instruction(Command.MULTIPLY_UNSIGNED, new Register[] { rs47, rs48 });
+			case DIVIDE_UNSIGNED:
+				Register rs49 = getRegisterFromArgument(arguments[0]);
+				Register rs50 = getRegisterFromArgument(arguments[1]);
+
+				if(rs49 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs50 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				return new Instruction(Command.DIVIDE_UNSIGNED, new Register[] { rs49, rs50 });
 		}
 
 		return null;

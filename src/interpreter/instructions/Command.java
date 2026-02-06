@@ -126,6 +126,19 @@ public enum Command {
 	},
 
 	/**
+	 * Adds two unsigned values and stores the result.
+	 */
+	ADD_UNSIGNED("addu", 3) {
+
+		@Override
+		public void run(Register destination, Register r1, Register r2) {
+			super.run(destination, r1, r2);
+			int sum = (int)(MathHelper.toUnsigned(r1.getIntegerOfValues()) + MathHelper.toUnsigned(r2.getIntegerOfValues()));
+			destination.storeStringNum(BinaryConversion.intToBinary(sum));
+		}
+	},
+
+	/**
 	 * Subtracts two values and stores the result.
 	 */
 	SUBTRACT("sub", 3) {
@@ -139,8 +152,21 @@ public enum Command {
 	},
 
 	/**
+	 * Subtracts two unsigned values and stores the result.
+	 */
+	SUBTRACT_UNSIGNED("subu", 3) {
+
+		@Override
+		public void run(Register destination, Register r1, Register r2) {
+			super.run(destination, r1, r2);
+			int sum = (int)(MathHelper.toUnsigned(r1.getIntegerOfValues()) - MathHelper.toUnsigned(r2.getIntegerOfValues()));
+			destination.storeStringNum(BinaryConversion.intToBinary(sum));
+		}
+	},
+
+	/**
 	 * Multiplies two numbers and stores the result into
-	 * hi and low registers.
+	 * hi and lo registers.
 	 */
 	MULTIPLY("mult", 2) {
 
@@ -156,6 +182,29 @@ public enum Command {
 		}
 	},
 
+	/**
+	 * Multiplies two unsigned numbers and stores the result into
+	 * hi and lo registers.
+	 */
+	MULTIPLY_UNSIGNED("multu", 2) {
+
+		@Override
+		public void run(Register r1, Register r2) {
+			super.run(r1, r2);
+			long product = MathHelper.multiply((int)MathHelper.toUnsigned(r1.getIntegerOfValues()),
+							(int)MathHelper.toUnsigned(r2.getIntegerOfValues()));
+			String binary = BinaryConversion.longToBinary(product);
+			String[] splitBinary = BinaryConversion.split64BitBinary(binary);
+
+			Registers.hi.storeStringNum(splitBinary[0]);
+			Registers.lo.storeStringNum(splitBinary[1]);
+		}
+	},
+
+	/**
+	 * Divides two numbers. Stores the remainder into hi
+	 * and the quotient into lo.
+	 */
 	DIVIDE("div", 2) {
 		@Override
 		public void run(Register r1, Register r2) {
@@ -163,6 +212,26 @@ public enum Command {
 
 			int quotient = r1.getIntegerOfValues() / r2.getIntegerOfValues();
 			int remainder = r1.getIntegerOfValues() % r2.getIntegerOfValues();
+
+			String binaryQuotient = BinaryConversion.intToBinary(quotient);
+			String binaryRemainder = BinaryConversion.intToBinary(remainder);
+
+			Registers.lo.storeStringNum(binaryQuotient);
+			Registers.hi.storeStringNum(binaryRemainder);
+		}
+	},
+
+	/**
+	 * Divides two unsigned numbers. Stores the remainder into hi
+	 * and the quotient into lo.
+	 */
+	DIVIDE_UNSIGNED("divu", 2) {
+		@Override
+		public void run(Register r1, Register r2) {
+			super.run(r1, r2);
+
+			int quotient = (int)MathHelper.toUnsigned(r1.getIntegerOfValues()) / (int)MathHelper.toUnsigned(r2.getIntegerOfValues());
+			int remainder = (int)MathHelper.toUnsigned(r1.getIntegerOfValues()) % (int)MathHelper.toUnsigned((r2.getIntegerOfValues()));
 
 			String binaryQuotient = BinaryConversion.intToBinary(quotient);
 			String binaryRemainder = BinaryConversion.intToBinary(remainder);
@@ -181,6 +250,19 @@ public enum Command {
 		public void run(Register destination, Register r1, int num) {
 			super.run(destination, r1, num);
 			int sum = r1.getIntegerOfValues() + num;
+			destination.storeStringNum(BinaryConversion.intToBinary(sum));
+		}
+	},
+
+	/**
+	 * Adds a constant and a register's value and stores the result.
+	 */
+	ADD_IMMEDIATE_UNSIGNED("addiu", 3) {
+
+		@Override
+		public void run(Register destination, Register r1, int num) {
+			super.run(destination, r1, num);
+			int sum = (int)(MathHelper.toUnsigned(r1.getIntegerOfValues()) + MathHelper.toUnsigned(num));
 			destination.storeStringNum(BinaryConversion.intToBinary(sum));
 		}
 	},
