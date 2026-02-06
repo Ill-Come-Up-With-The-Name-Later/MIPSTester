@@ -117,8 +117,6 @@ public class Registers {
 			case "t5" -> t5;
 			case "t6" -> t6;
 			case "t7" -> t7;
-			case "t8" -> t8;
-			case "t9" -> t9;
 			case "s0" -> s0;
 			case "s1" -> s1;
 			case "s2" -> s2;
@@ -127,6 +125,8 @@ public class Registers {
 			case "s5" -> s5;
 			case "s6" -> s6;
 			case "s7" -> s7;
+			case "t8" -> t8;
+			case "t9" -> t9;
 			case "k0" -> k0;
 			case "k1" -> k1;
 			case "gp" -> gp;
