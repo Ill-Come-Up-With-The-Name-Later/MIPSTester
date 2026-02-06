@@ -79,6 +79,15 @@ public class Register {
 	}
 
 	/**
+	 * Gets the value of this <code>Register</code> in hexadecimal.
+	 *
+	 * @return The value in this in hexadecimal
+	 */
+	public String getHexValueString() {
+		return BinaryConversion.hexToBinaryInt(getValueString());
+	}
+
+	/**
 	 * Converts the value of the
 	 * <code>Register</code> to a base 10 integer.
 	 *

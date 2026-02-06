@@ -10,6 +10,9 @@ lw $s0, 0($t0)
 
 # Operations
 sll $s0, $s0, 2
+li $t1, 128
+add $s2, $s2, $t1
 
 # Store $s0 back into memory
 sw $s0, 4($zero)
+sw $s2, 8($zero)

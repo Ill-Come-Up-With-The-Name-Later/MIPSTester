@@ -97,9 +97,66 @@ public class BinaryConversion {
 		StringBuilder builder = new StringBuilder();
 
 		for(String s : binary) {
-			builder.append((char) Integer.parseInt(binaryToInt(s)));
+			builder.append((char) Integer.parseUnsignedInt(binaryToInt(s)));
 		}
 
 		return builder.toString();
+	}
+
+	/**
+	 * Converts binary to hexadecimal.
+	 *
+	 * @param binary A binary String
+	 * @return The hexadecimal conversion of
+	 * 				 <code>binary</code>
+	 */
+	public static String binaryToHex(String binary) {
+		return Integer.toHexString(Integer.parseUnsignedInt(binaryToInt(binary)));
+	}
+
+	/**
+	 * Converts a base-10 integer to hexadecimal.
+	 *
+	 * @param num A base-10 number
+	 * @return The hexadecimal conversion of
+	 * 				 <code>num</code>
+	 */
+	public static String intToHex(int num) {
+		return Integer.toHexString(num);
+	}
+
+	/**
+	 * Converts a base-10 long to hexadecimal.
+	 *
+	 * @param num A base-10 number
+	 * @return The hexadecimal conversion of
+	 * 				 <code>num</code>
+	 */
+	public static String longToHex(long num) {
+		return Long.toHexString(num);
+	}
+
+	/**
+	 * Converts hexadecimal to 32-bit binary.
+	 *
+	 * @param hex A hexadecimal number
+	 * @return A binary conversion of
+	 * 				 <code>hex</code>
+	 */
+	public static String hexToBinaryInt(String hex) {
+		String binary = Integer.toBinaryString(Integer.parseUnsignedInt(hex, 2));
+		return "0".repeat(32 - binary.length()).concat(binary);
+	}
+
+	/**
+	 * Converts hexadecimal to 64-bit binary.
+	 *
+	 * @param hex A hexadecimal number
+	 * @return A binary conversion of
+	 * 				 <code>hex</code>
+	 */
+	public static String hexToBinaryLong(String hex) {
+		String binary = Long.toBinaryString(Long.parseUnsignedLong(hex, 2));
+		return "0".repeat(64 - binary.length()).concat(binary);
 	}
 }

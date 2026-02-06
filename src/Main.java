@@ -1,6 +1,7 @@
 import interpreter.file.FileParser;
 import misc.Memory;
 import program.Program;
+import util.BinaryConversion;
 
 public class Main {
 
