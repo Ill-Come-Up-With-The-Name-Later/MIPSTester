@@ -159,4 +159,24 @@ public class BinaryConversion {
 		String binary = Long.toBinaryString(Long.parseUnsignedLong(hex, 2));
 		return "0".repeat(64 - binary.length()).concat(binary);
 	}
+
+	/**
+	 * Converts hexadecimal to an integer.
+	 *
+	 * @param hex A hexadecimal number
+	 * @return The base-10 version of <code>hex</code>
+	 */
+	public static int hexToInt(String hex) {
+		return Integer.parseUnsignedInt(hex, 16);
+	}
+
+	/**
+	 * Converts hexadecimal to a long.
+	 *
+	 * @param hex A hexadecimal number
+	 * @return The base-10 version of <code>hex</code>
+	 */
+	public static long hexToLong(String hex) {
+		return Long.parseUnsignedLong(hex, 16);
+	}
 }
