@@ -6,7 +6,7 @@ import util.BinaryConversion;
 public class Main {
 
 	public static void main(String[] args) {
-		FileParser.GLOBAL.readFile("program.txt");
+		FileParser.GLOBAL.readFile("program.asm");
 		Program.MAIN_PROGRAM.run();
 
 		System.out.println("Post-execution");
