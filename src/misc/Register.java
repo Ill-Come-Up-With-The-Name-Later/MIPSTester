@@ -146,7 +146,7 @@ public class Register {
 	 */
 	public Register copy() {
 		Register register = new Register();
-		register.values = this.values;
+		register.values = this.values.clone();
 		return register;
 	}
 

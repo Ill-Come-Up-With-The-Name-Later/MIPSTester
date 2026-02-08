@@ -131,7 +131,7 @@ public class Word {
 	 */
 	public Word copy() {
 		Word word = new Word();
-		word.values = this.values;
+		word.values = this.values.clone();
 		return word;
 	}
 
