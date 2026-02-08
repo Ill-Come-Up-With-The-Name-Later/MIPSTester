@@ -186,6 +186,10 @@ public class Memory {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < values.size(); i++) {
 			if(values.get(i) != null) {
+				if(values.get(i).isFiller()) {
+					continue;
+				}
+
 				sb.append("Memory[").append(i * 4).append("] = ").append(values.get(i).getHexValueString()).append("\n");
 			}
 		}
@@ -200,6 +204,10 @@ public class Memory {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < values.size(); i++) {
 			if(values.get(i) != null) {
+				if(values.get(i).isFiller()) {
+					continue;
+				}
+
 				sb.append("Memory[").append(i * 4).append("] = ").append(values.get(i).getIntegerOfValues()).append("\n");
 			}
 		}
@@ -212,6 +220,10 @@ public class Memory {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < values.size(); i++) {
 			if(values.get(i) != null) {
+				if(values.get(i).isFiller()) {
+					continue;
+				}
+
 				sb.append("Memory[").append(i * 4).append("] = ").append(values.get(i).toString()).append("\n");
 			}
 		}

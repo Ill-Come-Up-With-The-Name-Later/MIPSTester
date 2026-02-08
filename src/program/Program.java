@@ -70,7 +70,6 @@ public class Program {
 					w1.storeStringNum(BinaryConversion.intToBinary(num));
 					Memory.GLOBAL_MEMORY.setWord(w1, addresses[0]);
 
-					startIndex = addresses[1] + 4;
 					break;
 				case ASCII:
 					String val = String.valueOf(symbol.getValue());
@@ -84,20 +83,24 @@ public class Program {
 						index++;
 					}
 
-					startIndex = addresses[1] + 4;
 					break;
 				case SPACE:
 					int start = addresses[0];
 					int end = addresses[1];
 
 					for(int i = start; i < end; i += 4) {
-						Word w3 = new Word();
+						Word w3 = new Word(true);
 						Memory.GLOBAL_MEMORY.setWord(w3, i);
 					}
 
-					startIndex = addresses[1] + 4;
 					break;
 			}
+
+			// Allocating this prevents some weird behaviors related to
+			// null-terminated values like Strings
+			Word filler = new Word(true);
+			Memory.GLOBAL_MEMORY.setWord(filler, addresses[1] + 4);
+			startIndex = addresses[1] + 4;
 
 			symbolAddresses.put(symbol, new Integer[] { addresses[0], addresses[1] });
 		}

@@ -8,9 +8,24 @@ import util.BinaryConversion;
 public class Word {
 
 	private int[] values;
+	private final boolean filler;
+
+	public Word(boolean filler) {
+		this.filler = filler;
+		this.values = new int[32];
+	}
 
 	public Word() {
-		values = new int[32];
+		this(false);
+	}
+
+	/**
+	 * If this word is a filler for space.
+	 *
+	 * @return If this word is a filler for space
+	 */
+	public boolean isFiller() {
+		return filler;
 	}
 
 	/**
@@ -130,7 +145,7 @@ public class Word {
 	 * 				 value
 	 */
 	public Word copy() {
-		Word word = new Word();
+		Word word = new Word(filler);
 		word.values = this.values.clone();
 		return word;
 	}
