@@ -179,6 +179,34 @@ public class Memory {
 		}
 	}
 
+	/**
+	 * Prints the memory's values in hexadecimal.
+	 */
+	public void printMemoryInHex() {
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < values.size(); i++) {
+			if(values.get(i) != null) {
+				sb.append("Memory[").append(i * 4).append("] = ").append(values.get(i).getHexValueString()).append("\n");
+			}
+		}
+
+		System.out.println(sb);
+	}
+
+	/**
+	 * Prints the memory's values in base-10.
+	 */
+	public void printMemoryInBase10() {
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < values.size(); i++) {
+			if(values.get(i) != null) {
+				sb.append("Memory[").append(i * 4).append("] = ").append(values.get(i).getIntegerOfValues()).append("\n");
+			}
+		}
+
+		System.out.println(sb);
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

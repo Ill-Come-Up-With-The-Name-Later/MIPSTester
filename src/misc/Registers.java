@@ -136,4 +136,33 @@ public class Registers {
 			default -> null;
 		};
 	}
+
+	/**
+	 * Prints out all <code>Register</code>s.
+	 */
+	public void printRegisters() {
+		for(Register register : REGISTERS) {
+			System.out.println(register.toString());
+		}
+	}
+
+	/**
+	 * Prints out all <code>Register</code>s in
+	 * hexadecimal
+	 */
+	public void printRegistersHex() {
+		for(Register register : REGISTERS) {
+			System.out.println(register.getHexValueString());
+		}
+	}
+
+	/**
+	 * Prints out all <code>Register</code>s in
+	 * base-10
+	 */
+	public void printRegistersBase10() {
+		for(Register register : REGISTERS) {
+			System.out.println(register.getIntegerOfValues());
+		}
+	}
 }

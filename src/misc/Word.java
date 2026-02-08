@@ -83,7 +83,7 @@ public class Word {
 	 * @return The value in this in hexadecimal
 	 */
 	public String getHexValueString() {
-		return BinaryConversion.hexToBinaryInt(getValueString());
+		return BinaryConversion.binaryToHex(getValueString());
 	}
 
 	/**
