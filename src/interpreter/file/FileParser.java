@@ -176,16 +176,16 @@ public class FileParser {
 			throw new NotASymbolError(lineNumber, tokens[0]);
 		}
 
-		if(tokens.length > 3) {
-			tokens = Arrays.copyOfRange(tokens, 0, 3);
-		}
-
 		DataType type = null;
 
 		for(DataType dataType : DataType.values()) {
 			if(tokens[1].equals(dataType.getId())) {
 				type = dataType;
 			}
+		}
+
+		if(type != DataType.ASCII && tokens.length > 3) {
+			throw new NotASymbolError(lineNumber, tokens[0]);
 		}
 
 		if(type == null) {
@@ -207,11 +207,28 @@ public class FileParser {
 		String value = tokens[2];
 
 		if(type == DataType.ASCII) {
-			value = value.substring(1, value.length() - 1);
+			value = concatenate(Arrays.copyOfRange(tokens, 2, tokens.length));
 		}
 
 		// Token comes out as "name:" so we use a substring
 		return new Symbol(value, type, tokens[0].substring(0, tokens[0].length() - 1));
+	}
+
+	/**
+	 * Concatenates all Strings in an array of
+	 * Strings.
+	 *
+	 * @param tokens The array of Strings
+	 * @return A combined String
+	 */
+	private String concatenate(String[] tokens) {
+		StringBuilder sb = new StringBuilder();
+		for(String token : tokens) {
+			sb.append(token);
+			sb.append(" ");
+		}
+
+		return sb.toString();
 	}
 
 	/**
