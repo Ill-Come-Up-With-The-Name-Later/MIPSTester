@@ -39,7 +39,7 @@ public class Program {
 	 * memory.
 	 */
 	public void allocateSymbols() {
-		int startIndex = Memory.GLOBAL_MEMORY.size() / 2;
+		int startIndex = Memory.GLOBAL_MEMORY.size() / 8;
 
 		for(Symbol symbol : symbols) {
 			int[] addresses = null;
