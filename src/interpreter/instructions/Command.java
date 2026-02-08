@@ -583,12 +583,12 @@ public enum Command {
 			int call = Registers.v0.getIntegerOfValues();
 
 			switch(call) {
-				case 1:
+				case 1: // Print integer
 					int a0IntVal = Registers.a0.getIntegerOfValues();
 
 					System.out.println(a0IntVal);
 					break;
-				case 4:
+				case 4: // Print String
 					int currentAddress = Registers.a0.getIntegerOfValues();
 					StringBuilder toPrint = new StringBuilder();
 
@@ -599,13 +599,13 @@ public enum Command {
 
 					System.out.println(toPrint);
 					break;
-				case 5:
+				case 5: // Read integer
 					Scanner intScanner = new Scanner(System.in);
 					int num = intScanner.nextInt();
 
 					Registers.v0.storeNum(num);
 					break;
-				case 8:
+				case 8: // Read String
 					int a0Buffer = Registers.a0.getIntegerOfValues();
 					int a1Length = Registers.a1.getIntegerOfValues();
 
@@ -642,22 +642,22 @@ public enum Command {
 						Memory.GLOBAL_MEMORY.setWord(w, startAddress + (i * 4));
 					}
 					break;
-				case 10:
+				case 10: // Exit program
 					System.exit(0);
 					break;
-				case 11:
+				case 11: // Print character
 					int a0CharVal = Registers.a0.getIntegerOfValues();
 
 					System.out.println((char)a0CharVal);
 					break;
-				case 12:
+				case 12: // Read character
 					Scanner charScanner = new Scanner(System.in);
 					Registers.v0.storeNum(charScanner.next().charAt(0));
 					break;
-				case 17:
+				case 17: // Exit with status code
 					int a0ExitVal = Registers.a0.getIntegerOfValues();
 					System.exit(a0ExitVal);
-				case 30:
+				case 30: // Get current system time
 					long time = System.currentTimeMillis();
 
 					String binary = BinaryConversion.longToBinary(time);
@@ -666,25 +666,25 @@ public enum Command {
 					Registers.a0.storeStringNum(binarySplit[1]);
 					Registers.a1.storeStringNum(binarySplit[0]);
 					break;
-				case 34:
+				case 34: // Print hexadecimal value
 					int a0IntVal2 = Registers.a0.getIntegerOfValues();
 
 					System.out.println(BinaryConversion.intToHex(a0IntVal2));
 					break;
-				case 35:
+				case 35: // Print binary value
 					int a0IntVal3 = Registers.a0.getIntegerOfValues();
 
 					System.out.println(BinaryConversion.intToBinary(a0IntVal3));
 					break;
-				case 36:
+				case 36: // Print unsigned integer
 					int a0IntVal4 = Registers.a0.getIntegerOfValues();
 
 					System.out.println(MathHelper.toUnsigned(a0IntVal4));
 					break;
-				case 41:
+				case 41: // Generate random number
 					Registers.a0.storeNum(new Random().nextInt());
 					break;
-				case 42:
+				case 42: // Generate random number up to a range
 					int a1MaxVal = Registers.a0.getIntegerOfValues();
 					Registers.a0.storeNum(new Random().nextInt(a1MaxVal));
 					break;
