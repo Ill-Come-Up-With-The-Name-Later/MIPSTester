@@ -40,20 +40,21 @@ public class Program {
 	 * memory.
 	 */
 	public void allocateSymbols() {
+		int startIndex = Memory.GLOBAL_MEMORY.size() / 2;
 		for(Symbol symbol : symbols) {
 			int[] addresses = null;
 
 			switch(symbol.getType()) {
 				case SPACE:
-					addresses = Memory.GLOBAL_MEMORY.findAvailableMemory(Integer.parseInt(symbol.getValue()));
+					addresses = Memory.GLOBAL_MEMORY.findAvailableMemory(Integer.parseInt(symbol.getValue()), startIndex);
 					break;
 				case ASCII:
 					String val = String.valueOf(symbol.getValue());
 					int binaryLength = MathHelper.binaryLength(val);
-					addresses = Memory.GLOBAL_MEMORY.findAvailableMemory(binaryLength);
+					addresses = Memory.GLOBAL_MEMORY.findAvailableMemory(binaryLength, startIndex);
 					break;
 				default:
-					addresses = Memory.GLOBAL_MEMORY.findAvailableMemory(4);
+					addresses = Memory.GLOBAL_MEMORY.findAvailableMemory(4, startIndex);
 					break;
 			}
 

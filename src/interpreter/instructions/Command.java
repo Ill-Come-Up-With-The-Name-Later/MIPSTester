@@ -597,7 +597,7 @@ public enum Command {
 						currentAddress += 4;
 					}
 
-					System.out.print(toPrint);
+					System.out.println(toPrint);
 					break;
 				case 5:
 					Scanner intScanner = new Scanner(System.in);
