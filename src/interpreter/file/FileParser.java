@@ -123,6 +123,10 @@ public class FileParser {
 					command = Command.getCommand(tokens[0]);
 				}
 
+				if(tokens.length == 1) {
+					command = Command.getCommand(tokens[0]);
+				}
+
 				if (command == null) {
 					throw new InvalidCommandError(lineNumber, tokens[commandIndex]);
 				}
