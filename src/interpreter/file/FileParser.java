@@ -207,7 +207,8 @@ public class FileParser {
 		String value = tokens[2];
 
 		if(type == DataType.ASCII) {
-			value = concatenate(Arrays.copyOfRange(tokens, 2, tokens.length));
+			String s = concatenate(Arrays.copyOfRange(tokens, 2, tokens.length));
+			value = s.substring(1, s.length() - 2);
 		}
 
 		// Token comes out as "name:" so we use a substring
