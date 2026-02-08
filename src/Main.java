@@ -1,9 +1,6 @@
 import interpreter.file.FileParser;
 import misc.Memory;
 import program.Program;
-import util.BinaryConversion;
-
-import java.util.Arrays;
 
 public class Main {
 

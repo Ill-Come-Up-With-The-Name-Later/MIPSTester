@@ -135,6 +135,7 @@ public class Instruction {
 			case JUMP -> Command.JUMP.run(branchData);
 			case JUMP_REGISTER -> Command.JUMP_REGISTER.run(registersData[0]);
 			case JUMP_AND_LINK -> Command.JUMP_AND_LINK.run(branchData);
+			case SYSCALL -> Command.SYSCALL.run();
 		}
 	}
 

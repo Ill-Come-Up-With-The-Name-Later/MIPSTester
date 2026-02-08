@@ -87,6 +87,22 @@ public class Memory {
 	 * 				 is none
 	 */
 	public int[] findAvailableMemory(int length) {
+		return findAvailableMemory(length, 0);
+	}
+
+	/**
+	 * Finds the start and end byte index
+	 * of the first available block of memory of
+	 * a certain length.
+	 *
+	 * @param length The required number of bytes, must be
+	 *               a multiple of 4
+	 * @param startIndex The index to start looking from
+	 * @return The start and end index in memory that is
+	 * 				 of the required length, or [-1, -1] if there
+	 * 				 is none
+	 */
+	public int[] findAvailableMemory(int length, int startIndex) {
 		if(length % 4 != 0) {
 			throw new IllegalArgumentException("Length must be a multiple of 4");
 		}
@@ -99,13 +115,21 @@ public class Memory {
 			throw new IllegalArgumentException("Cannot use more memory than is available");
 		}
 
+		if(startIndex > values.size() * 4 || startIndex < 0) {
+			throw new IllegalArgumentException("Cannot search memory that is not available");
+		}
+
+		if(startIndex % 4 != 0) {
+			throw new IllegalArgumentException("Start index must be a multiple of 4");
+		}
+
 		int[] indices = new int[2];
 		Arrays.fill(indices, -1);
 
-		int start = 0;
-		int end = 0;
+		int start = startIndex;
+		int end = startIndex;
 
-		for(int i = 0; i < values.size() * 4; i += 4) {
+		for(int i = startIndex; i < values.size() * 4; i += 4) {
 			if(getWord(i) == null) {
 				end += 4;
 
@@ -147,7 +171,7 @@ public class Memory {
 			words[i] = word;
 		}
 
-		int currentIndex = startIndex / 4;
+		int currentIndex = startIndex;
 
 		for(Word word : words) {
 			setWord(word, currentIndex);

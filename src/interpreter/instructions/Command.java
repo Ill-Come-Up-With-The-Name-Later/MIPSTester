@@ -1,14 +1,19 @@
 package interpreter.instructions;
 
 import interpreter.errors.IllegalModificationError;
+import interpreter.errors.InvalidSyscallError;
 import interpreter.errors.SymbolNotExistError;
 import interpreter.variables.Symbol;
 import misc.Memory;
 import misc.Register;
 import misc.Registers;
+import misc.Word;
 import program.Program;
 import util.BinaryConversion;
 import util.MathHelper;
+
+import java.util.Random;
+import java.util.Scanner;
 
 /**
  * The various supported commands.
@@ -206,6 +211,7 @@ public enum Command {
 	 * and the quotient into lo.
 	 */
 	DIVIDE("div", 2) {
+
 		@Override
 		public void run(Register r1, Register r2) {
 			super.run(r1, r2);
@@ -226,6 +232,7 @@ public enum Command {
 	 * and the quotient into lo.
 	 */
 	DIVIDE_UNSIGNED("divu", 2) {
+
 		@Override
 		public void run(Register r1, Register r2) {
 			super.run(r1, r2);
@@ -565,6 +572,127 @@ public enum Command {
 
 		}
 	},
+
+	/**
+	 * A system call.
+	 */
+	SYSCALL("syscall", 0) {
+
+		@Override
+		public void run() {
+			int call = Registers.v0.getIntegerOfValues();
+
+			switch(call) {
+				case 1:
+					int a0IntVal = Registers.a0.getIntegerOfValues();
+
+					System.out.println(a0IntVal);
+					break;
+				case 4:
+					int currentAddress = Registers.a0.getIntegerOfValues();
+					StringBuilder toPrint = new StringBuilder();
+
+					while(Memory.GLOBAL_MEMORY.getWord(currentAddress) != null) {
+						toPrint.append((char) Memory.GLOBAL_MEMORY.getWord(currentAddress).getIntegerOfValues());
+						currentAddress += 4;
+					}
+
+					System.out.print(toPrint);
+					break;
+				case 5:
+					Scanner intScanner = new Scanner(System.in);
+					int num = intScanner.nextInt();
+
+					Registers.v0.storeNum(num);
+					break;
+				case 8:
+					int a0Buffer = Registers.a0.getIntegerOfValues();
+					int a1Length = Registers.a1.getIntegerOfValues();
+
+					Scanner strScanner = new Scanner(System.in);
+					String str = strScanner.next();
+
+					if(a1Length < 1) {
+						return;
+					}
+
+					if(str.isBlank()) {
+						return;
+					}
+
+					if(str.length() > a1Length) {
+						return;
+					}
+
+					if(str.length() < a1Length) {
+						str = str.concat("\n");
+					}
+
+					int[] addresses = Memory.GLOBAL_MEMORY.findAvailableMemory(str.length() * 4, a0Buffer);
+					int startAddress = addresses[0];
+
+					if(addresses[0] == -1) {
+						return;
+					}
+
+					for(int i = 0; i < str.length(); i++) {
+						Word w = new Word();
+						char c = str.charAt(i);
+						w.storeNum(c);
+						Memory.GLOBAL_MEMORY.setWord(w, startAddress + (i * 4));
+					}
+					break;
+				case 10:
+					System.exit(0);
+					break;
+				case 11:
+					int a0CharVal = Registers.a0.getIntegerOfValues();
+
+					System.out.println((char)a0CharVal);
+					break;
+				case 12:
+					Scanner charScanner = new Scanner(System.in);
+					Registers.v0.storeNum(charScanner.next().charAt(0));
+					break;
+				case 17:
+					int a0ExitVal = Registers.a0.getIntegerOfValues();
+					System.exit(a0ExitVal);
+				case 30:
+					long time = System.currentTimeMillis();
+
+					String binary = BinaryConversion.longToBinary(time);
+					String[] binarySplit = BinaryConversion.split64BitBinary(binary);
+
+					Registers.a0.storeStringNum(binarySplit[1]);
+					Registers.a1.storeStringNum(binarySplit[0]);
+					break;
+				case 34:
+					int a0IntVal2 = Registers.a0.getIntegerOfValues();
+
+					System.out.println(BinaryConversion.intToHex(a0IntVal2));
+					break;
+				case 35:
+					int a0IntVal3 = Registers.a0.getIntegerOfValues();
+
+					System.out.println(BinaryConversion.intToBinary(a0IntVal3));
+					break;
+				case 36:
+					int a0IntVal4 = Registers.a0.getIntegerOfValues();
+
+					System.out.println(MathHelper.toUnsigned(a0IntVal4));
+					break;
+				case 41:
+					Registers.a0.storeNum(new Random().nextInt());
+					break;
+				case 42:
+					int a1MaxVal = Registers.a0.getIntegerOfValues();
+					Registers.a0.storeNum(new Random().nextInt(a1MaxVal));
+					break;
+				default:
+					throw new InvalidSyscallError(call);
+			}
+		}
+	}
 	;
 
 	private final String name;
@@ -591,6 +719,10 @@ public enum Command {
 		}
 
 		return null;
+	}
+
+	public void run() {
+
 	}
 
 	public void run(Register destination, Register r1) {

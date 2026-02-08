@@ -827,6 +827,8 @@ public class FileParser {
 				}
 
 				return new Instruction(Command.DIVIDE_UNSIGNED, new Register[] { rs49, rs50 });
+			case SYSCALL:
+				return new Instruction(Command.SYSCALL);
 		}
 
 		return null;
