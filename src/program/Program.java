@@ -41,6 +41,7 @@ public class Program {
 	 */
 	public void allocateSymbols() {
 		int startIndex = Memory.GLOBAL_MEMORY.size() / 2;
+
 		for(Symbol symbol : symbols) {
 			int[] addresses = null;
 
@@ -69,6 +70,7 @@ public class Program {
 					w1.storeStringNum(BinaryConversion.intToBinary(num));
 					Memory.GLOBAL_MEMORY.setWord(w1, addresses[0]);
 
+					startIndex = addresses[1] + 4;
 					break;
 				case ASCII:
 					String val = String.valueOf(symbol.getValue());
@@ -82,6 +84,7 @@ public class Program {
 						index++;
 					}
 
+					startIndex = addresses[1] + 4;
 					break;
 				case SPACE:
 					int start = addresses[0];
@@ -92,6 +95,7 @@ public class Program {
 						Memory.GLOBAL_MEMORY.setWord(w3, i);
 					}
 
+					startIndex = addresses[1] + 4;
 					break;
 			}
 
