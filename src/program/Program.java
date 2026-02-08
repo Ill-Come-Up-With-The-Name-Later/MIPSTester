@@ -14,7 +14,6 @@ import util.MathHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 
 /**
  * The actual program itself, with the branches,
