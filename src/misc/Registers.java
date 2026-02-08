@@ -9,41 +9,41 @@ import java.util.ArrayList;
  */
 public class Registers {
 
-	public static final Register zero = new Register();
-	public static final Register at = new Register();
-	public static final Register v0 = new Register();
-	public static final Register v1 = new Register();
-	public static final Register a0 = new Register();
-	public static final Register a1 = new Register();
-	public static final Register a2 = new Register();
-	public static final Register a3 = new Register();
-	public static final Register t0 = new Register();
-	public static final Register t1 = new Register();
-	public static final Register t2 = new Register();
-	public static final Register t3 = new Register();
-	public static final Register t4 = new Register();
-	public static final Register t5 = new Register();
-	public static final Register t6 = new Register();
-	public static final Register t7 = new Register();
-	public static final Register t8 = new Register();
-	public static final Register t9 = new Register();
-	public static final Register s0 = new Register();
-	public static final Register s1 = new Register();
-	public static final Register s2 = new Register();
-	public static final Register s3 = new Register();
-	public static final Register s4 = new Register();
-	public static final Register s5 = new Register();
-	public static final Register s6 = new Register();
-	public static final Register s7 = new Register();
-	public static final Register k0 = new Register();
-	public static final Register k1 = new Register();
-	public static final Register gp = new Register();
-	public static final Register sp = new Register();
-	public static final Register fp = new Register();
-	public static final Register ra = new Register();
-	public static final Register hi = new Register();
-	public static final Register lo = new Register();
-	public static final Register pc = new Register();
+	public static final Register zero = new Register("zero");
+	public static final Register at = new Register("at");
+	public static final Register v0 = new Register("v0");
+	public static final Register v1 = new Register("v1");
+	public static final Register a0 = new Register("a0");
+	public static final Register a1 = new Register("a1");
+	public static final Register a2 = new Register("a2");
+	public static final Register a3 = new Register("a3");
+	public static final Register t0 = new Register("t0");
+	public static final Register t1 = new Register("t1");
+	public static final Register t2 = new Register("t2");
+	public static final Register t3 = new Register("t3");
+	public static final Register t4 = new Register("t4");
+	public static final Register t5 = new Register("t5");
+	public static final Register t6 = new Register("t6");
+	public static final Register t7 = new Register("t7");
+	public static final Register t8 = new Register("t8");
+	public static final Register t9 = new Register("t9");
+	public static final Register s0 = new Register("s0");
+	public static final Register s1 = new Register("s1");
+	public static final Register s2 = new Register("s2");
+	public static final Register s3 = new Register("s3");
+	public static final Register s4 = new Register("s4");
+	public static final Register s5 = new Register("s5");
+	public static final Register s6 = new Register("s6");
+	public static final Register s7 = new Register("s7");
+	public static final Register k0 = new Register("k0");
+	public static final Register k1 = new Register("k1");
+	public static final Register gp = new Register("gp");
+	public static final Register sp = new Register("sp");
+	public static final Register fp = new Register("fp");
+	public static final Register ra = new Register("ra");
+	public static final Register hi = new Register("hi");
+	public static final Register lo = new Register("lo");
+	public static final Register pc = new Register("pc");
 
 	public static final Register[] REGISTERS = {
 					zero,
@@ -140,7 +140,7 @@ public class Registers {
 	/**
 	 * Prints out all <code>Register</code>s.
 	 */
-	public void printRegisters() {
+	public static void printRegisters() {
 		for(Register register : REGISTERS) {
 			System.out.println(register.toString());
 		}
@@ -150,7 +150,7 @@ public class Registers {
 	 * Prints out all <code>Register</code>s in
 	 * hexadecimal
 	 */
-	public void printRegistersHex() {
+	public static void printRegistersHex() {
 		for(Register register : REGISTERS) {
 			System.out.println(register.getHexValueString());
 		}
@@ -160,7 +160,7 @@ public class Registers {
 	 * Prints out all <code>Register</code>s in
 	 * base-10
 	 */
-	public void printRegistersBase10() {
+	public static void printRegistersBase10() {
 		for(Register register : REGISTERS) {
 			System.out.println(register.getIntegerOfValues());
 		}

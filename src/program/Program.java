@@ -12,6 +12,10 @@ import misc.Word;
 import util.BinaryConversion;
 import util.MathHelper;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -209,6 +213,53 @@ public class Program {
 
 		int trueAddress = address / 4;
 		return instructions.get(trueAddress);
+	}
+
+	/**
+	 * Gets the program's output. Contains
+	 * a log of the memory, stack, and the registers.
+	 *
+	 * @return The log of the memory, stack, and registers
+	 */
+	public ArrayList<String> getOutput() {
+		ArrayList<String> lines = new ArrayList<>();
+
+		lines.add("- Memory -\n");
+		lines.add(Memory.GLOBAL_MEMORY.toString());
+		lines.add("");
+
+		lines.add("- Stack -\n");
+		lines.add(Memory.STACK_MEMORY.toString());
+		lines.add("");
+
+		lines.add("- Registers -\n");
+		for(Register register : Registers.REGISTERS) {
+			lines.add(register.toString() + "\n");
+		}
+
+		return lines;
+	}
+
+	/**
+	 * Writes the program output to a file.
+	 *
+	 * @param path The path of the output file
+	 */
+	public void outputToFile(String path) {
+		File file = new File(path);
+		FileWriter fw;
+
+		try {
+			fw = new FileWriter(file);
+
+			for(String line : getOutput()) {
+				fw.write(line);
+			}
+
+			fw.close();
+		} catch (IOException e) {
+			System.out.println("File not found");
+		}
 	}
 
 	public ArrayList<Branch> getBranches() {

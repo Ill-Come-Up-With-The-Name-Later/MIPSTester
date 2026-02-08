@@ -9,8 +9,14 @@ import util.BinaryConversion;
 public class Register {
 
 	private int[] values;
+	private String name;
 
 	public Register() {
+		this(" ");
+	}
+
+	public Register(String name) {
+		this.name = name;
 		values = new int[32];
 	}
 
@@ -153,10 +159,19 @@ public class Register {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(name).append(": ");
+
 		for(int i = 0; i < 32; i++) {
 			sb.append(values[i]);
 		}
 
 		return sb.toString();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
 	}
 }
