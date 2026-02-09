@@ -120,6 +120,11 @@ public class Program {
 		while(Registers.pc.getIntegerOfValues() < instructions.size() * 4) {
 			Instruction instruction = getInstructionAt(Registers.pc.getIntegerOfValues());
 
+			if(instruction.getCommand() == Command.CREATE_BRANCH) {
+				Registers.pc.storeNum(Registers.pc.getIntegerOfValues() + 4);
+				continue;
+			}
+
 			if(!instruction.isJump()) {
 				instruction.run();
 				Registers.pc.storeNum(Registers.pc.getIntegerOfValues() + 4);
@@ -138,6 +143,8 @@ public class Program {
 					currentBranch = destination;
 
 					Registers.ra.storeNum(Registers.pc.getIntegerOfValues() + 4);
+				} else {
+					Registers.pc.storeNum(Registers.pc.getIntegerOfValues() + 4);
 				}
 			}
 		}
@@ -185,8 +192,10 @@ public class Program {
 	 */
 	public int getStartOfBranch(Branch branch) {
 		for(int i = 0; i < instructions.size(); i++) {
-			if(instructions.get(i) == branch.getInstructions().getFirst()) {
-				return i * 4;
+			if(instructions.get(i).getCommand() == Command.CREATE_BRANCH) {
+				if(instructions.get(i).getBranchData() == branch) {
+					return i * 4;
+				}
 			}
 		}
 

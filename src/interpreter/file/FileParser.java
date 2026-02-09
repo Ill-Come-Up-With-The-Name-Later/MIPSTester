@@ -35,10 +35,8 @@ public class FileParser {
 		instructions = new ArrayList<>();
 		symbols = new ArrayList<>();
 
-		mainBranch = new Branch(null, "-");
+		mainBranch = createBranch(null, "-", true);
 		activeBranch = mainBranch;
-
-		branches.add(mainBranch);
 	}
 
 	/**
@@ -103,8 +101,9 @@ public class FileParser {
 					Branch branch = getBranchFromArgument(tokens[0].substring(0, tokens[0].length() - 1));
 
 					if(branch == null) {
-						branch = new Branch(activeBranch, tokens[0].substring(0, tokens[0].length() - 1));
-						branches.add(branch);
+						branch = createBranch(activeBranch, tokens[0].substring(0, tokens[0].length() - 1), true);
+					} else {
+						instructions.add(new Instruction(Command.CREATE_BRANCH, branch));
 					}
 
 					activeBranch = branch;
@@ -228,6 +227,24 @@ public class FileParser {
 		}
 
 		return sb.toString();
+	}
+
+	/**
+	 * Creates a new <code>Banch</code>.
+	 *
+	 * @param previous The previous <code>Branch</code>
+	 * @param name The name of the new <code>Branch</code>
+	 * @return The <code>Branch</code> created
+	 */
+	private Branch createBranch(Branch previous, String name, boolean addInstruction) {
+		Branch branch = new Branch(previous, name);
+		branches.add(branch);
+
+		if(addInstruction) {
+			instructions.add(new Instruction(Command.CREATE_BRANCH, branch));
+		}
+
+		return branch;
 	}
 
 	/**
@@ -540,8 +557,7 @@ public class FileParser {
 				}
 
 				if(branch1 == null) {
-					branch1 = new Branch(activeBranch, arguments[2]);
-					branches.add(branch1);
+					branch1 = createBranch(activeBranch, arguments[2], false);
 				}
 
 				return new Instruction(Command.BRANCH_ON_EQUAL, new Register[] { rs24, rs25 }, branch1);
@@ -559,8 +575,7 @@ public class FileParser {
 				}
 
 				if(branch2 == null) {
-					branch2 = new Branch(activeBranch, arguments[2]);
-					branches.add(branch2);
+					branch2 = createBranch(activeBranch, arguments[2], false);
 				}
 
 				return new Instruction(Command.BRANCH_ON_NOT_EQUAL, new Register[] { rs26, rs27 }, branch2);
@@ -578,8 +593,7 @@ public class FileParser {
 				}
 
 				if(branch3 == null) {
-					branch3 = new Branch(activeBranch, arguments[2]);
-					branches.add(branch3);
+					branch3 = createBranch(activeBranch, arguments[2], false);
 				}
 
 				return new Instruction(Command.BRANCH_ON_GREATER_THAN_OR_EQUAL, new Register[] { rs28, rs29 }, branch3);
@@ -597,8 +611,7 @@ public class FileParser {
 				}
 
 				if(branch4 == null) {
-					branch4 = new Branch(activeBranch, arguments[2]);
-					branches.add(branch4);
+					branch4 = createBranch(activeBranch, arguments[2], false);
 				}
 
 				return new Instruction(Command.BRANCH_ON_LESS_THAN, new Register[] { rs30, rs31 }, branch4);
@@ -606,8 +619,7 @@ public class FileParser {
 				Branch branch5 = getBranchFromArgument(arguments[0]);
 
 				if(branch5 == null) {
-					branch5 = new Branch(activeBranch, arguments[0]);
-					branches.add(branch5);
+					branch5 = createBranch(activeBranch, arguments[0], false);
 				}
 
 				return new Instruction(Command.JUMP, branch5);

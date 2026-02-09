@@ -692,7 +692,13 @@ public enum Command {
 					throw new InvalidSyscallError(call);
 			}
 		}
-	}
+	},
+
+	/**
+	 * Dummy command to create a branch
+	 */
+	CREATE_BRANCH("\t", 1) {
+	},
 	;
 
 	private final String name;
