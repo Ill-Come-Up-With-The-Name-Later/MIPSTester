@@ -114,7 +114,7 @@ public class Program {
 	 */
 	public void run() {
 		allocateSymbols();
-		Registers.sp.storeNum(Memory.STACK_MEMORY.size());
+		Registers.sp.storeNum(Memory.STACK_MEMORY.size() - 4);
 		Registers.pc.storeNum(0);
 		currentBranch = branches.getFirst();
 
