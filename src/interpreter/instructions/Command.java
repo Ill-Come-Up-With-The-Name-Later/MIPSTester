@@ -416,9 +416,9 @@ public enum Command {
 			int num2 = r2.getIntegerOfValues();
 
 			if(num1 < num2) {
-				result.storeStringNum(BinaryConversion.intToBinary(1));
+				result.storeNum(1);
 			} else {
-				result.storeStringNum(BinaryConversion.intToBinary(0));
+				result.storeNum(0);
 			}
 		}
 	},
@@ -586,7 +586,7 @@ public enum Command {
 				case 1: // Print integer
 					int a0IntVal = Registers.a0.getIntegerOfValues();
 
-					System.out.println(a0IntVal);
+					System.out.print(a0IntVal);
 					break;
 				case 4: // Print String
 					int currentAddress = Registers.a0.getIntegerOfValues();
@@ -597,7 +597,7 @@ public enum Command {
 						currentAddress += 4;
 					}
 
-					System.out.println(toPrint);
+					System.out.print(toPrint);
 					break;
 				case 5: // Read integer
 					Scanner intScanner = new Scanner(System.in);
@@ -648,7 +648,7 @@ public enum Command {
 				case 11: // Print character
 					int a0CharVal = Registers.a0.getIntegerOfValues();
 
-					System.out.println((char)a0CharVal);
+					System.out.print((char)a0CharVal);
 					break;
 				case 12: // Read character
 					Scanner charScanner = new Scanner(System.in);
@@ -669,17 +669,17 @@ public enum Command {
 				case 34: // Print hexadecimal value
 					int a0IntVal2 = Registers.a0.getIntegerOfValues();
 
-					System.out.println(BinaryConversion.intToHex(a0IntVal2));
+					System.out.print(BinaryConversion.intToHex(a0IntVal2));
 					break;
 				case 35: // Print binary value
 					int a0IntVal3 = Registers.a0.getIntegerOfValues();
 
-					System.out.println(BinaryConversion.intToBinary(a0IntVal3));
+					System.out.print(BinaryConversion.intToBinary(a0IntVal3));
 					break;
 				case 36: // Print unsigned integer
 					int a0IntVal4 = Registers.a0.getIntegerOfValues();
 
-					System.out.println(MathHelper.toUnsigned(a0IntVal4));
+					System.out.print(MathHelper.toUnsigned(a0IntVal4));
 					break;
 				case 41: // Generate random number
 					Registers.a0.storeNum(new Random().nextInt());
