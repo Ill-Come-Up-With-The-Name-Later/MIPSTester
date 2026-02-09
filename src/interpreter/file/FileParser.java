@@ -453,42 +453,6 @@ public class FileParser {
 				}
 
 				return new Instruction(Command.LOGICAL_NOR, new Register[]{rd12, rs15, rs16});
-			case LOGICAL_AND_IMMEDIATE:
-				Register rd13 = getRegisterFromArgument(arguments[0]);
-				Register rs17 = getRegisterFromArgument(arguments[1]);
-				Integer n3 = getNumberFromArgument(arguments[2]);
-
-				if (rd13 == null) {
-					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
-				}
-
-				if (rs17 == null) {
-					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
-				}
-
-				if (n3 == null) {
-					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
-				}
-
-				return new Instruction(Command.LOGICAL_AND_IMMEDIATE, new Register[]{rd13, rs17}, n3);
-			case LOGICAL_OR_IMMEDIATE:
-				Register rd14 = getRegisterFromArgument(arguments[0]);
-				Register rs18 = getRegisterFromArgument(arguments[1]);
-				Integer n4 = getNumberFromArgument(arguments[2]);
-
-				if (rd14 == null) {
-					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
-				}
-
-				if (rs18 == null) {
-					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
-				}
-
-				if (n4 == null) {
-					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
-				}
-
-				return new Instruction(Command.LOGICAL_OR_IMMEDIATE, new Register[]{rd14, rs18}, n4);
 			case SHIFT_LEFT_LOGICAL:
 				Register rd15 = getRegisterFromArgument(arguments[0]);
 				Register rs19 = getRegisterFromArgument(arguments[1]);

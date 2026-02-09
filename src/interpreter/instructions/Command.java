@@ -345,34 +345,6 @@ public enum Command {
 	},
 
 	/**
-	 * Stores the result of logical and between
-	 * a register and a constant.
-	 */
-	LOGICAL_AND_IMMEDIATE("andi", 3) {
-
-		@Override
-		public void run(Register destination, Register r1, int num) {
-			super.run(destination, r1, num);
-			int result = r1.getIntegerOfValues() & num;
-			destination.storeStringNum(BinaryConversion.intToBinary(result));
-		}
-	},
-
-	/**
-	 * Stores the result of logical or between
-	 * a register and a constant.
-	 */
-	LOGICAL_OR_IMMEDIATE("ori", 3) {
-
-		@Override
-		public void run(Register destination, Register r1, int num) {
-			super.run(destination, r1, num);
-			int result = r1.getIntegerOfValues() | num;
-			destination.storeStringNum(BinaryConversion.intToBinary(result));
-		}
-	},
-
-	/**
 	 * Bitwise left shifts a value.
 	 */
 	SHIFT_LEFT_LOGICAL("sll", 3) {
