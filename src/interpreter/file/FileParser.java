@@ -99,14 +99,12 @@ public class FileParser {
 				Command command = null;
 				int commandIndex = 0;
 
-				if (tokens[0].endsWith(":")) {
+				if(tokens[0].endsWith(":")) {
 					Branch branch = getBranchFromArgument(tokens[0].substring(0, tokens[0].length() - 1));
 
 					if(branch == null) {
 						branch = new Branch(activeBranch, tokens[0].substring(0, tokens[0].length() - 1));
 						branches.add(branch);
-					} else {
-						throw new DuplicateBranchError(tokens[0], lineNumber);
 					}
 
 					activeBranch = branch;
@@ -543,6 +541,7 @@ public class FileParser {
 
 				if(branch1 == null) {
 					branch1 = new Branch(activeBranch, arguments[2]);
+					branches.add(branch1);
 				}
 
 				return new Instruction(Command.BRANCH_ON_EQUAL, new Register[] { rs24, rs25 }, branch1);
@@ -561,6 +560,7 @@ public class FileParser {
 
 				if(branch2 == null) {
 					branch2 = new Branch(activeBranch, arguments[2]);
+					branches.add(branch2);
 				}
 
 				return new Instruction(Command.BRANCH_ON_NOT_EQUAL, new Register[] { rs26, rs27 }, branch2);
@@ -579,6 +579,7 @@ public class FileParser {
 
 				if(branch3 == null) {
 					branch3 = new Branch(activeBranch, arguments[2]);
+					branches.add(branch3);
 				}
 
 				return new Instruction(Command.BRANCH_ON_GREATER_THAN_OR_EQUAL, new Register[] { rs28, rs29 }, branch3);
@@ -597,6 +598,7 @@ public class FileParser {
 
 				if(branch4 == null) {
 					branch4 = new Branch(activeBranch, arguments[2]);
+					branches.add(branch4);
 				}
 
 				return new Instruction(Command.BRANCH_ON_LESS_THAN, new Register[] { rs30, rs31 }, branch4);
@@ -605,6 +607,7 @@ public class FileParser {
 
 				if(branch5 == null) {
 					branch5 = new Branch(activeBranch, arguments[0]);
+					branches.add(branch5);
 				}
 
 				return new Instruction(Command.JUMP, branch5);
