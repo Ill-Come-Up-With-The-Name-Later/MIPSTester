@@ -1,5 +1,6 @@
 package program;
 
+import interpreter.errors.BranchNotExistError;
 import interpreter.errors.MemoryError;
 import interpreter.instructions.Branch;
 import interpreter.instructions.Command;
@@ -199,7 +200,7 @@ public class Program {
 			}
 		}
 
-		return -1;
+		throw new BranchNotExistError();
 	}
 
 	/**
