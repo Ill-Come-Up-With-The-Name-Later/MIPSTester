@@ -368,7 +368,7 @@ public enum Command {
 		public void run(Register destination, Register source, int shiftAmount) {
 			super.run(destination, source, shiftAmount);
 			int val = source.getIntegerOfValues();
-			int shifted = val >> shiftAmount;
+			int shifted = val >>> shiftAmount;
 
 			destination.storeStringNum(BinaryConversion.intToBinary(shifted));
 		}
