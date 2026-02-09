@@ -528,7 +528,7 @@ public class FileParser {
 			case SET_ON_LESS_THAN:
 				Register rd17 = getRegisterFromArgument(arguments[0]);
 				Register rs21 = getRegisterFromArgument(arguments[1]);
-				Register rs22 = getRegisterFromArgument(arguments[1]);
+				Register rs22 = getRegisterFromArgument(arguments[2]);
 
 				if (rd17 == null) {
 					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
@@ -542,7 +542,7 @@ public class FileParser {
 					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
 				}
 
-				return new Instruction(Command.SET_ON_LESS_THAN, new Register[]{rd17, rs21, rs22});
+				return new Instruction(Command.SET_ON_LESS_THAN, new Register[]{ rd17, rs21, rs22 });
 			case BRANCH_ON_EQUAL:
 				Register rs24 = getRegisterFromArgument(arguments[0]);
 				Register rs25 = getRegisterFromArgument(arguments[1]);
@@ -635,7 +635,7 @@ public class FileParser {
 				Branch branch6 = getBranchFromArgument(arguments[0]);
 
 				if(branch6 == null) {
-					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+					branch6 = createBranch(activeBranch, arguments[0], false);
 				}
 
 				return new Instruction(Command.JUMP_AND_LINK, branch6);

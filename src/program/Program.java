@@ -140,10 +140,10 @@ public class Program {
 					Registers.pc.storeNum(instruction.getRegistersData()[0].getIntegerOfValues());
 				} else if(command == Command.JUMP_AND_LINK) {
 					Branch destination = instruction.getBranchData();
+					Registers.ra.storeNum(Registers.pc.getIntegerOfValues() + 4);
+
 					Registers.pc.storeNum(getStartOfBranch(destination));
 					currentBranch = destination;
-
-					Registers.ra.storeNum(Registers.pc.getIntegerOfValues() + 4);
 				} else {
 					Registers.pc.storeNum(Registers.pc.getIntegerOfValues() + 4);
 				}
