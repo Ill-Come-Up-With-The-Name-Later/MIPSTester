@@ -144,7 +144,7 @@ public class BinaryConversion {
 	 * 				 <code>hex</code>
 	 */
 	public static String hexToBinaryInt(String hex) {
-		String binary = Integer.toBinaryString(Integer.parseUnsignedInt(hex, 2));
+		String binary = Integer.toBinaryString(Integer.parseUnsignedInt(hex, 16));
 		return "0".repeat(32 - binary.length()).concat(binary);
 	}
 
@@ -156,7 +156,7 @@ public class BinaryConversion {
 	 * 				 <code>hex</code>
 	 */
 	public static String hexToBinaryLong(String hex) {
-		String binary = Long.toBinaryString(Long.parseUnsignedLong(hex, 2));
+		String binary = Long.toBinaryString(Long.parseUnsignedLong(hex, 16));
 		return "0".repeat(64 - binary.length()).concat(binary);
 	}
 
