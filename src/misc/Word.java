@@ -109,7 +109,7 @@ public class Word {
 	 * 				 of the value in this <code>Word</code>
 	 */
 	public int getIntegerOfValues() {
-		return Integer.parseInt(BinaryConversion.binaryToInt(getValueString()));
+		return BinaryConversion.binaryToInt(getValueString());
 	}
 
 	/**

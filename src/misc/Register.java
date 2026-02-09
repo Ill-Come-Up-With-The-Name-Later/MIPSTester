@@ -101,7 +101,7 @@ public class Register {
 	 * 				 of the value in this <code>Register</code>
 	 */
 	public int getIntegerOfValues() {
-		return Integer.parseInt(BinaryConversion.binaryToInt(getValueString()));
+		return BinaryConversion.binaryToInt(getValueString());
 	}
 
 	/**

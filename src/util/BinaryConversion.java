@@ -23,8 +23,8 @@ public class BinaryConversion {
 	 * @param binary A binary value
 	 * @return The base 10 equivalent of <code>binary</code>
 	 */
-	public static String binaryToInt(String binary) {
-		return String.valueOf(Integer.parseUnsignedInt(binary, 2));
+	public static int binaryToInt(String binary) {
+		return Integer.parseUnsignedInt(binary, 2);
 	}
 
 	/**
@@ -47,8 +47,8 @@ public class BinaryConversion {
 	 * @param binary A binary value
 	 * @return The base 10 equivalent of <code>binary</code>
 	 */
-	public static String binaryToLong(String binary) {
-		return String.valueOf(Long.parseUnsignedLong(binary, 2));
+	public static long binaryToLong(String binary) {
+		return Long.parseUnsignedLong(binary, 2);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class BinaryConversion {
 		StringBuilder builder = new StringBuilder();
 
 		for(String s : binary) {
-			builder.append((char) Integer.parseUnsignedInt(binaryToInt(s)));
+			builder.append((char) binaryToInt(s));
 		}
 
 		return builder.toString();
@@ -111,7 +111,7 @@ public class BinaryConversion {
 	 * 				 <code>binary</code>
 	 */
 	public static String binaryToHex(String binary) {
-		return Integer.toHexString(Integer.parseUnsignedInt(binaryToInt(binary)));
+		return Integer.toHexString(binaryToInt(binary));
 	}
 
 	/**
