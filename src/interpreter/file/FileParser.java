@@ -222,6 +222,10 @@ public class FileParser {
 	private String concatenate(String[] tokens) {
 		StringBuilder sb = new StringBuilder();
 		for(String token : tokens) {
+			if(token.startsWith("#")) {
+				return sb.toString();
+			}
+
 			sb.append(token);
 			sb.append(" ");
 		}
