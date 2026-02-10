@@ -6,6 +6,7 @@ import misc.Register;
 import misc.Registers;
 import program.Program;
 
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -14,11 +15,16 @@ import java.util.Scanner;
  */
 public class CommandInterface {
 
+	public static String[] commands = new String[]{ "quit", "run", "run-and-output", "print-memory", "print-registers",
+					"print-stack", "write-output-file", "print-register", "help" };
+
 	/**
 	 * Reads input from the command line.
 	 */
 	public static void readCommands() {
 		Scanner sc = new Scanner(System.in);
+
+		System.out.print("Type \"help\" for a list of commands.");
 
 		while(true) {
 			System.out.print("\nEnter Command: ");
@@ -32,15 +38,24 @@ public class CommandInterface {
 						return;
 					case "run":
 						if (tokens.length != 2) {
-							throw new IllegalArgumentException("Wrong number of arguments");
+							throw new IllegalArgumentException("\nWrong number of arguments");
 						}
 
 						FileParser.GLOBAL.readFile(tokens[1]);
 						Program.MAIN_PROGRAM.run();
 						break;
+					case "run-and-output":
+						if (tokens.length != 3) {
+							throw new IllegalArgumentException("\nWrong number of arguments");
+						}
+						FileParser.GLOBAL.readFile(tokens[1]);
+						Program.MAIN_PROGRAM.run();
+						Program.MAIN_PROGRAM.outputToFile(tokens[2]);
+
+						break;
 					case "print-memory":
 						if (tokens.length != 2) {
-							throw new IllegalArgumentException("Wrong number of arguments");
+							throw new IllegalArgumentException("\nWrong number of arguments");
 						}
 
 						switch (tokens[1]) {
@@ -57,7 +72,7 @@ public class CommandInterface {
 						break;
 					case "print-registers":
 						if (tokens.length != 2) {
-							throw new IllegalArgumentException("Wrong number of arguments");
+							throw new IllegalArgumentException("\nWrong number of arguments");
 						}
 
 						switch (tokens[1]) {
@@ -74,7 +89,7 @@ public class CommandInterface {
 						break;
 					case "print-stack":
 						if (tokens.length != 2) {
-							throw new IllegalArgumentException("Wrong number of arguments");
+							throw new IllegalArgumentException("\nWrong number of arguments");
 						}
 
 						switch (tokens[1]) {
@@ -91,20 +106,20 @@ public class CommandInterface {
 						break;
 					case "write-output-file":
 						if (tokens.length != 2) {
-							throw new IllegalArgumentException("Wrong number of arguments");
+							throw new IllegalArgumentException("\nWrong number of arguments");
 						}
 
 						Program.MAIN_PROGRAM.outputToFile(tokens[1]);
 						break;
 					case "print-register":
 						if (tokens.length != 3) {
-							throw new IllegalArgumentException("Wrong number of arguments");
+							throw new IllegalArgumentException("\nWrong number of arguments");
 						}
 
 						Register register = Registers.getFromString(tokens[1]);
 
 						if (register == null) {
-							throw new IllegalArgumentException("Register not found");
+							throw new IllegalArgumentException("\nRegister not found");
 						}
 
 						switch (tokens[2]) {
@@ -120,8 +135,12 @@ public class CommandInterface {
 						}
 
 						break;
+					case "help":
+						System.out.println(Arrays.toString(commands));
+						break;
 					default:
-						throw new IllegalArgumentException("Command does not exist: " + tokens[0]);
+						System.out.print("Type \"help\" for a list of commands.");
+						throw new IllegalArgumentException("\nCommand does not exist: " + tokens[0]);
 				}
 			} catch(NoSuchElementException e) {
 				System.exit(0);
