@@ -906,7 +906,7 @@ public class FileParser {
 				int end = start;
 
 				for(int i = start; i < argument.length(); i++) {
-					if(!Character.isAlphabetic(argument.charAt(i))) {
+					if(!Character.isLetterOrDigit(argument.charAt(i))) {
 						end = i;
 						break;
 					}
