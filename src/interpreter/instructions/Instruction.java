@@ -110,6 +110,7 @@ public class Instruction {
 			case SUBTRACT -> Command.SUBTRACT.run(registersData[0], registersData[1], registersData[2]);
 			case SUBTRACT_UNSIGNED -> Command.SUBTRACT_UNSIGNED.run(registersData[0], registersData[1], registersData[2]);
 			case MULTIPLY -> Command.MULTIPLY.run(registersData[0], registersData[1]);
+			case MULTIPLY_NORMAL -> Command.MULTIPLY_NORMAL.run(registersData[0], registersData[1], registersData[2]);
 			case MULTIPLY_UNSIGNED -> Command.MULTIPLY_UNSIGNED.run(registersData[0], registersData[1]);
 			case DIVIDE -> Command.DIVIDE.run(registersData[0], registersData[1]);
 			case DIVIDE_UNSIGNED -> Command.DIVIDE_UNSIGNED.run(registersData[0], registersData[1]);

@@ -188,6 +188,21 @@ public enum Command {
 	},
 
 	/**
+	 * Multiplies two numbers and stores the result into
+	 * a destination register. Will not work with a product greater
+	 * than 2,147,483,647
+	 */
+	MULTIPLY_NORMAL("mul", 3) {
+
+		@Override
+		public void run(Register destination, Register r1, Register r2) {
+			super.run(destination, r1, r2);
+			int product = r1.getIntegerOfValues() * r2.getIntegerOfValues();
+			destination.storeNum(product);
+		}
+	},
+
+	/**
 	 * Multiplies two unsigned numbers and stores the result into
 	 * hi and lo registers.
 	 */

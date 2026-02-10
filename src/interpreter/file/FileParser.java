@@ -834,6 +834,24 @@ public class FileParser {
 				return new Instruction(Command.DIVIDE_UNSIGNED, new Register[] { rs49, rs50 });
 			case SYSCALL:
 				return new Instruction(Command.SYSCALL);
+			case MULTIPLY_NORMAL:
+				Register rd34 = getRegisterFromArgument(arguments[0]);
+				Register rs51 = getRegisterFromArgument(arguments[1]);
+				Register rs52 = getRegisterFromArgument(arguments[2]);
+
+				if(rd34 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[0], command.getName());
+				}
+
+				if(rs51 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[1], command.getName());
+				}
+
+				if(rs52 == null) {
+					throw new ImproperArgumentError(lineNumber, arguments[2], command.getName());
+				}
+
+				return new Instruction(Command.MULTIPLY_NORMAL, new Register[] { rd34, rs51, rs52 });
 		}
 
 		return null;
