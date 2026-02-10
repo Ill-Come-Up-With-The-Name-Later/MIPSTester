@@ -78,7 +78,6 @@ public class Registers {
 					sp,
 					fp,
 					ra,
-					pc,
 	};
 
 	public static final ArrayList<Register> READONLY_REGISTERS = new ArrayList<>() {
@@ -101,38 +100,38 @@ public class Registers {
 	 */
 	public static Register getFromString(String name) {
 		return switch (name) {
-			case "zero" -> zero;
-			case "at" -> at;
-			case "v0" -> v0;
-			case "v1" -> v1;
-			case "a0" -> a0;
-			case "a1" -> a1;
-			case "a2" -> a2;
-			case "a3" -> a3;
-			case "t0" -> t0;
-			case "t1" -> t1;
-			case "t2" -> t2;
-			case "t3" -> t3;
-			case "t4" -> t4;
-			case "t5" -> t5;
-			case "t6" -> t6;
-			case "t7" -> t7;
-			case "s0" -> s0;
-			case "s1" -> s1;
-			case "s2" -> s2;
-			case "s3" -> s3;
-			case "s4" -> s4;
-			case "s5" -> s5;
-			case "s6" -> s6;
-			case "s7" -> s7;
-			case "t8" -> t8;
-			case "t9" -> t9;
-			case "k0" -> k0;
-			case "k1" -> k1;
-			case "gp" -> gp;
-			case "sp" -> sp;
-			case "fp" -> fp;
-			case "ra" -> ra;
+			case "zero", "0" -> zero;
+			case "at", "1" -> at;
+			case "v0", "2" -> v0;
+			case "v1", "3" -> v1;
+			case "a0", "4" -> a0;
+			case "a1", "5" -> a1;
+			case "a2", "6" -> a2;
+			case "a3", "7" -> a3;
+			case "t0", "8" -> t0;
+			case "t1", "9" -> t1;
+			case "t2", "10" -> t2;
+			case "t3", "11" -> t3;
+			case "t4", "12" -> t4;
+			case "t5", "13" -> t5;
+			case "t6", "14" -> t6;
+			case "t7", "15" -> t7;
+			case "s0", "16" -> s0;
+			case "s1", "17" -> s1;
+			case "s2", "18" -> s2;
+			case "s3", "19" -> s3;
+			case "s4", "20" -> s4;
+			case "s5", "21" -> s5;
+			case "s6", "22" -> s6;
+			case "s7", "23" -> s7;
+			case "t8", "24" -> t8;
+			case "t9", "25" -> t9;
+			case "k0", "26" -> k0;
+			case "k1", "27" -> k1;
+			case "gp", "28" -> gp;
+			case "sp", "29" -> sp;
+			case "fp", "30" -> fp;
+			case "ra", "31" -> ra;
 			case "pc" -> pc;
 			default -> null;
 		};

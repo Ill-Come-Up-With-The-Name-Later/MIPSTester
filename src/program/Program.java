@@ -44,6 +44,7 @@ public class Program {
 	 */
 	public void allocateSymbols() {
 		int startIndex = Memory.GLOBAL_MEMORY.size() / 8;
+		Registers.gp.storeNum(startIndex);
 
 		for(Symbol symbol : symbols) {
 			int[] addresses = null;
