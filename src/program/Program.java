@@ -126,6 +126,10 @@ public class Program {
 				continue;
 			}
 
+			if(instruction.getCommand() == Command.SYSCALL && (Registers.v0.getIntegerOfValues() == 10 || Registers.v0.getIntegerOfValues() == 17)) {
+				return;
+			}
+
 			if(!instruction.isJump()) {
 				instruction.run();
 				Registers.pc.storeNum(Registers.pc.getIntegerOfValues() + 4);
@@ -250,7 +254,7 @@ public class Program {
 	}
 
 	/**
-	 * Writes the program output to a file.
+	 * Writes the program memory and registers to a file.
 	 *
 	 * @param path The path of the output file
 	 */
@@ -266,6 +270,8 @@ public class Program {
 			}
 
 			fw.close();
+
+			System.out.println("File written to: " + path);
 		} catch (IOException e) {
 			System.out.println("File not found");
 		}

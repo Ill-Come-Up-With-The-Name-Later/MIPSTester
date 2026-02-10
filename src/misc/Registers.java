@@ -152,7 +152,7 @@ public class Registers {
 	 */
 	public static void printRegistersHex() {
 		for(Register register : REGISTERS) {
-			System.out.println(register.getHexValueString());
+			System.out.println(register.getName() + ": " + register.getHexValueString());
 		}
 	}
 
@@ -162,7 +162,7 @@ public class Registers {
 	 */
 	public static void printRegistersBase10() {
 		for(Register register : REGISTERS) {
-			System.out.println(register.getIntegerOfValues());
+			System.out.println(register.getName() + ": " + register.getIntegerOfValues());
 		}
 	}
 }
