@@ -2,6 +2,7 @@ package ui;
 
 import interpreter.file.FileParser;
 import misc.Memory;
+import misc.Register;
 import misc.Registers;
 import program.Program;
 
@@ -93,8 +94,32 @@ public class CommandInterface {
 
 					Program.MAIN_PROGRAM.outputToFile(tokens[1]);
 					break;
+				case "print-register":
+					if(tokens.length != 3) {
+						throw new IllegalArgumentException("Wrong number of arguments");
+					}
+
+					Register register = Registers.getFromString(tokens[1]);
+
+					if(register == null) {
+						throw new IllegalArgumentException("Register not found");
+					}
+
+					switch(tokens[2]) {
+						case "bin":
+							System.out.println(register.getValueString());
+							break;
+						case "hex":
+							System.out.println(register.getHexValueString());
+							break;
+						case "dec":
+							System.out.println(register.getIntegerOfValues());
+							break;
+					}
+
+					break;
 				default:
-					throw new IllegalArgumentException("Command does not exist");
+					throw new IllegalArgumentException("Command does not exist: " + tokens[0]);
 			}
 		}
 	}

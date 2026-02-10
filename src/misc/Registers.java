@@ -133,6 +133,7 @@ public class Registers {
 			case "sp" -> sp;
 			case "fp" -> fp;
 			case "ra" -> ra;
+			case "pc" -> pc;
 			default -> null;
 		};
 	}
