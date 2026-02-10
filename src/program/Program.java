@@ -111,14 +111,34 @@ public class Program {
 
 	/**
 	 * Runs the program.
+	 *
 	 */
 	public void run() {
+		run(0, instructions.size() * 4);
+	}
+
+	/**
+	 * Runs the program from
+	 * a set start to a set end.
+	 *
+	 * @param startPoint The starting line of the program
+	 * @param endPoint The ending line of the program
+	 */
+	public void run(int startPoint, int endPoint) {
+		if(startPoint > endPoint) {
+			throw new IllegalArgumentException("Cannot start after end.");
+		}
+
+		if(startPoint % 4 != 0 || endPoint % 4 != 0) {
+			throw new IllegalArgumentException("Cannot start or end on a non-multiple of 4.");
+		}
+
 		allocateSymbols();
 		Registers.sp.storeNum(Memory.STACK_MEMORY.size() - 4);
-		Registers.pc.storeNum(0);
+		Registers.pc.storeNum(startPoint);
 		currentBranch = branches.getFirst();
 
-		while(Registers.pc.getIntegerOfValues() < instructions.size() * 4) {
+		while(Registers.pc.getIntegerOfValues() < endPoint) {
 			Instruction instruction = getInstructionAt(Registers.pc.getIntegerOfValues());
 
 			if(instruction.getCommand() == Command.CREATE_BRANCH) {

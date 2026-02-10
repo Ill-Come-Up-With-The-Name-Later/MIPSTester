@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class CommandInterface {
 
 	public static String[] commands = new String[]{ "quit", "run", "run-and-output", "print-memory", "print-registers",
-					"print-stack", "write-output-file", "print-register", "help" };
+					"print-stack", "write-output-file", "print-register", "help", "run-from" };
 
 	/**
 	 * Reads input from the command line.
@@ -53,6 +53,18 @@ public class CommandInterface {
 						Program.MAIN_PROGRAM.outputToFile(tokens[2]);
 
 						break;
+					case "run-from":
+						if (tokens.length != 4) {
+							throw new IllegalArgumentException("\nWrong number of arguments");
+						}
+
+						FileParser.GLOBAL.readFile(tokens[1]);
+
+						int start = Integer.parseInt(tokens[2]);
+						int end = Integer.parseInt(tokens[3]);
+
+						Program.MAIN_PROGRAM.run(start, end);
+						break;
 					case "print-memory":
 						if (tokens.length != 2) {
 							throw new IllegalArgumentException("\nWrong number of arguments");
@@ -64,6 +76,9 @@ public class CommandInterface {
 								break;
 							case "hex":
 								Memory.GLOBAL_MEMORY.printMemoryInHex();
+								break;
+							case "octal":
+								Memory.GLOBAL_MEMORY.printMemoryInOctal();
 								break;
 							case "dec":
 								Memory.GLOBAL_MEMORY.printMemoryInBase10();
@@ -82,6 +97,9 @@ public class CommandInterface {
 							case "hex":
 								Registers.printRegistersHex();
 								break;
+							case "octal":
+								Registers.printRegistersOctal();
+								break;
 							case "dec":
 								Registers.printRegistersBase10();
 								break;
@@ -98,6 +116,9 @@ public class CommandInterface {
 								break;
 							case "hex":
 								Memory.STACK_MEMORY.printMemoryInHex();
+								break;
+							case "octal":
+								Memory.STACK_MEMORY.printMemoryInOctal();
 								break;
 							case "dec":
 								Memory.STACK_MEMORY.printMemoryInBase10();
@@ -128,6 +149,9 @@ public class CommandInterface {
 								break;
 							case "hex":
 								System.out.println(register.getHexValueString());
+								break;
+							case "octal":
+								System.out.println(register.getOctalValueString());
 								break;
 							case "dec":
 								System.out.println(register.getIntegerOfValues());

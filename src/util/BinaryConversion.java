@@ -161,7 +161,7 @@ public class BinaryConversion {
 	}
 
 	/**
-	 * Converts hexadecimal to an integer.
+	 * Converts hexadecimal to a base-10 integer.
 	 *
 	 * @param hex A hexadecimal number
 	 * @return The base-10 version of <code>hex</code>
@@ -171,12 +171,52 @@ public class BinaryConversion {
 	}
 
 	/**
-	 * Converts hexadecimal to a long.
+	 * Converts hexadecimal to a base-10 long.
 	 *
 	 * @param hex A hexadecimal number
 	 * @return The base-10 version of <code>hex</code>
 	 */
 	public static long hexToLong(String hex) {
 		return Long.parseUnsignedLong(hex, 16);
+	}
+
+	/**
+	 * Converts a base-10 integer to octal.
+	 *
+	 * @param num A base-10 integer
+	 * @return The octal version of <code>num</code>
+	 */
+	public static int intToOctal(int num) {
+		return Integer.parseUnsignedInt(Integer.toOctalString(num), 10);
+	}
+
+	/**
+	 * Converts a base-10 long to octal.
+	 *
+	 * @param num A base-10 long
+	 * @return The octal version of <code>num</code>
+	 */
+	public static long longToOctal(long num) {
+		return Long.parseUnsignedLong(Long.toOctalString(num), 10);
+	}
+
+	/**
+	 * Converts octal to a base-10 int.
+	 *
+	 * @param octal An octal number
+	 * @return The base-10 version of <code>octal</code>
+	 */
+	public static int octalToInt(String octal) {
+		return Integer.parseUnsignedInt(octal, 8);
+	}
+
+	/**
+	 * Converts octal to a base-10 long.
+	 *
+	 * @param octal An octal number
+	 * @return The base-10 version of <code>octal</code>
+	 */
+	public static long octalToLong(String octal) {
+		return Long.parseUnsignedLong(octal, 8);
 	}
 }

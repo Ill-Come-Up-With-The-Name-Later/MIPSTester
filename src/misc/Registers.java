@@ -159,6 +159,16 @@ public class Registers {
 
 	/**
 	 * Prints out all <code>Register</code>s in
+	 * octal
+	 */
+	public static void printRegistersOctal() {
+		for(Register register : REGISTERS) {
+			System.out.println(register.getName() + ": " + register.getOctalValueString());
+		}
+	}
+
+	/**
+	 * Prints out all <code>Register</code>s in
 	 * base-10
 	 */
 	public static void printRegistersBase10() {

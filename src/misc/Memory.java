@@ -198,6 +198,24 @@ public class Memory {
 	}
 
 	/**
+	 * Prints the memory's values in octal.
+	 */
+	public void printMemoryInOctal() {
+		StringBuilder sb = new StringBuilder();
+		for(int i = 0; i < values.size(); i++) {
+			if(values.get(i) != null) {
+				if(values.get(i).isFiller()) {
+					continue;
+				}
+
+				sb.append("Memory[").append(i * 4).append("] = ").append(values.get(i).getOctalValueString()).append("\n");
+			}
+		}
+
+		System.out.println(sb);
+	}
+
+	/**
 	 * Prints the memory's values in base-10.
 	 */
 	public void printMemoryInBase10() {

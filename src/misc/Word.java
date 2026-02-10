@@ -102,6 +102,15 @@ public class Word {
 	}
 
 	/**
+	 * Gets the value of this <code>Word</code> in octal.
+	 *
+	 * @return The value in this in octal
+	 */
+	public String getOctalValueString() {
+		return String.valueOf(BinaryConversion.intToOctal(getIntegerOfValues()));
+	}
+
+	/**
 	 * Converts the value of the
 	 * <code>Register</code> to a base-10 integer.
 	 *
