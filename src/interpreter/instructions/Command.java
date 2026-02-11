@@ -23,7 +23,8 @@ public enum Command {
 	/**
 	 * Loads a <code>Word</code> from program memory.
 	 */
-	LOAD_WORD("lw", 3) {
+	LOAD_WORD("lw", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMBER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, int offset, Register source) {
@@ -43,7 +44,8 @@ public enum Command {
 	 * Loads the start address of a symbol into
 	 * a register.
 	 */
-	LOAD_ADDRESS("la", 2) {
+	LOAD_ADDRESS("la", 2,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.SYMBOL }) {
 
 		@Override
 		public void run(Register destination, Symbol symbol) {
@@ -56,7 +58,8 @@ public enum Command {
 	/**
 	 * Loads a constant into a register
 	 */
-	LOAD_IMMEDIATE("li", 2) {
+	LOAD_IMMEDIATE("li", 2,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMBER }) {
 
 		@Override
 		public void run(Register destination, int num) {
@@ -68,7 +71,8 @@ public enum Command {
 	/**
 	 * Moves a value from one register to another.
 	 */
-	MOVE("move", 2) {
+	MOVE("move", 2,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, Register source) {
@@ -79,7 +83,8 @@ public enum Command {
 	/**
 	 * Copies the value from the hi register.
 	 */
-	MOVE_FROM_HI("mfhi", 1) {
+	MOVE_FROM_HI("mfhi", 1,
+					new ArgumentType[] { ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination) {
@@ -91,7 +96,8 @@ public enum Command {
 	/**
 	 * Copies the value from the lo register.
 	 */
-	MOVE_FROM_LO("mflo", 1) {
+	MOVE_FROM_LO("mflo", 1,
+					new ArgumentType[] { ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination) {
@@ -103,7 +109,8 @@ public enum Command {
 	/**
 	 * Stores a word in program memory.
 	 */
-	STORE_WORD("sw", 3) {
+	STORE_WORD("sw", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.NUMBER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register source, int offset, Register destinationAddress) {
@@ -120,7 +127,8 @@ public enum Command {
 	/**
 	 * Adds two values and stores the result.
 	 */
-	ADD("add", 3) {
+	ADD("add", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -133,7 +141,8 @@ public enum Command {
 	/**
 	 * Adds two unsigned values and stores the result.
 	 */
-	ADD_UNSIGNED("addu", 3) {
+	ADD_UNSIGNED("addu", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -146,7 +155,8 @@ public enum Command {
 	/**
 	 * Subtracts two values and stores the result.
 	 */
-	SUBTRACT("sub", 3) {
+	SUBTRACT("sub", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -159,7 +169,8 @@ public enum Command {
 	/**
 	 * Subtracts two unsigned values and stores the result.
 	 */
-	SUBTRACT_UNSIGNED("subu", 3) {
+	SUBTRACT_UNSIGNED("subu", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -173,7 +184,8 @@ public enum Command {
 	 * Multiplies two numbers and stores the result into
 	 * hi and lo registers.
 	 */
-	MULTIPLY("mult", 2) {
+	MULTIPLY("mult", 2,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register r1, Register r2) {
@@ -192,7 +204,8 @@ public enum Command {
 	 * a destination register. Will not work with a product greater
 	 * than 2,147,483,647
 	 */
-	MULTIPLY_NORMAL("mul", 3) {
+	MULTIPLY_NORMAL("mul", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -206,7 +219,8 @@ public enum Command {
 	 * Multiplies two unsigned numbers and stores the result into
 	 * hi and lo registers.
 	 */
-	MULTIPLY_UNSIGNED("multu", 2) {
+	MULTIPLY_UNSIGNED("multu", 2,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register r1, Register r2) {
@@ -225,7 +239,8 @@ public enum Command {
 	 * Divides two numbers. Stores the remainder into hi
 	 * and the quotient into lo.
 	 */
-	DIVIDE("div", 2) {
+	DIVIDE("div", 2,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register r1, Register r2) {
@@ -246,7 +261,8 @@ public enum Command {
 	 * Divides two unsigned numbers. Stores the remainder into hi
 	 * and the quotient into lo.
 	 */
-	DIVIDE_UNSIGNED("divu", 2) {
+	DIVIDE_UNSIGNED("divu", 2,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register r1, Register r2) {
@@ -266,7 +282,8 @@ public enum Command {
 	/**
 	 * Adds a constant and a register's value and stores the result.
 	 */
-	ADD_IMMEDIATE("addi", 3) {
+	ADD_IMMEDIATE("addi", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.NUMBER }) {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
@@ -279,7 +296,8 @@ public enum Command {
 	/**
 	 * Adds a constant and a register's value and stores the result.
 	 */
-	ADD_IMMEDIATE_UNSIGNED("addiu", 3) {
+	ADD_IMMEDIATE_UNSIGNED("addiu", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.NUMBER }) {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
@@ -293,7 +311,8 @@ public enum Command {
 	 * Stores the result of logical and between
 	 * two registers.
 	 */
-	LOGICAL_AND("and", 3) {
+	LOGICAL_AND("and", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -307,7 +326,8 @@ public enum Command {
 	 * Performs logical and with a register value
 	 * and a constant.
 	 */
-	AND_IMMEDIATE("andi", 3) {
+	AND_IMMEDIATE("andi", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.NUMBER }) {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
@@ -321,7 +341,8 @@ public enum Command {
 	 * Stores the result of logical or between two
 	 * registers.
 	 */
-	LOGICAL_OR("or", 3) {
+	LOGICAL_OR("or", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -335,7 +356,8 @@ public enum Command {
 	 * Performs logical or with a register value
 	 * and a constant.
 	 */
-	OR_IMMEDIATE("ori", 3) {
+	OR_IMMEDIATE("ori", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.NUMBER }) {
 
 		@Override
 		public void run(Register destination, Register r1, int num) {
@@ -349,7 +371,8 @@ public enum Command {
 	 * Stores the result of logical nor between
 	 * two registers.
 	 */
-	LOGICAL_NOR("nor", 3) {
+	LOGICAL_NOR("nor", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
@@ -362,7 +385,8 @@ public enum Command {
 	/**
 	 * Bitwise left shifts a value.
 	 */
-	SHIFT_LEFT_LOGICAL("sll", 3) {
+	SHIFT_LEFT_LOGICAL("sll", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.NUMBER }) {
 
 		@Override
 		public void run(Register destination, Register source, int shiftAmount) {
@@ -377,7 +401,8 @@ public enum Command {
 	/**
 	 * Bitwise right shifts a value.
 	 */
-	SHIFT_RIGHT_LOGICAL("srl", 3) {
+	SHIFT_RIGHT_LOGICAL("srl", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.NUMBER }) {
 
 		@Override
 		public void run(Register destination, Register source, int shiftAmount) {
@@ -394,7 +419,8 @@ public enum Command {
 	 * provided register's value is less than the third
 	 * provided register's value.
 	 */
-	SET_ON_LESS_THAN("slt", 3) {
+	SET_ON_LESS_THAN("slt", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register result, Register r1, Register r2) {
@@ -415,7 +441,8 @@ public enum Command {
 	 * provided register's value is less than the third
 	 * provided register's value.
 	 */
-	SET_ON_LESS_THAN_UNSIGNED("sltu", 3) {
+	SET_ON_LESS_THAN_UNSIGNED("sltu", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register result, Register r1, Register r2) {
@@ -441,7 +468,8 @@ public enum Command {
 	 * than a constant otherwise sets the register
 	 * to 0.
 	 */
-	SET_ON_LESS_THAN_IMMEDIATE("slti", 3) {
+	SET_ON_LESS_THAN_IMMEDIATE("slti", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.NUMBER }) {
 
 		@Override
 		public void run(Register result, Register r1, int num) {
@@ -462,7 +490,8 @@ public enum Command {
 	 * than a constant otherwise sets the register
 	 * to 0.
 	 */
-	SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE("sltui", 3) {
+	SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE("sltui", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.NUMBER }) {
 
 		@Override
 		public void run(Register result, Register r1, int num) {
@@ -483,7 +512,8 @@ public enum Command {
 	 * Jumps to a branch when two registers' values
 	 * are equal.
 	 */
-	BRANCH_ON_EQUAL("beq", 3) {
+	BRANCH_ON_EQUAL("beq", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.BRANCH }) {
 
 		@Override
 		public void run(Register r1, Register r2, Branch branch) {
@@ -495,7 +525,8 @@ public enum Command {
 	 * Jumps to a branch when two registers' values
 	 * are not equal.
 	 */
-	BRANCH_ON_NOT_EQUAL("bne", 3) {
+	BRANCH_ON_NOT_EQUAL("bne", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.BRANCH }) {
 
 		@Override
 		public void run(Register r1, Register r2, Branch branch) {
@@ -507,7 +538,8 @@ public enum Command {
 	 * Jumps to a branch if a value is greater than
 	 * or equal to another.
 	 */
-	BRANCH_ON_GREATER_THAN_OR_EQUAL("bge", 3) {
+	BRANCH_ON_GREATER_THAN_OR_EQUAL("bge", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.BRANCH }) {
 
 		@Override
 		public void run(Register r1, Register r2, Branch branch) {
@@ -519,7 +551,8 @@ public enum Command {
 	 * Jumps to a branch if a value is less than
 	 * another.
 	 */
-	BRANCH_ON_LESS_THAN("blt", 3) {
+	BRANCH_ON_LESS_THAN("blt", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.BRANCH}) {
 
 		@Override
 		public void run(Register r1, Register r2, Branch branch) {
@@ -530,7 +563,8 @@ public enum Command {
 	/**
 	 * Jumps to a branch.
 	 */
-	JUMP("j", 1) {
+	JUMP("j", 1,
+					new ArgumentType[] { ArgumentType.BRANCH }) {
 		@Override
 		public void run(Branch branch) {
 
@@ -540,7 +574,8 @@ public enum Command {
 	/**
 	 * Jumps to register for returning.
 	 */
-	JUMP_REGISTER("jr", 1) {
+	JUMP_REGISTER("jr", 1,
+					new ArgumentType[] { ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination) {
@@ -552,7 +587,8 @@ public enum Command {
 	 * Jumps to an instruction and retains
 	 * the original jump location.
 	 */
-	JUMP_AND_LINK("jal", 1) {
+	JUMP_AND_LINK("jal", 1,
+					new ArgumentType[] { ArgumentType.BRANCH }) {
 
 		@Override
 		public void run(Branch branch) {
@@ -563,7 +599,7 @@ public enum Command {
 	/**
 	 * A system call.
 	 */
-	SYSCALL("syscall", 0) {
+	SYSCALL("syscall", 0, new ArgumentType[] { }) {
 
 		@Override
 		public void run() {
@@ -684,16 +720,18 @@ public enum Command {
 	/**
 	 * Dummy command to create a branch
 	 */
-	CREATE_BRANCH("\t", 1) {
+	CREATE_BRANCH("\t", 1, new ArgumentType[] { ArgumentType.BRANCH }) {
 	},
 	;
 
 	private final String name;
 	private final int argumentCount;
+	private final ArgumentType[] argumentTypes;
 
-	Command(String name, int argumentCount) {
+	Command(String name, int argumentCount, ArgumentType[] argumentTypes) {
 		this.name = name;
 		this.argumentCount = argumentCount;
+		this.argumentTypes = argumentTypes;
 	}
 
 	public String getName() {
@@ -702,6 +740,10 @@ public enum Command {
 
 	public int getArgumentCount() {
 		return argumentCount;
+	}
+
+	public ArgumentType[] getArgumentTypes() {
+		return argumentTypes;
 	}
 
 	public static Command getCommand(String name) {
