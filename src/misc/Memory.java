@@ -12,10 +12,10 @@ import java.util.Arrays;
 public class Memory {
 
 	// For global defined variables
-	public static final Memory GLOBAL_MEMORY = new Memory(16384);
+	public static final Memory GLOBAL_MEMORY = new Memory(32768);
 
 	// For local variables in procedures
-	public static final Memory STACK_MEMORY = new Memory(4096);
+	public static final Memory STACK_MEMORY = new Memory(8192);
 
 	private final ArrayList<Word> values;
 
