@@ -133,6 +133,8 @@ public class Instruction {
 			case LOGICAL_OR -> Command.LOGICAL_OR.run(registersData[0], registersData[1], registersData[2]);
 			case OR_IMMEDIATE -> Command.OR_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case LOGICAL_NOR -> Command.LOGICAL_NOR.run(registersData[0], registersData[1], registersData[2]);
+			case LOGICAL_XOR -> Command.LOGICAL_XOR.run(registersData[0], registersData[1], registersData[2]);
+			case LOGICAL_XOR_IMMEDIATE -> Command.LOGICAL_XOR_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case SHIFT_LEFT_LOGICAL -> Command.SHIFT_LEFT_LOGICAL.run(registersData[0], registersData[1], integerData);
 			case SHIFT_RIGHT_LOGICAL -> Command.SHIFT_RIGHT_LOGICAL.run(registersData[0], registersData[1], integerData);
 			case SET_ON_LESS_THAN -> Command.SET_ON_LESS_THAN.run(registersData[0], registersData[1], registersData[2]);

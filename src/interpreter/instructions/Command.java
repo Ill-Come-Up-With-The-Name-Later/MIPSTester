@@ -383,6 +383,38 @@ public enum Command {
 	},
 
 	/**
+	 * Performs the xor operation between two registers and
+	 * stores the result into a register.
+	 */
+	LOGICAL_XOR("xor", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
+
+		@Override
+		public void run(Register destination, Register r1, Register r2) {
+			super.run(destination, r1, r2);
+
+			int result = r1.getIntegerOfValues() ^ r2.getIntegerOfValues();
+			destination.storeNum(result);
+		}
+	},
+
+	/**
+	 * Performs the xor operation between a register and a number and
+	 * stores the result into a register.
+	 */
+	LOGICAL_XOR_IMMEDIATE("xori", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.NUMBER }) {
+
+		@Override
+		public void run(Register destination, Register r1, int num) {
+			super.run(destination, r1, num);
+
+			int result = r1.getIntegerOfValues() ^ num;
+			destination.storeNum(result);
+		}
+	},
+
+	/**
 	 * Bitwise left shifts a value.
 	 */
 	SHIFT_LEFT_LOGICAL("sll", 3,
@@ -552,7 +584,7 @@ public enum Command {
 	 * another.
 	 */
 	BRANCH_ON_LESS_THAN("blt", 3,
-					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.BRANCH}) {
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.BRANCH }) {
 
 		@Override
 		public void run(Register r1, Register r2, Branch branch) {
