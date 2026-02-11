@@ -225,7 +225,7 @@ public class Program {
 			}
 		}
 
-		throw new BranchNotExistError();
+		throw new BranchNotExistError("");
 	}
 
 	/**

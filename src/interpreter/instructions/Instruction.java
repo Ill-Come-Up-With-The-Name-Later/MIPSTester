@@ -67,6 +67,12 @@ public class Instruction {
 		this.symbolData = symbolData;
 	}
 
+	public Instruction(Command command, Register[] registersData, int integerData, Branch branchData, Symbol symbolData) {
+		this(command, registersData, integerData);
+		this.branchData = branchData;
+		this.symbolData = symbolData;
+	}
+
 	public Command getCommand() {
 		return command;
 	}

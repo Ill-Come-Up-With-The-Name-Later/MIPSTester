@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Scanner;
 
 /**
@@ -139,7 +140,8 @@ public class FileParser {
 				//System.out.println(command + " | Tokens: " +
 				//				Arrays.toString(tokens) + " | Arguments: " + Arrays.toString(arguments));
 
-				Instruction parsed = validateCommand(command, arguments, lineNumber);
+				//Instruction parsed = validateCommand(command, arguments, lineNumber);
+				Instruction parsed = validateCommand2(command, arguments, lineNumber);;
 
 				if (parsed == null) {
 					throw new InstructionParseError(lineNumber);
@@ -855,6 +857,99 @@ public class FileParser {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Validates a command and its arguments.
+	 * Converts to a parameterized <code>Instruction</code>
+	 * for sequencing.
+	 *
+	 * @param command The command
+	 * @param arguments The arguments
+	 * @param lineNumber The line number of the command
+	 * @return An executable <code>Instruction</code> of the command
+	 */
+	private Instruction validateCommand2(Command command, String[] arguments, int lineNumber) {
+		Optional<Register> reg1 = Optional.empty();
+		Optional<Register> reg2 = Optional.empty();
+		Optional<Register> reg3 = Optional.empty();
+
+		if(arguments.length >= 1) {
+			reg1 = Optional.ofNullable(getRegisterFromArgument(arguments[0]));
+		}
+
+		if(arguments.length >= 2) {
+			reg2 = Optional.ofNullable(getRegisterFromArgument(arguments[1]));
+		}
+
+		if(arguments.length == 3) {
+			reg3 = Optional.ofNullable(getRegisterFromArgument(arguments[2]));
+		}
+
+		Optional<Integer> num1 = Optional.empty();
+		Optional<Integer> num2 = Optional.empty();
+
+		if(arguments.length >= 2) {
+			num1 = Optional.ofNullable(getNumberFromArgument(arguments[1]));
+		}
+
+		if(arguments.length == 3) {
+			num2 = Optional.ofNullable(getNumberFromArgument(arguments[2]));
+		}
+
+		Optional<Symbol> symbol1 = Optional.empty();
+
+		if(arguments.length >= 2) {
+			symbol1 = Optional.ofNullable(getSymbolFromArgument(arguments[1]));
+		}
+
+		Optional<Branch> branch1 = Optional.empty();
+		Optional<String> branchName1 = Optional.empty();
+
+		if(arguments.length >= 1) {
+			branch1 = Optional.ofNullable(getBranchFromArgument(arguments[0]));
+			branchName1 = Optional.ofNullable(arguments[0]);
+		}
+
+		Optional<Branch> branch2;
+		Optional<String> branchName2;
+
+		if(arguments.length == 3) {
+			branch2 = Optional.ofNullable(getBranchFromArgument(arguments[2]));
+			branchName2 = Optional.ofNullable(arguments[2]);
+		} else {
+			branchName2 = Optional.empty();
+			branch2 = Optional.empty();
+		}
+
+		Register[] registerArray = new Register[3];
+		registerArray[0] = reg1.orElse(null);
+		registerArray[1] = reg2.orElse(null);
+		registerArray[2] = reg3.orElse(null);
+
+		Optional<Integer> finalNum = num2;
+		Integer num = num1.orElseGet(() -> finalNum.orElse(null));
+		Symbol symbol = symbol1.orElse(null);
+		Branch b1 = branch1.orElseGet(() -> branch2.orElse(null));
+
+		if(num == null) {
+			num = Integer.MIN_VALUE;
+		}
+
+		if(b1 == null) {
+			if(branchName1.isPresent() || branchName2.isPresent()) {
+				String bn1 =  branchName1.orElse(null);
+				String bn2 = branchName2.orElse(null);
+
+				if(bn1 != null && Character.isLetter(bn1.charAt(0))) {
+					b1 = createBranch(activeBranch, bn1, false);
+				} else if(bn2 != null && Character.isLetter(bn2.charAt(0))) {
+					b1 = createBranch(activeBranch, bn2, false);
+				}
+			}
+		}
+
+		return new Instruction(command, registerArray, num, b1, symbol);
 	}
 
 	/**
