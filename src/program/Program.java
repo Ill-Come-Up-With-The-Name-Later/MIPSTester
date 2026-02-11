@@ -177,6 +177,13 @@ public class Program {
 	}
 
 	/**
+	 * Runs a single instruction.
+	 */
+	public void step() {
+		run(Registers.pc.getIntegerOfValues(), Registers.pc.getIntegerOfValues() + 4);
+	}
+
+	/**
 	 * Determines if a branch should happen based on
 	 * the condition of the branching.
 	 *
