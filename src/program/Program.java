@@ -147,6 +147,10 @@ public class Program {
 				continue;
 			}
 
+			if(Registers.sp.getIntegerOfValues() < 0) {
+				throw new StackOverflowError("Program stack overflow.");
+			}
+
 			if(instruction.getCommand() == Command.SYSCALL && (Registers.v0.getIntegerOfValues() == 10 || Registers.v0.getIntegerOfValues() == 17)) {
 				return;
 			}
