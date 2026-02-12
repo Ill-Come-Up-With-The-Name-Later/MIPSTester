@@ -110,13 +110,13 @@ public class Instruction {
 	 */
 	public void run() {
 		switch(command) {
-			case LOAD_WORD -> Command.LOAD_WORD.run(registersData[0], integerData, registersData[1]);
+			case LOAD_WORD -> Command.LOAD_WORD.run(registersData[0], integerData, registersData[2]);
 			case LOAD_ADDRESS ->  Command.LOAD_ADDRESS.run(registersData[0], symbolData);
 			case LOAD_IMMEDIATE -> Command.LOAD_IMMEDIATE.run(registersData[0], integerData);
 			case MOVE -> Command.MOVE.run(registersData[0], registersData[1]);
 			case MOVE_FROM_HI -> Command.MOVE_FROM_HI.run(registersData[0]);
 			case MOVE_FROM_LO -> Command.MOVE_FROM_LO.run(registersData[0]);
-			case STORE_WORD -> Command.STORE_WORD.run(registersData[0], integerData, registersData[1]);
+			case STORE_WORD -> Command.STORE_WORD.run(registersData[0], integerData, registersData[2]);
 			case ADD -> Command.ADD.run(registersData[0], registersData[1], registersData[2]);
 			case ADD_UNSIGNED -> Command.ADD_UNSIGNED.run(registersData[0], registersData[1], registersData[2]);
 			case SUBTRACT -> Command.SUBTRACT.run(registersData[0], registersData[1], registersData[2]);

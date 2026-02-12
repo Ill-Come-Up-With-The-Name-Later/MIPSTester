@@ -162,10 +162,17 @@ public class Word {
 			}
 
 			if(!s.isEmpty()) {
-				if (c == 'n' && s.charAt(s.length() - 1) == '\\') {
-					s.deleteCharAt(s.length() - 1);
-					s.append('\n');
-					continue;
+				if (s.charAt(s.length() - 1) == '\\') {
+					switch(c) {
+						case 'n':
+							s.deleteCharAt(s.length() - 1);
+							s.append('\n');
+							continue;
+						case 't':
+							s.deleteCharAt(s.length() - 1);
+							s.append('\t');
+							continue;
+					}
 				}
 			}
 
