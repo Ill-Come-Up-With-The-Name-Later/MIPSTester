@@ -161,6 +161,12 @@ public class Word {
 				break;
 			}
 
+			if(c == 'n' && s.charAt(s.length() - 1) == '\\') {
+				s.deleteCharAt(s.length() - 1);
+				s.append('\n');
+				continue;
+			}
+
 			s.append(c);
 		}
 
