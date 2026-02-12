@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Arrays;
+
 public class BinaryConversion {
 
 	/**
@@ -218,5 +220,46 @@ public class BinaryConversion {
 	 */
 	public static long octalToLong(String octal) {
 		return Long.parseUnsignedLong(octal, 8);
+	}
+
+	/**
+	 * Converts a String into binary using
+	 * 8 bits for each character and storing
+	 * the bits in 32-bit chunks.
+	 *
+	 * @param string The String
+	 * @return The String in binary
+	 */
+	public static String[] stringToCompressedBinary(String string) {
+		String[] binary = new String[string.length() % 4 == 0 ?
+						string.length() / 4 : string.length() / 4 + 1];
+
+		Arrays.fill(binary, "");
+
+		int index = 0;
+		int byteIndex = 0;
+
+		for(int i = 0; i < string.length(); i++) {
+			byteIndex += 1;
+			String charBinary = BinaryConversion.intToBinary(string.charAt(i)).substring(24, 32);;
+
+			binary[index] += charBinary;
+
+			if(i == string.length() - 1 && byteIndex < 4) {
+				binary[index] += BinaryConversion.intToBinary('\0').substring(24, 32);
+			}
+
+			if(i == string.length() - 1) {
+				binary[index] += "0".repeat(32 - binary[index].length());
+			}
+
+			if(byteIndex == 4) {
+				byteIndex = 0;
+
+				index++;
+			}
+		}
+
+		return binary;
 	}
 }

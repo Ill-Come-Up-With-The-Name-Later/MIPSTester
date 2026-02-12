@@ -648,7 +648,7 @@ public enum Command {
 					StringBuilder toPrint = new StringBuilder();
 
 					while(Memory.GLOBAL_MEMORY.getWord(currentAddress) != null) {
-						toPrint.append((char) Memory.GLOBAL_MEMORY.getWord(currentAddress).getIntegerOfValues());
+						toPrint.append(Memory.GLOBAL_MEMORY.getWord(currentAddress).readAsString());
 						currentAddress += 4;
 					}
 
@@ -690,11 +690,12 @@ public enum Command {
 						return;
 					}
 
-					for(int i = 0; i < str.length(); i++) {
-						Word w = new Word();
-						char c = str.charAt(i);
-						w.storeNum(c);
-						Memory.GLOBAL_MEMORY.setWord(w, startAddress + (i * 4));
+					String[] binaryArray = BinaryConversion.stringToCompressedBinary(str);
+
+					for(int i = 0; i < binaryArray.length; i++) {
+						Word word = new Word();
+						word.storeStringNum(binaryArray[i]);
+						Memory.GLOBAL_MEMORY.setWord(word, startAddress + (i * 4));
 					}
 					break;
 				case 10: // Exit program

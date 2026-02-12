@@ -35,7 +35,7 @@ public class MathHelper {
 	 * @return The number of bytes needed for the String
 	 */
 	public static int binaryLength(String string) {
-		String[] binary = BinaryConversion.stringToBinary(string);
+		String[] binary = BinaryConversion.stringToCompressedBinary(string);
 
 		return binary.length * 4;
 	}

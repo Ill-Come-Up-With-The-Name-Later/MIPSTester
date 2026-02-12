@@ -77,7 +77,7 @@ public class Program {
 					break;
 				case ASCII:
 					String val = String.valueOf(symbol.getValue());
-					String[] binary = BinaryConversion.stringToBinary(val);
+					String[] binary = BinaryConversion.stringToCompressedBinary(val);
 
 					int index = 0;
 					for(int i = addresses[0]; i < addresses[1]; i += 4) {

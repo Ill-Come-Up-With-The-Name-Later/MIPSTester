@@ -147,6 +147,27 @@ public class Word {
 	}
 
 	/**
+	 * Interprets the <code>Word</code> as
+	 * storing characters instead of a number.
+	 *
+	 * @return The characters in the <code>Word</code>
+	 */
+	public String readAsString() {
+		StringBuilder s = new StringBuilder();
+
+		for(int i = 0; i < 32; i += 8) {
+			char c = (char) BinaryConversion.binaryToInt(getValueString().substring(i, i + 8));
+			if(c == '\0') {
+				break;
+			}
+
+			s.append(c);
+		}
+
+		return s.toString();
+	}
+
+	/**
 	 * Copies the value of this <code>Word</code>
 	 * into another.
 	 *
