@@ -175,4 +175,13 @@ public class Registers {
 			System.out.println(register.getName() + ": " + register.getIntegerOfValues());
 		}
 	}
+
+	/**
+	 * Resets all <code>Register</code>s.
+	 */
+	public static void reset() {
+		for(Register register : REGISTERS) {
+			register.storeNum(0);
+		}
+	}
 }

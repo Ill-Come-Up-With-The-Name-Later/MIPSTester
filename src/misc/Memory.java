@@ -18,11 +18,13 @@ public class Memory {
 	public static final Memory STACK_MEMORY = new Memory(8192);
 
 	private final ArrayList<Word> values;
+	private final int size;
 
 	private Memory(int size) {
-		values = new ArrayList<>(size);
+		this.size = size;
+		values = new ArrayList<>(this.size);
 
-		for(int i = 0; i < size; i++) {
+		for(int i = 0; i < this.size; i++) {
 			values.add(null);
 		}
 	}
@@ -231,6 +233,17 @@ public class Memory {
 		}
 
 		System.out.println(sb);
+	}
+
+	/**
+	 * Clears the <code>Memory</code>.
+	 */
+	public void clear() {
+		values.clear();
+
+		for(int i = 0; i < size; i++) {
+			values.add(null);
+		}
 	}
 
 	@Override

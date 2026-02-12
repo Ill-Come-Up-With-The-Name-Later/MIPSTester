@@ -2,6 +2,7 @@ package program;
 
 import interpreter.errors.BranchNotExistError;
 import interpreter.errors.MemoryError;
+import interpreter.file.FileParser;
 import interpreter.instructions.Branch;
 import interpreter.instructions.Command;
 import interpreter.instructions.Instruction;
@@ -134,10 +135,12 @@ public class Program {
 			throw new IllegalArgumentException("Cannot start or end on a non-multiple of 4.");
 		}
 
-		allocateSymbols();
-		Registers.sp.storeNum(Memory.STACK_MEMORY.size() - 4);
-		Registers.pc.storeNum(startPoint);
-		currentBranch = branches.getFirst();
+		if(startPoint == 0) {
+			allocateSymbols();
+			Registers.sp.storeNum(Memory.STACK_MEMORY.size() - 4);
+			Registers.pc.storeNum(startPoint);
+			currentBranch = branches.getFirst();
+		}
 
 		while(Registers.pc.getIntegerOfValues() < endPoint) {
 			Instruction instruction = getInstructionAt(Registers.pc.getIntegerOfValues());
@@ -347,5 +350,24 @@ public class Program {
 
 	public Branch getCurrentBranch() {
 		return currentBranch;
+	}
+
+	/**
+	 * Resets the program.
+	 */
+	public void reset() {
+		Memory.GLOBAL_MEMORY.clear();
+		Memory.STACK_MEMORY.clear();
+
+		FileParser.GLOBAL.reset();
+		Registers.reset();
+
+		instructions.clear();
+		symbols.clear();
+		symbolAddresses.clear();
+		branches.clear();
+
+		programCounter = 0;
+		currentBranch = null;
 	}
 }

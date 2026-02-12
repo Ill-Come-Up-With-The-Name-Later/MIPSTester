@@ -26,7 +26,7 @@ public class FileParser {
 
 	public static final FileParser GLOBAL = new FileParser();
 
-	private final Branch mainBranch;
+	private Branch mainBranch;
 	private Branch activeBranch;
 	private final ArrayList<Branch> branches;
 	private final ArrayList<Instruction> instructions;
@@ -1067,6 +1067,18 @@ public class FileParser {
 
 	public Branch getMainBranch() {
 		return mainBranch;
+	}
+
+	/**
+	 * Resets the parser.
+	 */
+	public void reset() {
+		branches.clear();
+		instructions.clear();
+		symbols.clear();
+
+		activeBranch = null;
+		mainBranch = null;
 	}
 
 	@Override

@@ -16,7 +16,22 @@ import java.util.Scanner;
 public class CommandInterface {
 
 	public static String[] commands = new String[]{ "quit", "run", "run-and-output", "print-memory", "print-registers",
-					"print-stack", "write-output-file", "print-register", "help", "run-from" };
+					"print-stack", "write-output-file", "print-register", "help", "run-from", "reset", "reset-and-run" };
+
+	public static String[] commandContext = new String[] {
+					"quit",
+					"run [file]",
+					"run-and-output [file] [file]",
+					"print-memory [bin|hex|octal|dec]",
+					"print-registers [bin|hex|octal|dec]",
+					"print-stack [bin|hex|octal|dec]",
+					"write-output-file [file]",
+					"print-register [register] [bin|hex|octal|dec]",
+					"help",
+					"run-from [file] [start] [end]",
+					"reset",
+					"reset-and-run [file]",
+	};
 
 	/**
 	 * Reads input from the command line.
@@ -159,8 +174,23 @@ public class CommandInterface {
 						}
 
 						break;
+					case "reset":
+						Program.MAIN_PROGRAM.reset();
+						break;
+					case "reset-and-run":
+						if (tokens.length != 2) {
+							throw new IllegalArgumentException("\nWrong number of arguments");
+						}
+
+						Program.MAIN_PROGRAM.reset();
+						FileParser.GLOBAL.readFile(tokens[1]);
+						Program.MAIN_PROGRAM.run();
+						break;
 					case "help":
-						System.out.println(Arrays.toString(commands));
+						for(int i = 0; i < commands.length; i++) {
+							System.out.println(commands[i] + ": " + commandContext[i]);
+						}
+
 						break;
 					default:
 						System.out.print("Type \"help\" for a list of commands.");
