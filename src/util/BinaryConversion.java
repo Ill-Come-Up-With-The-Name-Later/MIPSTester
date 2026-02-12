@@ -231,33 +231,27 @@ public class BinaryConversion {
 	 * @return The String in binary
 	 */
 	public static String[] stringToCompressedBinary(String string) {
-		String[] binary = new String[string.length() % 4 == 0 ?
-						string.length() / 4 : string.length() / 4 + 1];
+		string = string + '\0';
 
-		Arrays.fill(binary, "");
+		int wordCount = (string.length() + 3) / 4;
+		String[] binary = new String[wordCount];
 
-		int index = 0;
-		int byteIndex = 0;
+		int charIndex = 0;
 
-		for(int i = 0; i < string.length(); i++) {
-			byteIndex += 1;
-			String charBinary = BinaryConversion.intToBinary(string.charAt(i)).substring(24, 32);;
-
-			binary[index] += charBinary;
-
-			if(i == string.length() - 1 && byteIndex < 4) {
-				binary[index] += BinaryConversion.intToBinary('\0').substring(24, 32);
+		for(int i = 0; i < wordCount; i++) {
+			StringBuilder wordBinary = new StringBuilder();
+			for(int b = 0; b < 4; b++) {
+				if(charIndex < string.length()) {
+					String charBinary = BinaryConversion.intToBinary(string.charAt(charIndex))
+													.substring(24, 32);
+					wordBinary.append(charBinary);
+					charIndex++;
+				} else {
+					wordBinary.append("00000000");
+				}
 			}
 
-			if(i == string.length() - 1) {
-				binary[index] += "0".repeat(32 - binary[index].length());
-			}
-
-			if(byteIndex == 4) {
-				byteIndex = 0;
-
-				index++;
-			}
+			binary[i] = wordBinary.toString();
 		}
 
 		return binary;
