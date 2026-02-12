@@ -162,7 +162,7 @@ public class Memory {
 			throw new IllegalArgumentException("Index must be a multiple of 4");
 		}
 
-		String[] binary = BinaryConversion.stringToBinary(string);
+		String[] binary = BinaryConversion.stringToCompressedBinary(string);
 		Word[] words = new Word[binary.length];
 
 		for(int i = 0; i < binary.length; i++) {

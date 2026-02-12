@@ -295,6 +295,7 @@ public class FileParser {
 	 * @param lineNumber The line number of the command
 	 * @return An executable <code>Instruction</code> of the command
 	 */
+	@Deprecated
 	private Instruction validateCommand(Command command, String[] arguments, int lineNumber) {
 		switch (command) {
 			case LOAD_WORD:

@@ -76,6 +76,7 @@ public class BinaryConversion {
 	 * @return The binary representation of String's
 	 * 				 characters
 	 */
+	@Deprecated
 	public static String[] stringToBinary(String string) {
 		String[] binary = new String[string.length()];
 
