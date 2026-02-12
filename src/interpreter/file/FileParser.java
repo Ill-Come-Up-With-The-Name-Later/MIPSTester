@@ -131,7 +131,7 @@ public class FileParser {
 				}
 
 				int argumentStartIndex = commandIndex + 1;
-				String[] arguments = Arrays.copyOfRange(tokens, argumentStartIndex, tokens.length);
+				String[] arguments = Arrays.copyOfRange(tokens, argumentStartIndex, command.getArgumentCount() + 1);
 
 				if (arguments.length != command.getArgumentCount()) {
 					throw new InsufficientArgumentError(lineNumber, command.getName(),
