@@ -125,6 +125,7 @@ public class Instruction {
 			case MULTIPLY_NORMAL -> Command.MULTIPLY_NORMAL.run(registersData[0], registersData[1], registersData[2]);
 			case MULTIPLY_UNSIGNED -> Command.MULTIPLY_UNSIGNED.run(registersData[0], registersData[1]);
 			case DIVIDE -> Command.DIVIDE.run(registersData[0], registersData[1]);
+			case REMAINDER -> Command.REMAINDER.run(registersData[0], registersData[1], registersData[2]);
 			case DIVIDE_UNSIGNED -> Command.DIVIDE_UNSIGNED.run(registersData[0], registersData[1]);
 			case ADD_IMMEDIATE -> Command.ADD_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case LOGICAL_AND -> Command.LOGICAL_AND.run(registersData[0], registersData[1], registersData[2]);

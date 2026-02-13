@@ -258,6 +258,20 @@ public enum Command {
 	},
 
 	/**
+	 * Calculates the remainder of division and stores it.
+	 */
+	REMAINDER("rem", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
+
+		@Override
+		public void run(Register destination, Register r1, Register r2) {
+			int remainder = r1.getIntegerOfValues() % r2.getIntegerOfValues();
+
+			destination.storeNum(remainder);
+		}
+	},
+
+	/**
 	 * Divides two unsigned numbers. Stores the remainder into hi
 	 * and the quotient into lo.
 	 */
