@@ -219,6 +219,11 @@ public class Program {
 				Register r8 = instruction.getRegistersData()[1];
 
 				return r7.getIntegerOfValues() < r8.getIntegerOfValues();
+			case BRANCH_ON_GREATER_THAN:
+					Register r9 = instruction.getRegistersData()[0];
+					Register r10 = instruction.getRegistersData()[1];
+
+					return r9.getIntegerOfValues() > r10.getIntegerOfValues();
 		}
 
 		return false;
@@ -239,7 +244,7 @@ public class Program {
 			}
 		}
 
-		throw new BranchNotExistError();
+		throw new BranchNotExistError(branch);
 	}
 
 	/**

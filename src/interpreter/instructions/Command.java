@@ -593,6 +593,15 @@ public enum Command {
 		}
 	},
 
+	BRANCH_ON_GREATER_THAN("bgt", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.BRANCH }) {
+
+		@Override
+		public void run(Register r1, Register r2, Branch branch) {
+
+		}
+	},
+
 	/**
 	 * Jumps to a branch if a value is less than
 	 * another.
