@@ -1,5 +1,8 @@
 package util;
 
+import interpreter.exceptions.ArithmeticOverflowException;
+import interpreter.exceptions.ArithmeticUnderflowException;
+
 public class MathHelper {
 
 	/**
@@ -38,5 +41,31 @@ public class MathHelper {
 		String[] binary = BinaryConversion.stringToCompressedBinary(string);
 
 		return binary.length * 4;
+	}
+
+	/**
+	 * Verifies that adding or subtracting two 32-bit numbers
+	 * won't overflow or underflow. Will throw an exception
+	 * for overflow/underflow.
+	 *
+	 * @param op1 The first number
+	 * @param op2 The second number
+	 */
+	public static void verifyAddSubtract(int op1, int op2) {
+		long sum = op1 + op2;
+
+		int signDiffer = op1 ^ op2;
+		signDiffer = signDiffer <= 0 ? 1 : 0; // If signs differ, signDiffer = 1
+
+		if(signDiffer == 0) {
+			long sumSignDiffer = sum ^ op1;
+			sumSignDiffer = sumSignDiffer <= 0 ? 1 : 0; // If signs differ, sumSignDiffer = 1
+
+			if(sumSignDiffer != 0 && (~op1 < 0)) {
+				throw new ArithmeticOverflowException(op1, op2);
+			} else if(sumSignDiffer != 0 && (~op1 > 0)) {
+				throw new ArithmeticUnderflowException(op1, op2);
+			}
+		}
 	}
 }

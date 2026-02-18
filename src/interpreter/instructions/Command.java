@@ -133,6 +133,7 @@ public enum Command {
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
 			super.run(destination, r1, r2);
+			MathHelper.verifyAddSubtract(r1.getIntegerOfValues(), r2.getIntegerOfValues());
 			int sum = r1.getIntegerOfValues() + r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(sum));
 		}
@@ -161,6 +162,7 @@ public enum Command {
 		@Override
 		public void run(Register destination, Register r1, Register r2) {
 			super.run(destination, r1, r2);
+			MathHelper.verifyAddSubtract(r1.getIntegerOfValues(), r2.getIntegerOfValues());
 			int difference = r1.getIntegerOfValues() - r2.getIntegerOfValues();
 			destination.storeStringNum(BinaryConversion.intToBinary(difference));
 		}
@@ -302,6 +304,7 @@ public enum Command {
 		@Override
 		public void run(Register destination, Register r1, int num) {
 			super.run(destination, r1, num);
+			MathHelper.verifyAddSubtract(r1.getIntegerOfValues(), num);
 			int sum = r1.getIntegerOfValues() + num;
 			destination.storeStringNum(BinaryConversion.intToBinary(sum));
 		}
