@@ -373,7 +373,8 @@ public enum Command {
 	 * Performs logical not on a register
 	 * and stores the result.
 	 */
-	LOGICAL_NOT("not", 2, new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER }) {
+	LOGICAL_NOT("not", 2,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER }) {
 
 		@Override
 		public void run(Register destination, Register r1) {
