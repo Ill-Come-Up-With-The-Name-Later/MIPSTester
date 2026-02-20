@@ -133,6 +133,7 @@ public class Instruction {
 			case AND_IMMEDIATE -> Command.AND_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case ADD_IMMEDIATE_UNSIGNED ->  Command.ADD_IMMEDIATE_UNSIGNED.run(registersData[0], registersData[1], integerData);
 			case LOGICAL_OR -> Command.LOGICAL_OR.run(registersData[0], registersData[1], registersData[2]);
+			case LOGICAL_NOT -> Command.LOGICAL_NOT.run(registersData[0], registersData[1]);
 			case OR_IMMEDIATE -> Command.OR_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case LOGICAL_NOR -> Command.LOGICAL_NOR.run(registersData[0], registersData[1], registersData[2]);
 			case LOGICAL_XOR -> Command.LOGICAL_XOR.run(registersData[0], registersData[1], registersData[2]);
@@ -143,6 +144,11 @@ public class Instruction {
 			case SET_ON_LESS_THAN_UNSIGNED -> Command.SET_ON_LESS_THAN_UNSIGNED.run(registersData[0], registersData[1], registersData[2]);
 			case SET_ON_LESS_THAN_IMMEDIATE -> Command.SET_ON_LESS_THAN_IMMEDIATE.run(registersData[0], registersData[1], integerData);
 			case SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE -> Command.SET_ON_LESS_THAN_UNSIGNED_IMMEDIATE.run(registersData[0], registersData[1], integerData);
+			case SET_ON_EQUAL -> Command.SET_ON_EQUAL.run(registersData[0], registersData[1], registersData[2]);
+			case SET_ON_GREATER_THAN -> Command.SET_ON_GREATER_THAN.run(registersData[0], registersData[1], registersData[2]);
+			case SET_ON_GREATER_THAN_OR_EQUAL -> Command.SET_ON_GREATER_THAN_OR_EQUAL.run(registersData[0], registersData[1], registersData[2]);
+			case SET_ON_LESS_THAN_OR_EQUAL -> Command.SET_ON_LESS_THAN_OR_EQUAL.run(registersData[0], registersData[1], registersData[2]);
+			case SET_ON_NOT_EQUAL -> Command.SET_ON_NOT_EQUAL.run(registersData[0], registersData[1],  registersData[2]);
 			case BRANCH_ON_EQUAL -> Command.BRANCH_ON_EQUAL.run(registersData[0], registersData[1], branchData);
 			case BRANCH_ON_NOT_EQUAL -> Command.BRANCH_ON_NOT_EQUAL.run(registersData[0], registersData[1], branchData);
 			case BRANCH_ON_LESS_THAN -> Command.BRANCH_ON_LESS_THAN.run(registersData[0], registersData[1], branchData);

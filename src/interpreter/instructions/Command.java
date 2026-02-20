@@ -370,6 +370,20 @@ public enum Command {
 	},
 
 	/**
+	 * Performs logical not on a register
+	 * and stores the result.
+	 */
+	LOGICAL_NOT("not", 2, new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER }) {
+
+		@Override
+		public void run(Register destination, Register r1) {
+			super.run(destination, r1);
+
+			destination.storeNum(~r1.getIntegerOfValues());
+		}
+	},
+
+	/**
 	 * Performs logical or with a register value
 	 * and a constant.
 	 */
@@ -553,6 +567,106 @@ public enum Command {
 				result.storeStringNum(BinaryConversion.intToBinary(1));
 			} else {
 				result.storeStringNum(BinaryConversion.intToBinary(0));
+			}
+		}
+	},
+
+	/**
+	 * Sets a result register to 1
+	 * if two registers' values are
+	 * equal.
+	 */
+	SET_ON_EQUAL("seq", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
+
+		@Override
+		public void run(Register result, Register r1, Register r2) {
+			super.run(result, r1, r2);
+
+			if(r1.getIntegerOfValues() == r2.getIntegerOfValues()) {
+				result.storeNum(1);
+			} else {
+				result.storeNum(0);
+			}
+		}
+	},
+
+	/**
+	 * Sets a register to 1 if
+	 * a register's value is greater
+	 * than another.
+	 */
+	SET_ON_GREATER_THAN("sgt", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
+
+		@Override
+		public void run(Register result, Register r1, Register r2) {
+			super.run(result, r1, r2);
+
+			if(r1.getIntegerOfValues() > r2.getIntegerOfValues()) {
+				result.storeNum(1);
+			} else {
+				result.storeNum(0);
+			}
+		}
+	},
+
+	/**
+	 * Sets a register to 1 if
+	 * a register's value is greater
+	 * than or equal to another.
+	 */
+	SET_ON_GREATER_THAN_OR_EQUAL("sge", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
+
+		@Override
+		public void run(Register result, Register r1, Register r2) {
+			super.run(result, r1, r2);
+
+			if(r1.getIntegerOfValues() >= r2.getIntegerOfValues()) {
+				result.storeNum(1);
+			} else {
+				result.storeNum(0);
+			}
+		}
+	},
+
+	/**
+	 * Sets a register to 1 if
+	 * a register's value is less
+	 * than or equal to another.
+	 */
+	SET_ON_LESS_THAN_OR_EQUAL("sle", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
+
+		@Override
+		public void run(Register result, Register r1, Register r2) {
+			super.run(result, r1, r2);
+
+			if(r1.getIntegerOfValues() <= r2.getIntegerOfValues()) {
+				result.storeNum(1);
+			} else {
+				result.storeNum(0);
+			}
+		}
+	},
+
+	/**
+	 * Sets a register to 1 if
+	 * a register's value is not
+	 * equal to another.
+	 */
+	SET_ON_NOT_EQUAL("sne", 3,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.REGISTER, ArgumentType.REGISTER }) {
+
+		@Override
+		public void run(Register result, Register r1, Register r2) {
+			super.run(result, r1, r2);
+
+			if(r1.getIntegerOfValues() != r2.getIntegerOfValues()) {
+				result.storeNum(1);
+			} else {
+				result.storeNum(0);
 			}
 		}
 	},
