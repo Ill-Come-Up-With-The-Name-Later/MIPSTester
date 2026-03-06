@@ -224,6 +224,14 @@ public class Program {
 					Register r10 = instruction.getRegistersData()[1];
 
 					return r9.getIntegerOfValues() > r10.getIntegerOfValues();
+			case BRANCH_ON_LESS_THAN_ZERO:
+				Register r11 = instruction.getRegistersData()[0];
+
+				return r11.getIntegerOfValues() < 0;
+			case BRANCH_ON_GREATER_THAN_OR_EQUAL_TO_ZERO:
+				Register r12 = instruction.getRegistersData()[0];
+
+				return r12.getIntegerOfValues() >= 0;
 		}
 
 		return false;

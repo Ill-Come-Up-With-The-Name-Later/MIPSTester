@@ -734,6 +734,32 @@ public enum Command {
 	},
 
 	/**
+	 * Jumps to a branch if a value is less than
+	 * zero.
+	 */
+	BRANCH_ON_LESS_THAN_ZERO("bltz", 2,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.BRANCH }) {
+
+		@Override
+		public void run(Register r1, Branch branch) {
+
+		}
+	},
+
+	/**
+	 * Jumps to a branch if a value is greater than or equal to
+	 * zero.
+	 */
+	BRANCH_ON_GREATER_THAN_OR_EQUAL_TO_ZERO("bgez", 2,
+					new ArgumentType[] { ArgumentType.REGISTER, ArgumentType.BRANCH }) {
+
+		@Override
+		public void run(Register r1, Branch branch) {
+
+		}
+	},
+
+	/**
 	 * Jumps to a branch.
 	 */
 	JUMP("j", 1,
@@ -975,6 +1001,10 @@ public enum Command {
 	}
 
 	public void run(Register r1, Register r2, Branch branch) {
+
+	}
+
+	public void run(Register r1, Branch branch) {
 
 	}
 

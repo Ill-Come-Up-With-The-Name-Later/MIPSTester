@@ -11,7 +11,7 @@ import java.util.Arrays;
  */
 public class Instruction {
 
-	public static final ArrayList<Command> BRANCHING_COMMANDS = new ArrayList<Command>()
+	public static final ArrayList<Command> BRANCHING_COMMANDS = new ArrayList<>()
 	{
 		{
 			add(Command.JUMP);
@@ -22,6 +22,8 @@ public class Instruction {
 			add(Command.BRANCH_ON_LESS_THAN);
 			add(Command.BRANCH_ON_GREATER_THAN_OR_EQUAL);
 			add(Command.BRANCH_ON_GREATER_THAN);
+			add(Command.BRANCH_ON_LESS_THAN_ZERO);
+			add(Command.BRANCH_ON_GREATER_THAN_OR_EQUAL_TO_ZERO);
 		}
 	};
 
@@ -154,6 +156,8 @@ public class Instruction {
 			case BRANCH_ON_LESS_THAN -> Command.BRANCH_ON_LESS_THAN.run(registersData[0], registersData[1], branchData);
 			case BRANCH_ON_GREATER_THAN_OR_EQUAL -> Command.BRANCH_ON_GREATER_THAN_OR_EQUAL.run(registersData[0], registersData[1], branchData);
 			case BRANCH_ON_GREATER_THAN -> Command.BRANCH_ON_GREATER_THAN.run(registersData[0], registersData[1], branchData);
+			case BRANCH_ON_LESS_THAN_ZERO -> Command.BRANCH_ON_LESS_THAN_ZERO.run(registersData[0], branchData);
+			case BRANCH_ON_GREATER_THAN_OR_EQUAL_TO_ZERO -> Command.BRANCH_ON_GREATER_THAN_OR_EQUAL_TO_ZERO.run(registersData[0], branchData);
 			case JUMP -> Command.JUMP.run(branchData);
 			case JUMP_REGISTER -> Command.JUMP_REGISTER.run(registersData[0]);
 			case JUMP_AND_LINK -> Command.JUMP_AND_LINK.run(branchData);
