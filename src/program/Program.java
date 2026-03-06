@@ -154,8 +154,16 @@ public class Program {
 				throw new StackOverflowError("Program stack overflow.");
 			}
 
-			if(instruction.getCommand() == Command.SYSCALL && (Registers.v0.getIntegerOfValues() == 10 || Registers.v0.getIntegerOfValues() == 17)) {
-				return;
+			if(instruction.getCommand() == Command.SYSCALL) {
+				if(Registers.v0.getIntegerOfValues() == 10) {
+					System.out.println("Program exited with code 0");
+					return;
+				}
+
+				if(Registers.v0.getIntegerOfValues() == 17) {
+					System.out.println("Program exited with code " + Registers.a0.getIntegerOfValues());
+					return;
+				}
 			}
 
 			if(!instruction.isJump()) {
